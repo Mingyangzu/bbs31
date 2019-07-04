@@ -1,0 +1,100 @@
+<style>
+    .share_span_name{
+        font-size: 12px;
+        position: absolute;
+        right: 0px;
+        top: 5%;
+        z-index: 111;
+        background: #f42424;
+
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 10px 0px 0px 10px;
+        color: #ffffff !important;
+    }
+</style>
+<div id="shareContent" style="width: 414px;position: absolute;top: -100000px;">
+    <div class=" shop-header" >
+        {if $_G['cache']['plugin']['aljbd']['aljbd_plugins']}
+        <span class="share_span_name">{lang aljhtx:pt_goods_htm_1} {$_G['cache']['plugin']['aljbd']['aljbd_plugins']}</span>
+        {/if}
+        <div class="swiper-wrapper slides" style="max-height:350px;">
+            {if $madv}
+            {eval $aaa = 1}
+            {loop $madv $k $a}
+            {if $aaa == 1}
+            <div class="swiper-slide">
+
+                <a href="$madvurl[$k]" title="$v[2]">
+                    <img  src="$a"  width="100%" style ="display:block;" height="auto">
+                </a>
+
+            </div>
+            {/if}
+            {eval $aaa++}
+            {/loop}
+            {else}
+            <div class="swiper-slide">
+                <a>
+                    <img src="source/plugin/aljbd/images/shop-bg.png" width="100%" style ="display:block;" height="auto">
+                </a>
+            </div>
+            {/if}
+        </div>
+        <style type="text/css">
+            .shop-header-details{z-index:100}
+            .follow{z-index:100}
+        </style>
+
+        <!-- needData {lang aljhtx:brand_htm_2} -->
+        <div class="shop-header-details" style="position:relative;bottom: 0px;padding-top: 10px;background: #ffffff;">
+            <div class="details-box" style="padding-top: 40px;text-align: center;padding-left: 0px">
+                <div style="top: -50px;left: 50%;margin-left: -40px;width: 80px;position: absolute;">
+                    <img  style="width:80px;height:80px" src="{if $bd['logo']}$bd['logo']{else}$noimg{/if}">
+                </div>
+                <div class="shop-tit-a">
+                    <h3 style="color:#333;">{$bd['name']}
+                        {if $bd['label']}
+                        <span  class="bd-label">$bd['label']</span>
+                        {/if}
+                        {if $sign}<img  title="{lang aljbd:attestation_9}" src="source/plugin/aljbd/images/vip.gif" style="margin-left:5px;{if !$settings['is_view_dh']['value']}position: relative;top: 4px;{/if}">{/if}
+                        {if $vipdata}
+                        {if $vipdata['logo']}
+                        <img src="{$vipdata['logo']}" title="{$vipdata['title']}" style="margin-left:5px;" width="15" />
+                        {/if}
+                        {/if}
+                    </h3>
+                    <span class="provider-grade grade-2"></span>
+                    <i class="medal-level medal-6"></i>
+                </div>
+                <p class="details" style="color:#333;">
+                    <span><img src="source/plugin/aljbd/images/{$avg}.gif" style="vertical-align:baseline"></span>
+                    <span class="details-number">{$commentcount}{lang aljbd:sj_view_4}</span>
+                    <span class="details-number"><span>{$bd['view']}</span>$aljbdlang['template']['follow']</span>
+                </p>
+                <p style="color:#333;">{$bd['business_hours']}</p>
+                <p style="color:#333;">{$rlist[$bd['region']]['name']}{$rlist[$bd['subregion']]['name']}{$rlist[$bd['region1']]['name']}{$bd['addr']}</p>
+            </div>
+        </div>
+    </div>
+    <div style="display: block;font-size: 14px;padding-top: 30px;padding-bottom: 10px;overflow: hidden;background: #ffffff;">
+        <div style="float: left;width:50%;text-align: center;">
+            <div class="ewmbox">
+                {eval $pic_logo = (strpos($bd['logo'],$_G['cache']['plugin']['aljoss']['cdn_domain']) !== false  || strpos($bd['logo'],$_G['cache']['plugin']['aljoss']['domain'])) !== false ? $bd['logo'] : $_G['siteurl'].'/'.$bd['logo']}
+                {if $_G['cache']['plugin']['aljwx']['is_mini']}
+                <img src="source/plugin/aljwx/qrcode.php?url=plugin.php?id=aljbd%26act=view%26bid={$bid}&logo={$pic_logo}" width="100" height="100">
+                {/if}
+            </div>
+        </div>
+        <div style="float: left;width:50%;text-align: center;">
+            <div>
+                <img src="{$common_path}static/img/zhiwen.png" width="100px"/>
+            </div>
+        </div>
+        <p style="padding: 20px 0px;clear: both;text-align: center;color:#333;">{lang aljhtx:brand_htm_3}</p>
+    </div>
+
+</div>
+
+<script src="{$common_path}static/js/html2canvas.js"></script>
+<script src="{$common_path}static/js/jquery.qrcode.min.js"></script>

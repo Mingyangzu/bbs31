@@ -1,0 +1,72 @@
+<script>
+    function tips(info,url){
+        if(info == 0){
+            layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                location.href=location.href;
+            });
+        }else if(typeof (url) !== 'undefined'){
+            layer.alert(info, {icon: 6},function(){
+                location.href=url;
+            });
+        }else{
+            layer.alert(info, {icon: 6},function(){
+                location.href=location.href;
+            });
+        }
+    }
+    $(function () {
+        //Enable iCheck plugin for checkboxes
+        //iCheck for checkbox and radio inputs
+        $('.mailbox-messages input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+
+        //Enable check and uncheck all functionality
+        $(".checkbox-toggle").click(function () {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            $(this).data("clicks", !clicks);
+        });
+
+        //Handle starring for glyphicon and font awesome
+        $(".mailbox-star").click(function (e) {
+            e.preventDefault();
+            //detect type
+            var thisstar = $(this).find("a > i");
+            var glyph = thisstar.hasClass("glyphicon");
+            var fa = thisstar.hasClass("fa");
+
+            //Switch states
+            if (glyph) {
+                thisstar.toggleClass("glyphicon-star");
+                thisstar.toggleClass("glyphicon-star-empty");
+            }
+
+            if (fa) {
+                thisstar.toggleClass("fa-star");
+                thisstar.toggleClass("fa-star-o");
+            }
+        });
+    });
+</script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{PLUGIN_PATH}/static/js/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{PLUGIN_PATH}/static/js/bootstrap.min.js"></script>
+<script src="{PLUGIN_PATH}/static/js/app.min.js"></script>
+<script src="{PLUGIN_PATH}/static/js/icheck.min.js"></script>
+</body>
+</html>

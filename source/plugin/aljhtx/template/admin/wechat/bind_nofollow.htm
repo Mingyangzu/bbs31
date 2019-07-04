@@ -1,0 +1,191 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .layui-table, .layui-table-view {
+        margin: 3px 0;
+    }
+    .box.box-default {
+        border-top-color: #009688;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 2px solid #009688;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #009688;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-tips-c {
+        line-height: 14px;
+    }
+    .layui-table-cell {
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-9">
+                {template aljhtx:admin/wechat/nav}
+            </div>
+
+            <div class="col-md-3" style="text-align:right">
+                <a href="javascript:;"  class="btn btn-primary update"><strong>&nbsp;{lang aljhtx:mapp_wechat_htm_1}&nbsp;</strong></a>&nbsp;
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border" style="border-bottom:none;">
+                        <h3 class="box-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" value="$_GET['search']" id="search" class="form-control input-sm" placeholder="{lang aljhtx:bind_nofollow_htm_2}" onkeypress="R.enterPress(event)" onkeydown="R.enterPress()">
+                                <div class="glyphicon glyphicon-search form-control-feedback" style="pointer-events: visible;"></div>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            </form>
+
+                            <table id="demo" lay-filter="test"></table>
+                                <script type="text/html" id="barDemo">
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">{lang aljhtx:setting_htm_9}</a>
+                                </script>
+                        </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+        update: function(){
+            $('.update').click(function() {
+                layer.alert('{lang aljhtx:mapp_wechat_htm_5}', {
+                    btn: ['{lang aljhtx:mapp_wechat_htm_6}'],
+                    offset: "20px",
+                    yes: function(){
+                        layer.load(0, {offset: "50px"});
+                        location.href='plugin.php?id=aljhtx&c=wechat&a=update';
+                    }}
+                );
+
+            });
+        },
+        enterPress: function(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('.glyphicon-search').click();
+            }
+        },
+	    init: function(){
+            layui.use('table', function(){
+                var table = layui.table;
+                var tableIns = table.render({
+                    elem: '#demo'
+                    ,limit: 20
+                    ,url: 'plugin.php?id=aljhtx&c=wechat&a=bind_nofollow&ajax=yes&render=yes'
+                    ,page: true
+                    ,skin: 'line'
+                    ,even: true
+                    ,cols: [[
+                        {field: 'openid', title: 'OPENID', width:200, sort: true}
+                        ,{field: 'username', title: '{lang aljhtx:user_htm_13}', width:200, templet: function(d){
+                            if(d.avatar!=''){
+                                return '<img src="'+d.avatar+'" style="width:30px">&nbsp;'+d.username;
+                            }else{
+                                return d.username;
+                            }
+
+                        }}
+                        ,{field: 'bindtime', title: '{lang aljhtx:bind_follow_htm_10}'}
+                        ,{width:128, align:'center', toolbar: '#barDemo', title: '{lang aljhtx:getlist_htm_7}'}
+                    ]]
+                });
+                table.on('tool(test)', function(obj){
+                    var data = obj.data;
+                    if(obj.event === 'del'){
+                        layer.confirm('{lang aljhtx:getlist_htm_8}', function(index){
+                            layer.load();
+                            $.post('plugin.php?id=aljhtx&c=wechat&a=delete&ajax=yes&openid='+data.openid, function(){
+                                obj.del();
+                                layer.closeAll();
+                            });
+
+                        });
+                    }
+                    if(obj.event === 'updateWechatUserInfoByOpenid'){
+                        layer.load();
+                        $.post('plugin.php?id=aljhtx&c=wechat&a=updateWechatUserInfoByOpenid&ajax=yes&openid='+data.openid, function(){
+                            tableIns.reload({
+                            });
+                            layer.closeAll();
+                        });
+                    }
+                });
+                $('.glyphicon-search').on('click', function(){
+                    tableIns.reload({
+                        where: {
+                            search: $('#search').val()
+                        }
+                        ,page: {
+                            curr: 1
+                        }
+                    });
+                });
+
+            });
+            R.update();
+        }
+    }
+    R.init();
+</script>
+
+{eval include template(PLUGIN_ID.':admin/footer')}
+

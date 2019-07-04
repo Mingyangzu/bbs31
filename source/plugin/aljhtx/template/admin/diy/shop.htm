@@ -1,0 +1,343 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    .h_casev_sPhone {
+        width: 550px;
+        float: left;
+        height: 100%;
+        position: relative;
+    }
+    .h_casev_sPhoneBox {
+        width: 345px;
+        height: 663px;
+        margin-left: 55px;
+        background: url({PLUGIN_PATH}/static/img/phoneBg.png) no-repeat
+    }
+
+    .h_casev_sPhoneM {
+        padding-top: 72px;
+        padding-left: 13px
+    }
+
+    .h_casev_sPhoneM .nr {
+        width: 320px;
+        height: 486px;
+        position: relative
+    }
+
+    .h_casev_sPhoneM .scene_title {
+        width: 320px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #1d2224;
+        color: #fff;
+        font-size: 16px;
+        text-align: center
+    }
+
+    .col-md-4 {
+        width: 440px;
+        float:left;
+    }
+    @media only screen and (min-width: 640px) {
+        #wrapper,.maincontent,.c_main_menu_1,.weui-navbar,.indexcontent,.bottom_fixed,.bottom_fixed2,.bottom_fixed3,.layui-m-layermain{
+            left:50% !important;
+            margin-left: -270px;
+            max-width: 540px !important;
+        }
+        .row, .nav-tabs{
+            margin: 0px auto !important;
+            max-width: 980px !important;
+        }
+    }
+    .box.box-default {
+        border-top-color: #009688;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 1px solid #d2d6de;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+</style>
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+</style>
+
+<script>
+    var R = {
+        options: {
+
+        },
+        init: function(){
+            R.layuiUpload();
+            R.modCopy();
+            R.modDelete();
+            R.modUp();
+            R.modDown();
+            R.faArrowDown();
+            R.faArrowUp();
+            R.submitAction();
+            R.changeSettingWindow();
+        },
+        changeSettingWindow: function(){
+            $('.change-to-selfserve-adv').on('click', function(){
+                var index = layer.load();
+                var skey = $(this).parents('.box-body').find('.max-displayorder').siblings(':input[name="skey"]').val();
+                var that =this;
+                if($(that).parents('.diyDocument').attr('id').indexOf('change')!=-1){
+                    var name = $(that).parents('.diyDocument').attr('id').replace('-change', '');
+                    $.post('plugin.php?id=aljhtx&c=diy&a=changeAdvSettingWindow&delete=yes&skey='+skey, function(result){
+                        $(that).parents('.diyDocument').hide();
+                        $('#'+name).show();
+                        document.getElementById('caseIframe').contentWindow.location.reload();
+                        layer.close(index);
+                    });
+
+                }else{
+                    $.post('plugin.php?id=aljhtx&c=diy&a=changeAdvSettingWindow&skey='+$(that).attr('aljad-skey'), function(result){
+                        $(that).parents('.diyDocument').hide();
+                        $('#'+$(that).parents('.diyDocument').attr('id')+'-change').show();
+                        document.getElementById('caseIframe').contentWindow.location.reload();
+                        layer.close(index);
+                    });
+                }
+
+            });
+        },
+        modDelete: function(){
+            $(document).on('click','.mod-delete',function(){
+                var index = layer.load();
+                var skey = $(this).parents('.form-group').siblings(':input[name="skey"]').val();
+                var that =this;
+                $.post('plugin.php?id=aljhtx&c=diy&a=moddelete&ajax=yes&skey='+skey, function(){
+                    layer.alert('{lang aljhtx:shop_htm_1}', function(){
+                        location.href=location.href;
+                    });
+                });
+                return false;
+            });
+        },
+        modCopy: function(){
+            $(document).on('click','.mod-copy',function(){
+                var index = layer.load();
+                var skey = $(this).parents('.form-group').siblings(':input[name="skey"]').val();
+                var that =this;
+                $.post('plugin.php?id=aljhtx&c=diy&a=modcopy&ajax=yes&skey='+skey, function(){
+                    layer.alert('{lang aljhtx:shop_htm_2}', function(){
+                        location.href=location.href;
+                    });
+                });
+                return false;
+            });
+        },
+        modUp: function(){
+            $(document).on('click','.mod-up',function(){
+                var index = layer.load();
+                var skey = $(this).parents('.form-group').siblings(':input[name="skey"]').val();
+                var that =this;
+                $.post('plugin.php?id=aljhtx&c=diy&a=modup&ajax=yes&skey='+skey, function(){
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.close(index);
+                });
+                return false;
+            });
+        },
+        modDown: function(){
+            $(document).on('click','.mod-down',function(){
+                var index = layer.load();
+                var skey = $(this).parents('.form-group').siblings(':input[name="skey"]').val();
+                var that =this;
+                $.post('plugin.php?id=aljhtx&c=diy&a=moddown&ajax=yes&skey='+skey, function(){
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.close(index);
+                });
+                return false;
+            });
+        },
+        faArrowDown: function () {
+            $('.down-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(parseInt(displayorder)+1 == $(this).parents('.diyDocument').find('.down-displayorder').length){
+                    layer.alert('{lang aljhtx:shop_htm_3}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowdown&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').next().attr('data-id'));
+                    $(that).parents('.collapsed-box').next().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').next().insertBefore($(that).parents('.collapsed-box'));
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.close(index);
+                });
+            });
+        },
+        faArrowUp: function () {
+            $('.up-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(displayorder == 0){
+                    layer.alert('{lang aljhtx:shop_htm_4}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowup&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').prev().attr('data-id'));
+                    $(that).parents('.collapsed-box').prev().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').prev().insertAfter($(that).parents('.collapsed-box'));
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.close(index);
+                });
+            });
+        },
+        followChange: function(diyID){
+            $('.diyDocument').hide();
+            $('#'+diyID).show();
+
+
+        },
+        submitAction: function(){
+            $('.btn-submit').on('click', function () {
+                $(this).parents('.box-body').find('.max-displayorder').val(parseInt($(this).parents('.box-body').find('.max-displayorder').val())+1);
+                var index = layer.load();
+            });
+        },
+        tips: function (info,url){
+            if(info == 1){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                    location.href=location.href;
+                });
+            }else if(info == 2){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                    $('#'+url).remove();
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.closeAll();
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.closeAll();
+                });
+            }
+
+        },
+        layuiUpload: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+            });
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                //upload
+                upload.render({
+                    elem: '.upload'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+                upload.render({
+                    elem: '.upload_two'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_two" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_two" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_two').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+            });
+        }
+    };
+    $(function(){
+        R.init();
+    });
+</script>
+<div>
+
+    <section class="content" style="padding:0;margin-top: 30px;">
+
+        <div class="row">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                {template aljhtx:admin/diy/nav}
+                <div class="layui-tab-content"></div>
+            </div>
+            <!-- /.col -->
+            <iframe style="display:none;" name="submitiframe"></iframe>
+                <div class="col-md-4">
+                    <div class="h_casev_sPhone">
+                        <div class="h_casev_sPhoneBox">
+                            <div class="h_casev_sPhoneM">
+                                <div class="scene_title">
+                                    DIY{lang aljhtx:shop_htm_10}                    </div>
+                                <div class="nr" id="nr">
+                                    <iframe name="caseIframe" id="caseIframe" src="{$shopUrl}" style="border:0; width:100%; height:100%;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="width:540px;height:780px;overflow: auto;">
+
+                    {loop $diyAutoList $diy}
+                    {eval include template('aljhtx:admin/diy/'.ACTION.'/'.$diy['template']);}
+                    {/loop}
+
+                </div>
+                <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+{eval include template(PLUGIN_ID.':admin/footer')}

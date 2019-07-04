@@ -1,0 +1,171 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .layui-table, .layui-table-view {
+        margin: 3px 0;
+    }
+    .box.box-default {
+        border-top-color: #009688;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 2px solid #009688;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #009688;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-tips-c {
+        line-height: 14px;
+    }
+    .layui-table-cell {
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-9">
+                {template aljhtx:admin/notification/nav}
+            </div>
+
+            <div class="col-md-3" style="text-align:right">
+                <a href="javascript:;"  class="btn btn-primary adminUser"><strong>&nbsp;{lang aljhtx:user_htm_8}&nbsp;</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;"  class="btn btn-primary sendGroupMessage"><strong>&nbsp;{lang aljhtx:user_htm_11}&nbsp;</strong></a>&nbsp;
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" value="$_GET['search']" id="search" class="form-control input-sm" placeholder="{lang aljhtx:bind_nofollow_htm_2}" onkeypress="R.enterPress(event)" onkeydown="R.enterPress()">
+                                <div class="glyphicon glyphicon-search form-control-feedback" style="pointer-events: visible;" onclick="location.href='{$dourl}&search='+$('#search').val()"></div>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="table-responsive mailbox-messages">
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>{lang aljhtx:getlist_htm_3}</th>
+                                    <th>{lang aljhtx:aljdx_htm_5}</th>
+                                    <th>{lang aljhtx:getlist_htm_4}</th>
+                                    <th>{lang aljhtx:getlist_htm_6}</th>
+                                </tr>
+                                {loop $logList $log}
+                                <tr>
+                                    <td>{$log['username']}{$log['dx_phone']}</td>
+                                    <td>{$log['dx_content']}</td>
+                                    <td>{eval echo dgmdate($log['dx_sendtime']);}</td>
+                                    <td>{if $log['dx_status']}{lang aljhtx:aljdx_htm_8}{else}{lang aljhtx:aljdx_htm_9}{/if}</td>
+                                </tr>
+                                {/loop}
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer no-padding">
+                        <div class="mailbox-controls">
+
+                            <div class="pull-right">
+                              {$paging}
+                            </div>
+                                <!-- /.btn-group -->
+                            </div>
+                            <!-- /.pull-right -->
+                        </div>
+                    </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+        sendGroupMessage: function(){
+            $('.sendGroupMessage').click(function() {
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:user_htm_11}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    area: ['893px', '600px'],
+                    content: 'plugin.php?id=aljhtx&c=user&a=sendgroupmessage'
+                });
+            });
+        },
+        adminUser: function(){
+            $('.adminUser').click(function() {
+               location.href='plugin.php?id=aljhtx&c=user&a=user';
+            });
+        },
+        enterPress: function(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('.glyphicon-search').click();
+            }
+        },
+	    init: function(){
+            R.adminUser();
+            R.sendGroupMessage();
+        }
+    }
+    R.init();
+</script>
+
+{eval include template(PLUGIN_ID.':admin/footer')}
+

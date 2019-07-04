@@ -1,0 +1,84 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+</style>
+<div class="content-wrapper" style="margin-left:0px;height:100%">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+           
+            <!-- /.col -->
+            <iframe style="display:none;" name="submitiframe"></iframe>
+            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="{$friendUid}" name="frienduid">
+                <input type="hidden" value="yes" name="ajax">
+
+            <div class="col-md-12">
+                <div class="box box-primary" style="height:100%;margin-bottom:0;">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{$userName}</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+						
+						
+                        <div class="form-group">
+                            <label>{lang aljhtx:getlist_htm_5}</label>
+                    <textarea name="content"  class="form-control"  style="height:300px;"></textarea>
+                        </div>
+                        <div class="form-group mailbox-messages">
+                            {if $_GET['from'] != 'log'}
+                            <input type="checkbox" style="zoom:150%;vertical-align:middle;" name="type[]" value="system" data-id="1"  checked class="mailbox-messages message-type"><span style="vertical-align:middle;" >&nbsp;{lang aljhtx:sendgroupmessage_htm_5}&nbsp;</span>
+                            {/if}
+                            <input type="checkbox" style="zoom:150%;vertical-align:middle;" name="type[]" value="aljol" {if $checkAljol}data-id="1"{/if} {$checkAljol} class="mailbox-messages message-type"><span style="vertical-align:middle;" >&nbsp;{lang aljhtx:nav_htm_8}&nbsp;</span>
+                            {if  $_GET['from'] != 'log'}
+                            <input type="checkbox" style="zoom:150%;vertical-align:middle;" name="type[]" value="aljdx" {if $checkAljdx}data-id="1"{/if} {$checkAljdx} class="mailbox-messages message-type"><span style="vertical-align:middle;" >&nbsp;{lang aljhtx:sendgroupmessage_htm_7}</span>
+                            <input type="checkbox" style="zoom:150%;vertical-align:middle;" name="type[]" value="email"  data-id="1"  class="mailbox-messages message-type"><span style="vertical-align:middle;" >&nbsp;{lang aljhtx:sendgroupmessage_htm_8}</span>
+                            {/if}
+                        </div>
+                        <div class="form-group"><input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}"></div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+            </form>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            $(".message-type").click(function() {
+                if($(this).attr('data-id') != 1){
+                    layer.alert('{lang aljhtx:sendgroupmessage_htm_10}', {icon: 6});
+                    return false;
+                }
+            });
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+
+        R.init();
+    });
+</script>

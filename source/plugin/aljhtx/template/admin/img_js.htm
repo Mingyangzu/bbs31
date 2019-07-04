@@ -1,0 +1,53 @@
+<script type="text/javascript" src="{$path}/static/js/lrz.mobile.min.js"></script>
+<script>
+    function checkhHtml5()
+    {
+        var is_img_u='$settings['is_img_u']['value']';
+        if(is_img_u !== '0' && is_img_u !== 'null'){
+            $("#compress").val('1');
+            $("#admingoodssubmit").attr("enctype", "multipart/form-data");
+            $("#admingoodssubmit").attr("encoding", "multipart/form-data");
+            $("#admingoodssubmit").submit();
+        }else{
+            if (typeof(Worker) !== "undefined")
+            {
+                $("#admingoodssubmit").submit();
+            } else
+            {   $("#compress").val('1');
+                $("#admingoodssubmit").attr("enctype", "multipart/form-data");
+                $("#admingoodssubmit").attr("encoding", "multipart/form-data");
+                $("#admingoodssubmit").submit();
+            }
+        }
+
+    }
+    function lrz_mobile(name,id,evt){
+        file = evt.files[0];
+
+
+        if (!file.type.match('image.*')) {
+            alert('$imgmes');
+        }
+
+        lrz(file, {
+            width:1200,
+            before: function() {
+                //console.log('start');
+            },
+            fail: function(err) {
+                console.error(err);
+            },
+            always: function() {
+                //console.log('end');
+            },
+            done: function (results) {
+                $('#img_'+name+'_'+id).html('<br/>\u4e0a\u4f20\u4e2d\u8bf7\u7a0d\u540e<img src="static/image/common/loading.gif"/>');
+
+                $('#img_'+name+'_'+id).html('<br/><img src="'+results.base64+'" width="40px" height="40px"><input type="hidden" name="'+name+'['+id+']"  value="'+results.base64+'"><a href="javascript:;" onclick="delattach(\''+name+'\',\''+id+'\')" class="upload_delete bw_delimg" id="upload_delete_0" data-index="0"><img src="{$path}/static/img/img_close.png" width="20"></a>');
+            }})
+    }
+    function delattach(name,id){
+        $('#img_'+name+'_'+id).html('<br/>');
+        $('#'+name+'_'+id).html('<input type="file" name="'+id+'" style="width:200px;"  onchange="lrz_mobile(\''+name+'\',\''+id+'\',this)">');
+    }
+</script>

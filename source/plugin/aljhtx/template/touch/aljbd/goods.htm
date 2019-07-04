@@ -1,0 +1,366 @@
+<style>
+    .reg_price .sum{
+        font-size: 30px;
+        margin-right: 3px;
+    }
+    .reg_price .past {
+        -webkit-box-flex: 1;
+        -webkit-box-align: end;
+        display: flex;
+    {if $g['collage_price']>0 && $_G['cache']['plugin']['aljstg']['is_aljstg'] && $g['commodity_type'] == 2}
+    margin-top: 8px;
+    {else}
+    margin-top: 15px;
+    {/if}
+
+        line-height: 12px;
+    }
+    .reg_price .past .t {
+        margin-left: 10px;
+        font-size: 14px;
+        line-height: 12px;
+    }
+    #shareContent{
+        width: 460px;position: absolute;top: -100000px;
+    }
+
+</style>
+<style>
+    .share_span_name{
+        font-size: 12px;
+        position: absolute;
+        right: 0px;
+        top: 5%;
+        z-index: 111;
+        background: #f42424;
+
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 10px 0px 0px 10px;
+        color: #ffffff !important;
+    }
+</style>
+<script src="{$common_path}static/js/html2canvas.js"></script>
+<script src="{$common_path}static/js/layer/mobile/layer.js?{$version}" charset="utf-8"></script>
+<div class="content group-info" id="shareContent" >
+    {if $_G['cache']['plugin']['aljhtx']['reg_logo']}
+    <img src="$_G['cache']['plugin']['aljhtx']['reg_logo']" style="width:100%;max-height:150px">
+    {/if}
+        {if $g[pic1]}
+        <div style="width: 100%;max-height: 460px;overflow: hidden;position: relative;">
+            {if $_G['cache']['plugin']['aljbd']['aljbd_plugins'] && !$_G['cache']['plugin']['aljhtx']['reg_logo']}
+            <span class="share_span_name">{lang aljhtx:pt_goods_htm_1} {$_G['cache']['plugin']['aljbd']['aljbd_plugins']}</span>
+            {/if}
+            {if $ms_info['ms_start_time'] < TIMESTAMP && $ms_info['ms_end_time'] > TIMESTAMP && $ms_info['ms_limit_num'] > 0}
+            <style>
+                .label_xg{
+                    position: absolute;
+                    left: 0px;
+                    bottom: 10%;
+                    margin-top: -12px;
+                    background: #f42424;
+                    opacity: 0.7;
+                    font-weight: 600;
+                    border-radius: 0px 10px 10px 0px;
+                    padding: 5px 10px;
+                    font-size: 12px;
+                    float: right;
+                    color: #ffffff !important;
+                    z-index: 999999;
+                }
+            </style>
+            <div class="label_xg">&#38480;&#36141;{$ms_info['ms_limit_num']}&#20010;</div>
+            {elseif $g['limit_amount'] >0}
+            <style>
+                .label_xg{
+                    position: absolute;
+                    left: 0px;
+                    bottom: 10%;
+                    margin-top: -12px;
+                    background: #f42424;
+                    opacity: 0.7;
+                    font-weight: 600;
+                    border-radius: 0px 10px 10px 0px;
+                    padding: 5px 10px;
+                    font-size: 12px;
+                    float: right;
+                    color: #ffffff !important;
+                    z-index: 999999;
+                }
+            </style>
+            <div class="label_xg">&#38480;&#36141;{$g['limit_amount']}&#20010;</div>
+            {/if}
+            <img src="$g[pic1]" width="100%;object-fit: cover;"/>
+        </div>
+        {/if}
+    {if $ms_info['ms_start_time'] < TIMESTAMP && $ms_info['ms_end_time'] > TIMESTAMP}
+    <div class="activity-title-ms" style="height: 60px;line-height: 60px;">
+        <div class="activity-type-ms">
+            <div class="activity-buy-box-ms" style="height: 60px;line-height: 60px;">
+
+                <div class="b-price">{$price_unit}<em class="b-sum" style="font-size: 50px">{eval echo floatval($ms_info['ms_price'])}</em></div>
+                <div class="b-past Fix" style="margin-top: 14px;">
+                    <div class="t">
+                        <span class="b-o-price" style="font-size: 18px">{$price_unit}{if $g['price2']>0}{$g['price2']}{else}$g['price1']{/if}</span>
+                        <span class="b-type" style="text-align: center;font-size: 16px;">{lang aljhtx:goods_htm_2}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="sk-time-cd">
+            <p style="margin-bottom: 2px;">
+                {lang aljhtx:goods_htm_3}
+            </p>
+            <p class="time-span">
+                {eval echo dgmdate($ms_info['ms_end_time'],'u')}
+            </p>
+        </div>
+    </div>
+    {else}
+        {if $g['commodity_type'] == 1 && $_G['cache']['plugin']['aljstg']['is_aljstg']}
+            <div class="activity-title" >
+                <div class="activity-type" style="font-size: 20px;">
+                    {$_G['cache']['plugin']['aljstg']['aljstg_name']}
+
+                </div>
+                <div style="float: right;font-size: 20px;color:#ffffff;">
+                    {if TIMESTAMP < $g['endtime'] || TIMESTAMP < $g['starttime']}
+                    {eval echo dgmdate($g['starttime'])}&nbsp;-&nbsp;{if $g['endtime']>0}{eval echo dgmdate($g['endtime'])}{else}{lang aljhtx:goods_htm_4}{/if}
+                    {else}
+                    {if !$g['endtime']}
+                    {lang aljhtx:goods_htm_5}
+                    {else}
+                    {lang aljhtx:goods_htm_6}
+                    {/if}
+                    {/if}
+                </div>
+            </div>
+        {/if}
+    {/if}
+    <link rel="stylesheet" media="screen,projection,tv" href="source/plugin/$pluginid/template/touch/view/css/label.css" /></link>
+    <div class="cost-box" style="overflow: hidden;border: none;padding:0px 10px 15px 10px;">
+        <div class="intro" style="width:310px;float: left;">
+            {if !$ms_info || $ms_info['ms_sale_num']>=$ms_info['ms_num']}
+            <div class="reg_price" style="margin-top: 5px;height: 50px;-webkit-box-pack: justify;line-height: 50px;display: flex;margin-bottom: 5px;">
+                {if $g['collage_price']>0 && $_G['cache']['plugin']['aljstg']['is_aljstg'] && $g['commodity_type'] == 2}
+
+                <div class="price sum" style="font-size: 50px;">
+                    <em style="font-size: 12px;">{$price_unit}</em>{if $sku_price_s['min_price'] > 0}{$sku_price_s['min_price']}{else}$g['collage_price']{/if}
+                </div>
+                <div class="past Fix">
+                    <div class="t">
+                        {if $g['price2'] && $g['price1'] != $g['price2']}
+                        <span class="o-price" style="display: inline-block;margin-bottom: 5px;font-size: 18px;">{$price_unit}$g['price2']</span>
+                        {/if}
+                        <span style="display: block;border: 1px solid #f42424;padding:3px;font-size: 16px;color:#f42424;border-radius: 5px;text-align: center;">{lang aljhtx:goods_htm_7}</span>
+                    </div>
+                </div>
+
+                {else}
+                {if $g['price1']}
+                <div class="price sum" style="font-size: 50px;"><em style="font-size: 12px;">{$price_unit}</em>{if $sku_price_s['min_price'] > 0}{$sku_price_s['min_price']}{else}$g['price1']{/if}</div>
+                <div class="past Fix" style="margin-top: 20px;">
+                    <div class="t">
+                        {if $g['price2'] && $g['price1'] != $g['price2']}
+                        <span class="o-price" style="font-size: 22px;">{$price_unit}$g['price2']</span>
+                        {/if}
+
+                    </div>
+                </div>
+
+                {else}
+                <div class="price sum">{lang aljbd:s271}</div>
+                {/if}
+                {/if}
+            </div>
+            {/if}
+            <h3 style="font-size: 20px;line-height: 30px;padding:0px">
+                {if $ms_info['ms_start_time'] < TIMESTAMP && $ms_info['ms_end_time'] > TIMESTAMP}
+                {eval echo cutstr($g['name'],'70')}
+                {else}
+                {eval echo cutstr($g['name'],'50')}
+                {/if}
+            </h3>
+
+            {if $g['selling_point'] || $g[give_integral]>0 || $g[pay_integral]>0}
+            {eval $selling_point = explode(',',str_replace('{lang aljhtx:goods_1_htm_1}',',',$g['selling_point']));}
+            <div class="detail-tags" style="height:30px">
+                <div class=" detail-tags-h" style="height:30px">
+                    {if $g[give_integral]>0}
+                    <span class="span0 border-global" style="padding: 2px 10px;margin-top: 5px;">{lang aljhtx:goods_1_htm_2}{$g['give_integral']}{lang aljhtx:goods_1_htm_3}</span>
+                    {/if}
+                    {if $g[pay_integral]>0}
+                    <span class="span0 border-global" style="padding: 2px 10px;margin-top: 5px;">{lang aljhtx:goods_1_htm_4}{$g['pay_integral']}%</span>
+                    {/if}
+                    {loop $selling_point $sv}
+                    <span class="span0 border-global" style="padding: 2px 10px;margin-top: 5px;">$sv</span>
+                    {/loop}
+                </div>
+            </div>
+            {elseif $g['brief']}
+            <p style="font-size: 12px;color:#999;">{eval echo cutstr($g['brief'],'90')}</p>
+            {/if}
+
+        </div>
+
+            {eval $pic_logo = (strpos($g['pic1'],$_G['cache']['plugin']['aljoss']['cdn_domain']) !== false  || strpos($g['pic1'],$_G['cache']['plugin']['aljoss']['domain'])) !== false ? $g['pic1'] : $_G['siteurl'].'/'.$g['pic1']}
+            {if $_G['cache']['plugin']['aljhtx']['regtype'] == 3}
+                <style>
+                    .ewmbox img{width:100px;height:100px;}
+                    .qrcode_bg{
+                        margin-top: 15px;background: #ffffff;float: right;
+
+                        padding:10px;
+                        position: relative;
+
+                    }
+                    .qrcode_bg span{
+                        position: absolute;
+                        width: 120px;
+                        left: 0px;
+                        bottom: -10px;
+                        text-align: center;
+                    }
+                    .reg_p_text_tg{
+                        height: 30px;
+                        text-align: center;
+                        background: #f8f8f8;
+                        color: #999;
+                        font-size: 18px;
+                        line-height: 30px;
+                        width:460px;
+                    }
+                </style>
+                <div class="qrcode_bg">
+                    <div class="ewmbox" >
+                        <img src="{if is_file('source/plugin/aljwx/static/miniqrcode/'.md5('plugin.php?id=aljbd&act=goodview&bid='.$bid.'&gid='.$gid.'&d='.$fx_shopdata[uid]).'.jpg')}source/plugin/aljwx/static/miniqrcode/{eval echo md5('plugin.php?id=aljbd&act=goodview&bid='.$bid.'&gid='.$gid.'&d='.$fx_shopdata[uid]).'.jpg'}{else}source/plugin/aljwx/qrcode.php?url=plugin.php?id=aljbd%26act=goodview%26bid={$bid}%26gid={$gid}%26d={$fx_shopdata[uid]}&logo={$pic_logo}{/if}" >
+                    </div>
+                </div>
+            {elseif $_G['cache']['plugin']['aljhtx']['regtype'] == 2}
+                <style>
+                    .ewmbox img{width:100px;height:100px;}
+                    .qrcode_bg{
+                        margin-top: 15px;background: #ffffff;float: right;
+
+                        padding:10px;
+                        position: relative;
+                        width:120px;height:120px;background-image: url(source/plugin/aljhtx/static/img/qrcode_bg.png);
+                        background-size: 100%;
+                    }
+                    .qrcode_bg span{
+                        position: absolute;
+                        width: 120px;
+                        left: 0px;
+                        bottom: -10px;
+                        text-align: center;
+                    }
+                    .reg_p_text_tg{
+                        height: 30px;
+                        text-align: center;
+                        background: #f8f8f8;
+                        color: #999;
+                        font-size: 18px;
+                        line-height: 30px;
+                        width:460px;
+                    }
+                </style>
+                <div class="qrcode_bg">
+                    <div class="ewmbox" >
+                        {eval $gid=$_GET['d']>0?$g[id].'_'.$_GET['d']:$g[id]}
+                        <img src="{if is_file('source/plugin/aljhtx/static/img/qrcode/goods/'.$gid.'.jpg')}source/plugin/aljhtx/static/img/qrcode/goods/{$gid}.jpg{else}source/plugin/aljhtx/api/qrcode.php?gid={$g[id]}&d={$_GET['d']}{/if}" >
+                    </div>
+                    <span >{lang aljhtx:goods_htm_12}</span>
+                </div>
+            {elseif $_G['cache']['plugin']['aljhtx']['regtype'] == 1}
+                <style>
+                    .ewmbox img{width:100px;height:100px;}
+                    .qrcode_bg{
+                        margin-top: 15px;background: #ffffff;float: right;
+
+                        padding:10px;
+                        position: relative;
+                        width:120px;height:120px;background-image: url(source/plugin/aljhtx/static/img/qrcode_bg.png);
+                        background-size: 100%;
+                    }
+                    .qrcode_bg span{
+                        position: absolute;
+                        width: 120px;
+                        left: 0px;
+                        bottom: -10px;
+                        text-align: center;
+                    }
+                    .reg_p_text_tg{
+                        height: 30px;
+                        text-align: center;
+                        background: #f8f8f8;
+                        color: #999;
+                        font-size: 18px;
+                        line-height: 30px;
+                        width:460px;
+                    }
+                </style>
+                <div class="qrcode_bg">
+                    <div class="ewmbox" >
+                        <img src="source/plugin/aljhtx/api/reg_qrcode.php?url=plugin.php?id=aljbd%26act=goodview%26bid={$bid}%26gid={$gid}%26d={$fx_shopdata[uid]}" >
+                    </div>
+                    <span >{lang aljhtx:goods_htm_12}</span>
+                </div>
+            {/if}
+        </div>
+    </div>
+</div>
+<style>
+    .layui-m-layercont {
+        padding:0px 5px;
+        line-height: 22px;
+        text-align: center;
+    }
+    .layui-m-layerchild h3 {
+
+        height: 40px;
+        line-height: 40px;
+
+    }
+    .layui-m-layerbtn {
+
+        height: 40px;
+        line-height: 40px;
+
+        border-top: 1px solid #f8f8f8;
+        background-color: #f8f8f8;
+    }
+    .layui-m-layer0 .layui-m-layerchild {
+        width: 80%;
+        max-width: 640px;
+    }
+</style>
+
+<script>
+
+    function takeScreenshot() {
+        layer.open({
+            type: 2
+            ,content: '{lang aljhtx:goods_1_htm_5}'
+        });
+        var shareContent = document.getElementById("shareContent");
+
+        var opts = {
+            useCORS: true
+        };
+        console.log(opts);
+        html2canvas(shareContent,opts).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            layer.closeAll()
+            //$.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:goods_1_htm_7}");
+            //{lang aljhtx:goods_1_htm_8}
+            layer.open({
+                title: [
+                    '{lang aljhtx:goods_1_htm_9}',
+                ]
+                ,content: "<img src='"+dataUrl+"' width='100%'/>"
+                ,btn: '{lang aljhtx:goods_1_htm_10}'
+            });
+        });
+    }
+</script>

@@ -1,0 +1,36 @@
+<style>
+    .weui-dialog__bd img {
+        max-width: 90%;
+    }
+    img {
+        object-fit: cover;
+    }
+</style>
+<script>
+    {if !$_G['cache']['plugin']['aljwx']['is_mini']}
+    $('.ewmbox').qrcode({
+        width: 300,
+        height: 300,
+        text:'{$_G['siteurl']}/plugin.php?id=aljbd&act=view&bid={$bid}'
+    });
+    var canvas=$('.ewmbox canvas')[0];
+    $('.ewmbox').html("<img style='width:120px;padding: 5px;' src='"+canvas.toDataURL('image/jpg')+"' />");
+    {/if}
+    function takeScreenshot() {
+        $.showLoading();
+        var shareContent = document.getElementById("shareContent");
+        var opts = {
+            useCORS: true
+        };
+        html2canvas(shareContent,opts).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            $.hideLoading();
+            $.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:goods_1_htm_9}");
+            $('.weui-dialog__title').css('font-size', '14px');
+            $('.weui-dialog__hd').css('padding', '10px');
+            $('.weui-weui-dialog__bd').css('padding', '0px');
+            $('.weui-dialog__bd').css('padding', '0px');
+        });
+    }
+    //takeScreenshot();
+</script>

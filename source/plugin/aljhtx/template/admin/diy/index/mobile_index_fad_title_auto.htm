@@ -1,0 +1,47 @@
+{eval $diy = $diyAuto;}
+<div class="box-body diyDocument" id="mobile_index_fad_title_{$diy['template']}">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{lang aljhtx:mobile_index_fad_title_auto_htm_1}</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="">
+            <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <input type="hidden" value="mobile_index_fad_title_{$diy['template']}" name="skey">
+                <input type="hidden" value="yes" name="mobile_index_fad_title">
+                <div class="form-group">
+                    <label>{lang aljhtx:mobile_index_fad_title_auto_htm_2}</label>
+                    <input name="url" value="{$diy[data][0][1]}"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="layui-btn layui-btn-primary upload">
+                        <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                    </button>
+                    <div class="upload_img" style="margin-top:5px;">
+                        {if $diy[data]}
+                        <img style="width:200px;" src="{$diy[data][0][0]}">
+                        {/if}
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" class="layui-btn  layui-btn-sm" style="margin-left: 5px;" value="{lang aljhtx:setting_htm_8}">
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-up" style="margin-left: 5px;"><i class="layui-icon">&#xe619;</i> {lang aljhtx:setting_htm_67}</button>
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-down" style="margin-left: 5px;"><i class="layui-icon">&#xe61a;</i> {lang aljhtx:setting_htm_68}</button>
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-delete" style="margin-left: 5px;"><i class="layui-icon">&#xe640;</i>{lang aljhtx:mobile_index_fad_auto_htm_12}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

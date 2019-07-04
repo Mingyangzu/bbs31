@@ -1,0 +1,101 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+    .layui-form-select dl {
+        max-height: 200px;
+    }
+    .layui-form-item .layui-input-inline{
+        width: 300px;
+    }
+    .layui-input-block {
+        margin-left: 25px;
+        min-height: 36px;
+    }
+    .layui-field-box {
+        padding: 0;
+    }
+    .layui-form-item .layui-form-checkbox[lay-skin=primary] {
+        margin-top: 20px;
+    }
+    .layui-form-checkbox[lay-skin=primary]{
+        width:150px;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe name="submitiframe" id="submitiframe" style="display: none;"></iframe>
+                <input type="hidden" value="yes" name="ajax">
+                <form class="layui-form" method="post" action=""  target="submitiframe">
+                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                    <fieldset class="layui-elem-field">
+                        <blockquote class="layui-elem-quote" style="font-size:14px;">{lang aljhtx:express_company_htm_1}</blockquote>
+                        <div class="layui-field-box">
+                            <div class="layui-form-item" pane="">
+                                <div class="layui-input-block">
+                                    {loop $express_company $k  $v}
+                                    <input type="checkbox" value="{$v}" name="express_company[{$k}]" lay-skin="primary" title="{$v}" {if in_array($v, $express_company_list)}checked=""{/if}>
+                                    {/loop}
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="*">{lang aljhtx:express_company_htm_2}</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('submit(*)', function(data){
+
+                });
+
+            })
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    //parent.location.href=parent.location.href;
+                    layer.closeAll();
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    //location.href=url;
+                    layer.closeAll();
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    //parent.location.href=parent.location.href;
+                    layer.closeAll();
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

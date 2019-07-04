@@ -1,0 +1,137 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .box.box-default {
+        border-top-color: #e6e6e6;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 1px solid #e6e6e6;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #e6e6e6;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-tips-c {
+        line-height: 14px;
+    }
+    .layui-table-cell {
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-10">
+                <ul class="nav nav-tabs" role="tablist" >
+                    <li class="active"><a href="plugin.php?id=aljhtx&c=log&a=log">{lang aljhtx:dir_htm_1}</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <a style="float: right;" class="layui-btn" target="_blank" href="http://docs.liangjianyun.com/miniprogram/"><i class="layui-icon">&#xe6b2;</i>{lang aljhtx:dir_htm_2}</a>
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            </form>
+
+                    <blockquote class="layui-elem-quote" style="margin-top:25px;font-size:14px;">{lang aljhtx:dir_htm_3}</blockquote>
+
+                            <table id="demo" lay-filter="test"></table>
+                        </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+	    init: function(){
+            layui.use('table', function(){
+                var table = layui.table;
+                var tableIns = table.render({
+                    elem: '#demo'
+                    ,limit: 20
+                    ,url: 'plugin.php?id=aljhtx&c=log&a={ACTION}&ajax=yes&render=yes'
+                    ,page: true
+                    ,skin: 'line'
+                    ,even: true
+                    ,cols: [[
+                        {field: 'name', title: '{lang aljhtx:dir_htm_4}', width:200, sort: true}
+                        ,{field: 'intro', title: '{lang aljhtx:dir_htm_5}'}
+                        ,{field: 'identifier', title: '{lang aljhtx:dir_htm_6}', width:300}
+                        ,{title: '{lang aljhtx:dir_htm_7}', align:'center', width:100, templet: function(d){
+                            console.log(d);
+                            if(d.is_install == 1){
+                                return '<span style="color: green;"><i class="layui-icon">&#xe605;</i></span>'
+                            }else{
+                                return '<span style="color: #c00;"><i class="layui-icon">&#x1006;</i></span>'
+                            }
+
+                        }}
+                    ]]
+                });
+                $('.glyphicon-search').on('click', function(){
+                    tableIns.reload({
+                        where: {
+                            search: $('#search').val()
+                        }
+                        ,page: {
+                            curr: 1
+                        }
+                    });
+                });
+
+            });
+        }
+    }
+    R.init();
+</script>
+
+{eval include template(PLUGIN_ID.':admin/footer')}
+

@@ -1,0 +1,154 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .box.box-default {
+        border-top-color: #e6e6e6;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 1px solid #e6e6e6;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #e6e6e6;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-body{
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    .layui-table-page{
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist" >
+                    <li class="active"><a href="plugin.php?id=aljhtx&c=log&a=plugin">{lang aljhtx:plugin_htm_1}</a></li>
+                    <a style="float: right;margin-left: 10px;" class="layui-btn" target="_blank" href="$param_url">{lang aljhtx:plugin_htm_2}</a>
+                    <a style="float: right;" class="layui-btn layui-btn-primary update_app" href="javascript:;">{lang aljhtx:plugin_htm_3}</a>
+                </ul>
+
+            </div>
+
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            </form>
+                            <blockquote class="layui-elem-quote" style="margin-top:10px;font-size:14px;">{lang aljhtx:plugin_htm_4}</blockquote>
+                            <table id="demo" lay-filter="test"></table>
+                        </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+	    init: function(){
+            layui.use('table', function(){
+                var table = layui.table;
+                var tableIns = table.render({
+                    elem: '#demo'
+                    ,limit: 100
+                    ,url: 'plugin.php?id=aljhtx&c=log&a=plugin&ajax=yes&render=yes'
+                    ,page: false
+                    ,skin: 'line'
+                    ,even: true
+                    ,cols: [[
+                        {field: 'name', title: '{lang aljhtx:plugin_htm_5}', width:220, sort: true}
+                        ,{width:178, align:'center', width:120, templet: function(d){
+                            if(d.is_update){
+                                return '<a  target="_blank" href="'+d.is_update_url+'"><span style="color: #c00;">{lang aljhtx:plugin_htm_6}</span></a>'
+                            }else if(d.is_install == 1){
+                                return '<span style="color: green;"><i class="layui-icon">&#xe605;</i></span>'
+                            }else{
+                                return '<a  target="_blank" href="'+d.is_update_url+'"><span style="color: #c00;">{lang aljhtx:plugin_htm_7}</span></a>'
+                            }
+
+                        }}
+                        ,{field: 'intro', title: '{lang aljhtx:plugin_htm_8}', width:300}
+                    ]]
+                });
+                $('.glyphicon-search').on('click', function(){
+                    tableIns.reload({
+                        where: {
+                            search: $('#search').val()
+                        }
+                        ,page: {
+                            curr: 1
+                        }
+                    });
+                });
+                $('.update_app').on('click', function(){
+                    var url = 'plugin.php?id=aljhtx&c=log&a=plugin&ajax=yes&render=update_app';
+                    layer.load(0, {shade: false});
+                    $.post(url,function(res) {
+                        layer.closeAll('loading');
+                        layer.msg('{lang aljhtx:plugin_htm_9}', function(){
+                            location.href = location.href;
+                        });
+                    },'json');
+                });
+            });
+        }
+    }
+    R.init();
+</script>
+{if $_G['cache']['plugin']['aljbd']}
+{eval}
+$settings=C::t('#aljbd#aljbd_setting')->range();
+$mobile_common_footernav = explode ("\n", str_replace ("\r", "", $settings['mobile_common_footernav']['value']));
+foreach($mobile_common_footernav as $key=>$value){
+$arr=explode('|',$value);
+$mobile_common_footernav_arr[]=$arr;
+}
+{/eval}
+{eval include template('aljbd:new/common/footer_nav');}
+{/if}
+{eval include template(PLUGIN_ID.':admin/footer')}
+

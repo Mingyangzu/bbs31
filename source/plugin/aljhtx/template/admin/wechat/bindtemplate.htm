@@ -1,0 +1,148 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; height:700px;}
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+            <form class="layui-form" method="post" action="plugin.php?id=aljhtx&c=wechat&a=bindtemplate">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="{$type_id}" name="type">
+                {loop $templateList $tpl}
+                <input type="hidden" value="{$tpl['template_id']}" name="template_id">
+                <fieldset class="layui-elem-field">
+                    <legend style=" width: auto;border-bottom: none;color:#999;font-weight: 400;">{lang aljhtx:getlist_htm_5}</legend>
+                    <div class="layui-field-box">
+                        {loop $tpl[newContent] $t}
+                        {if $t[0] && $t[1]}
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">{$t[0]}({$t[1]})</label>
+                                <div class="layui-input-inline" style="width: 400px;margin-right:0;">
+                                    <select name="param[{$t[1]}][value]" lay-filter="type">
+                                        {loop $type['cols'] $k $v}
+                                        {eval $check = 0;}
+                                        <option value="$k" {if $bindTemplate[param][$t[1]][value] == $k}selected{/if}>$v<option>
+                                        {/loop}
+                                        {loop $bindTemplate[param] $p $param}
+                                        {if !array_key_exists($param['value'], $type['cols']) && $bindTemplate[param][$t[1]][value] == $param['value']}
+                                        {eval $check = 1;}
+                                        <option value="$param['value']" selected data-id="person">$param['value']<option>
+                                        {/if}
+                                        {/loop}
+                                        {if !$check}
+                                        <option value="{lang aljhtx:bindtemplate_htm_2}" data-id="person">{lang aljhtx:bindtemplate_htm_3}<option>
+                                        {/if}
+                                    </select>
+                                </div>
+                                <div class="layui-form-mid"></div>
+                                <div class="layui-input-inline" style="width: 60px;">
+                                    <input style="padding-left:0px;" type="color" value="{if $tpl[last_content][data][$t[1]][color]}{$tpl[last_content][data][$t[1]][color]}{else}#173177{/if}" name="param[{$t[1]}][color]" placeholder="{lang aljhtx:bindtemplate_htm_4}" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        {/if}
+                        {/loop}
+
+                    </div>
+                </fieldset>
+                {/loop}
+
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="*" lay-filter="*">{lang aljhtx:pcdiy_logo_htm_2}</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('radio(type)', function(data){
+                    $('.send-type').hide();
+                    $('#type_'+data.value).show();
+                });
+                form.on('select(type)', function(data){
+                    console.log(data);
+                    $(data.othis).find('.layui-input').attr("readonly", "readonly");
+
+                    if($(data.elem).find("option:selected").attr('data-id') == 'person'){
+                        var that = $(data.elem).find("option:selected");
+                        $(data.othis).find('.layui-input').attr("readonly", false);
+                        $(data.othis).find('.layui-input').attr('placeholder', '{lang aljhtx:bindtemplate_htm_6}');
+                        var that_data = data;
+                        setTimeout(function(){
+                            $(that_data.othis).find('.layui-input').focus();
+                        },50);
+                        $(data.othis).find('.layui-input').bind('input propertychange', function() {
+                            var str = $(that_data.othis).find('.layui-input').val();
+                            $(that).text(str);
+                            $(that).val(str);
+                            $(that_data.othis).find('.layui-this').text(str);
+                            $(that_data.othis).find('.layui-this').attr('lay-value', str);
+                        });
+                    }
+                    console.log(data.elem); //{lang aljhtx:bindtemplate_htm_7}
+                    console.log(data.value); //{lang aljhtx:bindtemplate_htm_8}
+                    console.log(data.othis); //{lang aljhtx:bindtemplate_htm_9}
+                });
+
+                $('select').each(function(){
+                    var that = this;
+                    if($(that).find("option:selected").attr('data-id') == 'person'){
+                        $(that).next('.layui-form-select').find('.layui-input').removeAttr("readonly");
+                        setTimeout(function(){
+                            $(that).next('.layui-form-select').find('.layui-input').focus();
+                        },50);
+                        $(that).next('.layui-form-select').find('.layui-input').bind('input propertychange', function() {
+                            var str =$(that).next('.layui-form-select').find('.layui-input').val();
+                            //alert($(that).find("option:selected").text());
+                            $(that).find("option:selected").text(str);
+                            $(that).find("option:selected").val(str);
+                            $(that).next('.layui-form-select').find('.layui-this').text(str);
+                            $(that).next('.layui-form-select').find('.layui-this').attr('lay-value', str);
+                        });
+                    }
+                });
+
+            })
+
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

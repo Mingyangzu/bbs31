@@ -1,0 +1,239 @@
+<style>
+    .reg_price .sum{
+        font-size: 30px;
+        margin-right: 3px;
+    }
+    .reg_price .past {
+        -webkit-box-flex: 1;
+        -webkit-box-align: end;
+        display: flex;
+        margin-top: 15px;
+        line-height: 12px;
+    }
+    .reg_price .past .t {
+        margin-left: 10px;
+        font-size: 14px;
+        line-height: 12px;
+    }
+    #shareContent{
+        width: 414px;padding:10px;
+    }
+
+</style>
+<style>
+    .share_span_name{
+        font-size: 12px;
+        position: absolute;
+        right: 0px;
+        bottom: -4px;
+        z-index: 111;
+        color: #999 !important;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<script src="{$common_path}static/js/html2canvas.js"></script>
+<script src="{$common_path}static/js/layer/mobile/layer.js?{$version}" charset="utf-8"></script>
+<div class="content group-info" id="shareContent" >
+
+        <div style="position: relative;width: 100%">
+            <img src="source/plugin/aljhtx/static/img/hb_bg1.png" style="width:100%">
+            <div style="position: absolute;
+    top: 10%;
+    width: 78%;
+    height: 65%;
+
+    left: 11%;
+    overflow: hidden;">
+                {if $_G['cache']['plugin']['aljbd']['aljbd_plugins']}
+                <span class="share_span_name">- {$_G['cache']['plugin']['aljbd']['aljbd_plugins']} -</span>
+                {/if}
+                {if $g[pic1]}
+                <div style="{if $g['brief'] || $g['selling_point']}width:100%;max-height:248px{else}width: 308px;height: 308px;{/if}overflow: hidden;position: relative;">
+
+                    {if $ms_info['ms_start_time'] < TIMESTAMP && $ms_info['ms_end_time'] > TIMESTAMP && $ms_info['ms_limit_num'] > 0}
+                    <style>
+                        .label_xg{
+                            position: absolute;
+                            left: 0px;
+                            bottom: 10%;
+                            margin-top: -12px;
+                            background: #f42424;
+                            opacity: 0.7;
+                            font-weight: 600;
+                            border-radius: 0px 10px 10px 0px;
+                            padding: 5px 10px;
+                            font-size: 12px;
+                            float: right;
+                            color: #ffffff !important;
+                            z-index: 999999;
+                        }
+                    </style>
+                    <div class="label_xg">&#38480;&#36141;{$ms_info['ms_limit_num']}&#20010;</div>
+                    {elseif $g['limit_amount'] >0}
+                    <style>
+                        .label_xg{
+                            position: absolute;
+                            left: 0px;
+                            bottom: 10%;
+                            margin-top: -12px;
+                            background: #f42424;
+                            opacity: 0.7;
+                            font-weight: 600;
+                            border-radius: 0px 10px 10px 0px;
+                            padding: 5px 10px;
+                            font-size: 12px;
+                            float: right;
+                            color: #ffffff !important;
+                            z-index: 999999;
+                        }
+                    </style>
+                    <div class="label_xg">&#38480;&#36141;{$g['limit_amount']}&#20010;</div>
+                    {/if}
+                    <img src="$g[pic1]" style="{if $g['brief'] || $g['selling_point']}width:246px;height:246px;margin-left:10%;{else}width:100%;height:100%;padding:0px 5% 0px 5%;{/if}object-fit: cover;"/>
+                </div>
+                {/if}
+            {if $ms_info['ms_start_time'] < TIMESTAMP && $ms_info['ms_end_time'] > TIMESTAMP}
+            {template aljms:mobile_goodsview_ms}
+            {else}
+            {if $g['commodity_type'] == 1 && $_G['cache']['plugin']['aljstg']['is_aljstg']}
+            {template aljstg:goods/countDown}
+            {/if}
+            {/if}
+            <link rel="stylesheet" media="screen,projection,tv" href="source/plugin/$pluginid/template/touch/view/css/label.css" /></link>
+            <div class="cost-box" style="border: none;padding-top: 10px;">
+                <div class="intro">
+                    <h3 style="height: 58px;
+    overflow: hidden;">{$g['name']}</h3>
+                    {if $g['brief']}
+                    <p style="font-size: 12px;color:#999;height:44px;overflow: hidden">{$g['brief']}</p>
+                    {/if}
+                    {if $g['selling_point']}
+                    {eval $selling_point = explode(',',str_replace('{lang aljhtx:goods_1_htm_1}',',',$g['selling_point']));}
+                    <div class="detail-tags" style="height:30px">
+                        <div class=" detail-tags-h" style="height:30px">
+                            {loop $selling_point $sv}
+                            <span class="span0 border-global" style="padding: 2px 10px;">$sv</span>
+                            {/loop}
+                        </div>
+                    </div>
+                    {/if}
+                    {if !$ms_info || $ms_info['ms_sale_num']>=$ms_info['ms_num']}
+                    <div class="reg_price" style="margin-top: 0;height: 40px;-webkit-box-pack: justify;line-height: 40px;display: flex;">
+                        {if $g['collage_price']>0 && $_G['cache']['plugin']['aljstg']['is_aljstg'] && $g['commodity_type'] == 2}
+
+                        {template aljspt:goods/goodsview_price}
+
+                        {else}
+                        {if $g['price1']}
+                        <div class="price">{$price_unit}</div>
+                        <div class="price sum">$g['price1']</div>
+                        <div class="past Fix">
+                            <div class="t">
+                                {if $g['price2']}
+                                <span class="o-price">{$price_unit}$g['price2']</span>
+                                {/if}
+
+                            </div>
+                            {if $g[give_integral]>0}
+                            <div class="t"><span style="color: #f63;display: inline-block;margin-bottom: 2px;padding:2px 5px;border: 1px solid #f63;border-radius: 5px;">{lang aljhtx:goods_1_htm_2}{$g['give_integral']}{lang aljhtx:goods_1_htm_3}</span></div>
+
+                            {/if}
+                            {if $g[pay_integral]>0}
+                            <div class="t"><span style="color: #f63;display: inline-block;margin-bottom: 2px;padding:2px 5px;border: 1px solid #f63;border-radius: 5px;">{lang aljhtx:goods_1_htm_4}{$g['pay_integral']}%</span></div>
+
+                            {/if}
+                        </div>
+
+                        {else}
+                        <div class="price sum">{lang aljbd:s271}</div>
+                        {/if}
+                        {/if}
+                    </div>
+                    {/if}
+                </div>
+
+
+
+            </div>
+            </div>
+            <style>
+                .ewmbox{position: absolute;bottom: 51px;left: 100px;}
+                .ewmbox img{width:86px !important;height:86px !important;}
+            </style>
+            {eval $pic_logo = (strpos($g['pic1'],$_G['cache']['plugin']['aljoss']['cdn_domain']) !== false  || strpos($g['pic1'],$_G['cache']['plugin']['aljoss']['domain'])) !== false ? $g['pic1'] : $_G['siteurl'].'/'.$g['pic1']}
+            {if $_G['cache']['plugin']['aljhtx']['regtype'] == 3}
+
+            <div class="ewmbox" >
+                <img src="{if is_file('source/plugin/aljwx/static/miniqrcode/'.md5('plugin.php?id=aljbd&act=goodview&bid='.$bid.'&gid='.$gid.'&d='.$fx_shopdata[uid]).'.jpg')}source/plugin/aljwx/static/miniqrcode/{eval echo md5('plugin.php?id=aljbd&act=goodview&bid='.$bid.'&gid='.$gid.'&d='.$fx_shopdata[uid]).'.jpg'}{else}source/plugin/aljwx/qrcode.php?url=plugin.php?id=aljbd%26act=goodview%26bid={$bid}%26gid={$gid}%26d={$fx_shopdata[uid]}&logo={$pic_logo}{/if}" width="100">
+            </div>
+
+            {elseif $_G['cache']['plugin']['aljhtx']['regtype'] == 2}
+
+            <div class="ewmbox" >
+
+                {eval $gid=$_GET['d']>0?$g[id].'_'.$_GET['d']:$g[id]}
+                <img src="{if is_file('source/plugin/aljhtx/static/img/qrcode/goods/'.$gid.'.jpg')}source/plugin/aljhtx/static/img/qrcode/goods/{$gid}.jpg{else}source/plugin/aljhtx/api/qrcode.php?gid={$g[id]}&d={$_GET['d']}{/if}" >
+            </div>
+
+            {elseif $_G['cache']['plugin']['aljhtx']['regtype'] == 1}
+
+            <div class="ewmbox" >
+                <img src="source/plugin/aljhtx/api/reg_qrcode.php?url=plugin.php?id=aljbd%26act=goodview%26bid={$bid}%26gid={$gid}%26d={$fx_shopdata[uid]}" >
+            </div>
+
+            {/if}
+        </div>
+</div>
+<style>
+    .layui-m-layercont {
+        padding:0px 10px;
+        line-height: 22px;
+        text-align: center;
+    }
+    .layui-m-layerchild h3 {
+
+        height: 40px;
+        line-height: 40px;
+
+    }
+    .layui-m-layerbtn {
+
+        height: 40px;
+        line-height: 40px;
+
+        border-top: 1px solid #f8f8f8;
+        background-color: #f8f8f8;
+    }
+    .layui-m-layer0 .layui-m-layerchild {
+        width: 80%;
+        max-width: 640px;
+    }
+</style>
+
+<script>
+
+    function takeScreenshot() {
+        layer.open({
+            type: 2
+            ,content: '{lang aljhtx:goods_1_htm_5}'
+        });
+        var shareContent = document.getElementById("shareContent");
+        var opts = {
+            useCORS: true // {lang aljhtx:goods_1_htm_6}
+        };
+        html2canvas(shareContent,opts).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            layer.closeAll()
+            //$.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:goods_1_htm_7}");
+            //{lang aljhtx:goods_1_htm_8}
+            layer.open({
+                title: [
+                    '{lang aljhtx:goods_1_htm_9}',
+                ]
+                ,content: "<img src='"+dataUrl+"' width='90%'/>"
+                ,btn: '{lang aljhtx:goods_1_htm_10}'
+            });
+        });
+    }
+</script>

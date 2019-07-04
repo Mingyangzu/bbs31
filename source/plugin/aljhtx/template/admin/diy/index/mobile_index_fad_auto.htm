@@ -1,0 +1,89 @@
+{loop $diyAutoList $diy}
+<div class="box-body diyDocument" id="mobile_index_fad_{$diy['template']}" style="display: none;">
+    {loop $diy['data'] $k $v}
+    <div class="box box-default collapsed-box" skey="mobile_index_fad_{$diy['template']}" data-id="{$k}" id="mobile_index_fad_{$diy['template']}_{$k}">
+        <div class="box-header with-border">
+            <h3 class="box-title">{lang aljhtx:setting_htm_25}{eval echo $k+1;}{lang aljhtx:setting_htm_26}</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa  {if $k+1==count($mobile_index_tad)}fa-minus{else}fa-plus{/if}"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="">
+            <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <input type="hidden" value="mobile_index_fad_{$diy['template']}" name="skey">
+                <input type="hidden" value="{$k}" name="displayorder">
+
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_27}</label>
+                    <input name="url" value="$v[1]"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="layui-btn layui-btn-primary upload">
+                        <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                    </button>
+                    <div class="upload_img" style="margin-top:5px;">
+                        <img style="height:200px;" src="{$v[0]}">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                </div>
+            </form>
+        </div>
+    </div>
+    {/loop}
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{lang aljhtx:setting_htm_202}</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa  {if $k+1==count($mobile_index_tad)}fa-minus{else}fa-plus{/if}"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="">
+            <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <input type="hidden" value="mobile_index_fad_{$diy['template']}" name="skey">
+                <input type="hidden" value="yes" name="add">
+                <input type="hidden" value="{eval echo $k+1;}" name="displayorder" class="max-displayorder">
+
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_27}</label>
+                    <input name="url" value=""  class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="layui-btn layui-btn-primary upload">
+                        <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                    </button>
+                    <div class="upload_img" style="margin-top:5px;">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" class="layui-btn  layui-btn-sm" style="margin-left: 5px;" value="{lang aljhtx:setting_htm_8}">
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-up" style="margin-left: 5px;"><i class="layui-icon">&#xe619;</i> {lang aljhtx:setting_htm_67}</button>
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-down" style="margin-left: 5px;"><i class="layui-icon">&#xe61a;</i> {lang aljhtx:setting_htm_68}</button>
+                    <button class="layui-btn  layui-btn-sm  layui-btn-primary mod-delete" style="margin-left: 5px;"><i class="layui-icon">&#xe640;</i>{lang aljhtx:mobile_index_fad_auto_htm_12}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/loop}

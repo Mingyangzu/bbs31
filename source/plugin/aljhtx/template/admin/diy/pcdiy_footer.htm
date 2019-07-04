@@ -1,0 +1,593 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe style="display:none;" name="submitiframe"></iframe>
+                <form class="layui-form" method="post" action="{$dourl}" target="submitiframe">
+                    <input type="hidden" value="{FORMHASH}" name="formhash">
+
+                    <div class="box-body diyDocument" id="swiper-container">
+                        {loop $pc_footer_new_top $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[1]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_top" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_1}</label>
+                                        <input name="title" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_footer_htm_2}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:80px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_top_tel $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[1]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_top_tel" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_4}</label>
+                                        <input name="title" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_footer_htm_2}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:80px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+                        {loop $pc_footer_new_top_kefu $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[2]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_top_kefu" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_7}</label>
+                                        <input name="title" value="$v[2]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_8}({lang aljhtx:pcdiy_footer_htm_9}javascript:;)</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_10}UID</label>
+                                        <input name="uid" value="$v[3]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_footer_htm_2}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:80px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_cron_c1 $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_c1" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_13}</label>
+                                        <input name="pc_footer_new_cron_t1" value="$pc_footer_new_cron_t1"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_14}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_74}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_cron_c2 $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_c2" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_13}</label>
+                                        <input name="pc_footer_new_cron_t2" value="$pc_footer_new_cron_t2"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_14}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_74}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_cron_c3 $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_c3" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_13}</label>
+                                        <input name="pc_footer_new_cron_t3" value="$pc_footer_new_cron_t3"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_14}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_74}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_cron_c4 $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_c4" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_13}</label>
+                                        <input name="pc_footer_new_cron_t4" value="$pc_footer_new_cron_t4"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_14}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_74}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        {loop $pc_footer_new_cron_c5 $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_c5" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_13}</label>
+                                        <input name="pc_footer_new_cron_t5" value="$pc_footer_new_cron_t5"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_14}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_74}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+                        {loop $pc_footer_new_cron_qrcode $k $v}
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[1]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_cron_qrcode" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_33}</label>
+                                        <input name="title" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_footer_htm_34}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:80px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        <div class="box box-default collapsed-box" skey="index_lz" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{lang aljhtx:pcdiy_footer_htm_36}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="pc_footer_new_bot" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_footer_htm_37}</label>
+                                        <textarea name="pc_footer_new_bot"  class="form-control">{$pc_footer_new_bot}</textarea>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('radio(type)', function(data){
+                    $('.send-type').hide();
+                    $('#type_'+data.value).show();
+                });
+            });
+            R.layuiUpload();
+            R.faArrowDown();
+            R.faArrowUp();
+        },
+        faArrowDown: function () {
+            $('.down-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(parseInt(displayorder)+1 == $(this).parents('.diyDocument').find('.down-displayorder').length){
+                    layer.alert('{lang aljhtx:shop_htm_3}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowdown&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').next().attr('data-id'));
+                    $(that).parents('.collapsed-box').next().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').next().insertBefore($(that).parents('.collapsed-box'));
+                    location.href = location.href;
+                    layer.close(index);
+                });
+            });
+        },
+        faArrowUp: function () {
+            $('.up-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(displayorder == 0){
+                    layer.alert('{lang aljhtx:shop_htm_4}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowup&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').prev().attr('data-id'));
+                    $(that).parents('.collapsed-box').prev().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').prev().insertAfter($(that).parents('.collapsed-box'));
+                    location.href = location.href;
+                    layer.close(index);
+                });
+            });
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        },
+        layuiUpload: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+            });
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                //upload
+                upload.render({
+                    elem: '.upload'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:80px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+                upload.render({
+                    elem: '.upload_two'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:80px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_two" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_two" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_two').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+            });
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>
+{eval include template(PLUGIN_ID.':admin/footer')}

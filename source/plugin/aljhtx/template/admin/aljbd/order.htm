@@ -1,0 +1,35 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+{eval include template(PLUGIN_ID.':admin/aside')}
+{eval $onek = $_GET['onek']?$_GET['onek']:0;$do=$_GET['do']?'&do='.$_GET['do']:''}
+{eval $two_iframe_url = ($_GET['twok'] || $_GET['onek'])?$sidearray[$_GET['type']]['nav'][$onek]['navlist'][$_GET['twok']]['url']:$sidearray[$_GET['type']]['nav'][0]['url']}
+<div class="content-wrapper">
+<iframe id="unified_iframe_two" src="{$two_iframe_url}{$do}" style="width:100%;height:100%;border: 0px;"></iframe>
+</div>
+<script>
+    $('.treeview-menu li').click(function(){
+        layer.load(0, {shade: false});
+        var uid = $_G[uid];
+        var furl = $(this).attr('data-url');
+        $('.treeview-menu li').removeClass('active');
+        $(this).addClass('active');
+        $('#unified_iframe_two').attr("src",furl);
+    })
+</script>
+<script type="text/javascript">
+    $(document).ready(function(e){
+        var iframe = document.getElementById("unified_iframe_two");
+        if (iframe.attachEvent) {
+            iframe.attachEvent("onload", function() {
+                parent.layer.closeAll('loading');
+                layer.closeAll('loading');
+            });
+        } else {
+            iframe.onload = function () {
+                parent.layer.closeAll('loading');
+                layer.closeAll('loading');
+            };
+        }
+    })
+
+</script>
+{eval include template(PLUGIN_ID.':admin/footer')}

@@ -1,0 +1,297 @@
+@charset "UTF-8";
+li, ol, ul {
+    list-style: none;
+}
+*, body {
+    margin: 0;
+    padding: 0;
+}
+.Y_area a, .Y_area_ul li a, .Y_txt .Y_tel s, .fy_container li a, a, a:hover {
+    text-decoration: none;
+}
+em, h1, h2, h3, h4, h5, h6, i {
+    font-size: 100%;
+    font-weight: 400;
+    font-style: normal;
+}
+.yqx_casev_content {
+    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+}
+
+.h_casev_m {
+    width: 1165px;
+    margin: 0 auto;
+    overflow: hidden
+}
+
+.h_casev_show {
+    overflow: hidden;
+    padding: 10px 0;
+    background: url(../img/casevBg2.png)\9;
+    background-color: rgba(255,255,255,.4);
+    margin-top: 20px
+}
+
+.h_casev_sPhone {
+    width: 550px;
+    float: left;
+    height: 646px;
+    position: relative
+}
+
+.h_casev_sDetail {
+    width: 540px;
+    padding-right: 55px;
+    float: left;
+    padding-top: 20px
+}
+
+.h_casev_sBar,.h_casev_sCode,.h_casev_sDetail h2 {
+    width: 490px;
+    text-align: center
+}
+
+.h_casev_sDetail h2 {
+    font-size: 24px;
+    color: #393939;
+    font-weight: 700;
+    line-height: 32px
+}
+
+.h_casev_sBar {
+    line-height: 28px;
+    font-size: 13px;
+    color: #454545;
+    padding-top: 8px
+}
+
+.h_casev_sBar .view {
+    padding-left: 35px
+}
+
+.h_casev_sCode {
+    line-height: 20px;
+    padding-top: 30px
+}
+
+.h_casev_sCode span {
+    color: #242424;
+    font-size: 14px;
+    display: block;
+    line-height: 30px
+}
+
+.h_casev_sCode p {
+    color: #999595;
+    font-size: 13px
+}
+
+.h_casev_sCodeImg {
+    width: 185px;
+    height: 185px
+}
+
+.h_casev_sIntro {
+    width: 560px
+}
+
+.h_casev_sIntro li {
+    overflow: hidden;
+    margin-top: 45px
+}
+
+.h_casev_sIntro li>span {
+    width: 137px;
+    padding-left: 56px;
+    height: 42px;
+    line-height: 42px;
+    vertical-align: middle;
+    float: left;
+    font-size: 18px;
+    color: #4c4c4b;
+    background: url(../img/icon_casev.png) 0 -50px no-repeat
+}
+
+.h_casev_sIntro li .rightBox {
+    float: left;
+    width: 360px;
+    padding-top: 12px
+}
+
+.h_casev_sIntro .h_casev_sIntro02>span {
+    background-position: 0 0
+}
+
+.h_casev_sIntro02 p {
+    color: #807e7e;
+    line-height: 24px;
+    font-size: 13px
+}
+
+.h_casev_sIntro01 p {
+    padding-left: 44px;
+    width: 135px;
+    float: left;
+    text-align: left
+}
+
+.h_casev_sIntro01 p:first-child {
+    width: 179px;
+    padding-left: 0;
+    border-right: 1px solid #d6cfcd
+}
+
+.h_casev_sIntro01 * {
+    display: block;
+    width: 100%
+}
+
+.h_casev_sIntro01 p em {
+    color: #7d7d7d;
+    font-size: 13px
+}
+
+.h_casev_sIntro01 p span {
+    font-size: 24px;
+    color: #ea6518;
+    margin-top: 15px
+}
+
+.h_casev_Appr {
+    margin-top: 28px;
+    margin-bottom: 50px;
+    padding: 43px 0 60px;
+    background: url(../img/casevBg2.png)\9;
+    background-color: rgba(255,255,255,.4)
+}
+
+.h_casev_Appr .appr_head {
+    padding-left: 115px
+}
+
+.h_casev_Appr .appr_head span {
+    background: url(../img/icon_casev.png) 0 -100px no-repeat;
+    padding-left: 56px;
+    color: #313131;
+    font-size: 18px;
+    height: 42px;
+    line-height: 42px;
+    display: inline-block
+}
+
+.h_casev_Appr_m {
+    margin-top: 35px;
+    padding-left: 208px;
+    overflow: hidden;
+    clear: both
+}
+
+.h_casev_Appr_img {
+    float: left;
+    width: 130px;
+    height: 130px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-right: 75px
+}
+
+.h_casev_Appr_con {
+    float: left;
+    width: 580px;
+    font-size: 13px;
+    color: #807e7e;
+    line-height: 24px
+}
+
+.h_casev_Appr_con .title {
+    color: #151414;
+    font-size: 22px;
+    margin-bottom: 12px
+}
+
+.h_casev_Appr_con .title span {
+    font-size: 14px;
+    padding-left: 15px
+}
+
+.h_casev_sPhoneBox {
+    width: 345px;
+    height: 663px;
+    margin-left: 105px;
+    background: url(../img/phoneBg.png) no-repeat
+}
+
+.h_casev_sPhoneM {
+    padding-top: 72px;
+    padding-left: 13px
+}
+
+.h_casev_sPhoneM .nr {
+    width: 320px;
+    height: 486px;
+    position: relative
+}
+
+.h_casev_sPhoneM .scene_title {
+    width: 320px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #1d2224;
+    color: #fff;
+    font-size: 16px;
+    text-align: center
+}
+
+.h_casev_tip,.oldie .h_casev_sPhoneM .nr {
+    display: none
+}
+
+.oldie .h_casev_tip {
+    display: block;
+    line-height: 26px;
+    color: #e31a1a;
+    font-size: 13px;
+    padding: 20px
+}
+
+.phoneBox-btn {
+    position: absolute;
+    top: 280px;
+    left: 465px;
+    width: 32px;
+    height: 85px
+}
+
+.phoneBox-btn a {
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    cursor: pointer;
+    background: url(../img/icon_casev.png) 0 -150px no-repeat
+}
+
+.phoneBox-btn a.phoneBox-next {
+    background-position: 0 -200px;
+    margin-top: 45px
+}
+
+.phoneBox-btn a.phoneBox-pre:hover {
+    background-position: -50px -150px
+}
+
+.phoneBox-btn a.phoneBox-next:hover {
+    background-position: -50px -200px
+}
+
+.phoneBox-btn .show_page_num {
+    width: 100%;
+    position: absolute;
+    top: 46px;
+    left: 0;
+    font-size: 12px;
+    color: #999;
+    display: block;
+    text-align: center
+}

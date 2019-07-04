@@ -1,0 +1,259 @@
+{eval include template($pluginid.':admin/header')}
+<style type="text/css">
+.board {
+    background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll -240px -550px;
+    padding-left: 55px;
+    position: relative;
+	margin-left:5px;
+}
+.boardnext {
+    background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll -185px -600px;
+    padding-left: 110px;
+    position: relative;
+	margin-left:5px;
+}
+.addtr {
+    background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll 0 -598px;
+    color: #3c8dbc;
+    line-height: 25px;
+    padding-left: 17px;
+}
+.deleterow {
+    background: rgba(0, 0, 0, 0) url("static/image/admincp/close.gif") no-repeat scroll 0 50%;
+    padding-left: 15px;
+	color: #fff;
+    line-height: 25px;
+    margin-right: 5px;
+
+    right:90px;
+    top: 6px;
+}
+
+.lj_right{padding-right: 55px;
+    position: relative;}
+
+.lj_input{
+width:66%;
+border-radius: 6px;
+}
+
+.sort_input{
+width:50px;
+float:left;
+margin-right:10px;
+
+border-radius: 6px;
+text-align:center;
+}
+
+.breadcrumbs{
+    margin-bottom: 5px;
+    list-style: none;
+	margin-left: 30px;
+
+}
+.breadcrumbs > li {
+    display: inline-block;
+	 padding-right:30px;
+	 color: #FF6600;
+}
+.btn{
+line-height:1.8;
+margin-left:3%;
+width:65px;
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 12px 20px;
+}
+.lj-edit-a{right:10px;top: 8px;}
+</style>
+
+<div class="content-wrapper" style="margin-left:0px">
+	<section class="content">
+        <div class="row">
+        
+            
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+					<div class="col-md-12" style="color: #3c8dbc;padding:10px 0px;">
+						<div class="col-md-1">{lang aljhtx:type_htm_1}</div><div class="col-md-6">{lang aljhtx:type_htm_2}</div><div class="col-md-2">{lang aljhtx:type_htm_3}/{lang aljhtx:type_htm_4}</div><div class="col-md-2">{lang aljhtx:type_htm_5}</div><div class="col-md-1">{lang aljhtx:getlist_htm_7}</div>
+					</div>
+                    
+                    
+
+                    <div class="box-body no-padding">
+                        <div class="mailbox-messages">
+                     <iframe style="display:none;" name="submitiframe"></iframe>
+					<form name="cpform" id="adminsettingsubmit" method="post" autocomplete="off" action="{$pluginurl}&act=admin&op=type" target="submitiframe">
+					<input type="hidden" value="{FORMHASH}" name="formhash">
+					
+
+					
+					{if $type_list}
+						{loop $type_list $tmp_type_first}
+							<div class="row lj_row">
+							<div class="col-md-12">
+							<div class="col-md-1"><input class="form-control sort_input"  name="type_displayorder_first_old[{$tmp_type_first['type_id']}]" value="$tmp_type_first['type_displayorder']" title="{$tmp_type_first['type_id']}"></div>
+							<div class="col-md-6" >
+								<div class="form-group">
+									<input class="form-control lj_input" name="type_name_first_old[{$tmp_type_first['type_id']}]" value="{$tmp_type_first['type_name']}">
+								</div>
+							</div>
+							<div class="col-md-2">
+
+								<input class="form-control lj_input" name="type_pluginid_first_old[{$tmp_type_first['type_id']}]" value="{$tmp_type_first['type_pluginid']}" placeholder="{lang aljhtx:type_htm_7}">
+
+							</div>
+								<div class="col-md-2">
+
+									<input class="form-control lj_input" name="type_icon_first_old[{$tmp_type_first['type_id']}]" value="{$tmp_type_first['type_icon']}" placeholder="{lang aljhtx:type_htm_5}">
+
+								</div>
+							<div class="col-md-1"><a href="{$pluginurl}&act=admin&op={$op}&do=deleterow&typeid={$tmp_type_first['type_id']}&modid={$mall_modid}" class="deleterow"  target="submitiframe">{lang aljhtx:setting_htm_9}</a></div>
+							</div>
+							{if empty($_GET['link']) && empty($_GET['upid'])}
+
+							{eval $type_list_second = DB::fetch_all('select * from %t where type_upid=%d order by type_displayorder',array($mall_type,$tmp_type_first['type_id']));}
+							{if $type_list_second}
+								{loop $type_list_second $tmp_type_second}
+									<div class="col-md-12" >
+										<div class="col-md-1">
+										<input class="form-control sort_input"  name="type_displayorder_second_old[{$tmp_type_second['type_id']}][]" value="{$tmp_type_second['type_displayorder']}" title="{$tmp_type_second['type_id']}">
+										</div>
+										<div class="col-md-6">
+											<div class="form-group board ">
+												<input class="form-control lj_input" name="type_name_second_old[{$tmp_type_second['type_id']}][]" value="{$tmp_type_second['type_name']}">
+											</div>
+										</div>
+										<div class="col-md-2">
+
+										<input class="form-control lj_input" type="text" name="type_mod_second_old[{$tmp_type_second['type_id']}][]" value="{$tmp_type_second['type_mod']}" placeholder="{lang aljhtx:type_htm_4}">
+
+										</div>
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-1"><a href="{$pluginurl}&act=admin&op={$op}&do=deleterow&typeid={$tmp_type_second['type_id']}" class="deleterow"  target="submitiframe">{lang aljhtx:setting_htm_9}</a></div>
+									</div>
+									{eval $type_list_third = DB::fetch_all('select * from %t where type_upid=%d order by type_displayorder',array($mall_type,$tmp_type_second['type_id']));}
+									{if $type_list_third }
+									{loop $type_list_third $tmp_type_third}
+
+										<div class="col-md-12" >
+											<div class="col-md-1"><input class="form-control sort_input"  name="type_displayorder_second_old[{$tmp_type_third['type_id']}][]" value="{$tmp_type_third['type_displayorder']}" title="{$tmp_type_third['type_id']}"></div>
+											<div class="col-md-6">
+												<div class="form-group boardnext ">
+													<input class="form-control lj_input" name="type_name_second_old[{$tmp_type_third['type_id']}][]" value="{$tmp_type_third['type_name']}">
+												</div>
+											</div>
+											<div class="col-md-2">
+
+											{if $mall_modid != $mall_config['nav_modid']}
+												<input class="myelem elem_{$tmp_type_third['type_id']}" type="file" name="{$tmp_type_third['type_id']}" value="" >
+												<span class="img_{$tmp_type_third['type_id']}">
+												{if $tmp_type_third['type_logo']}
+												<img src="{$tmp_type_third['type_logo']}" id="mysrc" style="width:40px;height:40px;">
+												{/if}
+												</span>
+											{/if}
+											</div>
+											<div class="col-md-2">
+											</div>
+											<div class="col-md-1">
+												<a href="{$pluginurl}&act=admin&op={$op}&do=deleterow&typeid={$tmp_type_third['type_id']}" class="deleterow"  target="submitiframe">{lang aljhtx:setting_htm_9}</a>
+											</div>
+										</div>
+									{/loop}
+									{/if}
+								{if $maxlevel == 3}
+								<div class="col-md-12 ">
+									<div class="col-md-1 ">&nbsp;</div>
+									<div class="col-md-7">
+										<div class="form-group boardnext ">
+											<a href="javascript:;" onclick="addrow(this, 2,{$tmp_type_second['type_id']})" class="addtr">{lang aljhtx:type_htm_13}</a>
+										</div>
+									</div>
+								</div>
+								{/if}
+								{/loop}
+							{/if}
+							{/if}
+
+
+								<div class="col-md-12 ">
+									<div class="col-md-1 ">&nbsp;</div>
+									<div class="col-md-7">
+										<div class="form-group board ">
+											<a href="javascript:;" onclick="addrow(this, 1,{$tmp_type_first['type_id']})" class="addtr">{lang aljhtx:type_htm_14}</a>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						{/loop}
+					{/if}
+					
+					<div class="form-group "> 
+					<div class="col-md-12 ">
+					<div class="form-group">
+					<a href="javascript:;" onclick="{if empty($_GET['link'])}addrow(this,0){else}addrow(this,3,{$type_upid}){/if}" class="addtr lj_addtr" >{lang aljhtx:type_htm_15}</a>
+					</div>
+					</div>
+					</div>
+					
+					<div class="form-group"><input type="submit" class="btn btn-primary" value="{lang aljhtx:setting_htm_8}"></div>
+					</form></div>
+                        
+
+                    </div>
+                    
+ 
+                </div>
+                
+
+            </div>
+            
+
+			<div class="pull-right">
+                                
+		<div class="btn-group">
+		  {$type_paging}
+		</div>
+		
+
+	</div>
+        </div>
+        
+
+    </section>
+	
+</div>
+<script>
+function addrow(obj,type,v){
+if(type==1){
+	$(obj).parent().parent().parent().before('<div class="col-md-12 " ><div class="col-md-1 "><input class="form-control sort_input"  name="type_displayorder_second['+v+'][]" value=""></div><div class="col-md-7"><div class="form-group board"><input class="form-control lj_input"  name="type_name_second['+v+'][]" value=""></div></div><div class="col-md-2">&nbsp;</div><div class="col-md-2"><a href="javascript:;" class="deleterow" onclick="deleterow(this,1)">&nbsp;</a></div></div>');
+}else if(type==2){
+	$(obj).parent().parent().parent().before('<div class="col-md-12 " ><div class="col-md-1 "><input class="form-control sort_input"  name="type_displayorder_second['+v+'][]" value=""></div><div class="col-md-7"><div class="form-group boardnext"><input class="form-control lj_input"  name="type_name_second['+v+'][]" value=""></div></div><div class="col-md-2">&nbsp;</div><div class="col-md-2"><a href="javascript:;" class="deleterow" onclick="deleterow(this,1)">&nbsp;</a></div></div>');
+
+}else if(type==3){
+	$(obj).parent().parent().parent().before('<div class="col-md-12 " ><div class="col-md-1 "><input class="form-control sort_input"  name="type_displayorder_second['+v+'][]" value=""></div><div class="col-md-7"><div class="form-group "><input class="form-control lj_input"  name="type_name_second['+v+'][]" value=""></div></div><div class="col-md-2">&nbsp;</div><div class="col-md-2"><a href="javascript:;" class="deleterow" onclick="deleterow(this,1)">&nbsp;</a></div></div>');
+
+}else{
+		$(obj).parent().parent().parent().before('<div class="col-md-12 " ><div class="col-md-1 "><input class="form-control sort_input"  name="type_displayorder_first[]" value=""></div><div class="col-md-7"><div class="form-group  "><input class="form-control lj_input"  name="type_name_first[]" value=""></div></div><div class="col-md-2">&nbsp;</div><div class="col-md-2"><a href="javascript:;" class="deleterow" onclick="deleterow(this,0)">&nbsp;</a></div></div>');
+}	
+}
+function deleterow(obj,type){
+	if(type == 1){
+		$(obj).parent().parent().remove();
+	}else{
+		$(obj).parent().parent().parent().remove();
+		var l = $('.lj_row').length;
+		if(l<3){
+			$('.lj_addtr').show();
+		}
+	}
+}
+</script>
+{eval include template($pluginid.':admin/footer')}

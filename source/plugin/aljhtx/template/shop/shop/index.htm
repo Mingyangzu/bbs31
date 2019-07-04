@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset={CHARSET}"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" >
+    <meta http-equiv="pragma" content="no-cache">
+    <title>$navtitle</title>
+    <meta name="description" content="$metakeywords" />
+    <meta name="keywords" content="$metadescription" />
+    <link rel="stylesheet" href="source/plugin/aljbd/css/sj/base.css" />
+    <link rel="stylesheet" href="source/plugin/aljbd/css/sj/index.css" />
+    <script src="source/plugin/aljbd/js/jquery.js"></script>
+    <script>
+        $(function(){
+            var R = {
+                options: {
+
+                },
+                init: function(){
+                    $('a').attr('href', 'javascript:;');
+                    $('.swiper-container').click(function(){
+                        $(this).css('border', '5px solid red');
+                        parent.R.followChange();
+                    });
+                    $('.swiper-container-horizontal').click(function(){
+                        $(this).css('border', '5px solid red');
+                        parent.R.followChange();
+                    });
+
+
+
+                }
+            };
+            R.init();
+        });
+    </script>
+</head>
+
+<body id="body" style="padding-bottom:20px">
+<a name="top"></a>
+<style type="text/css">
+    .search-content{width:100%;height:44px}
+    .my-cart {
+        width: 44px;
+        height: 44px
+    }
+
+    .my-cart a {
+        display: block;
+        width: 100%;
+        height: 100%
+    }
+    .my-cart .l_type {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        margin: 12px 4px 1px;
+        width: 22px;
+        height: 28px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAABGCAYAAAC363Y9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTU4RDEyNkMzM0MzMTFFNzhBMURBNENDREMzNjY1QzgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTU4RDEyNkQzM0MzMTFFNzhBMURBNENDREMzNjY1QzgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowQjU3NEVGRjMzQzMxMUU3OEExREE0Q0NEQzM2NjVDOCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowQjU3NEYwMDMzQzMxMUU3OEExREE0Q0NEQzM2NjVDOCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pg4GdlwAAATWSURBVHja7FrNi1RHEH/99s3MukI2fsB6iYsJMaeIOejBFaMkBj1oDmIg5EuS9SOi4MEvBA+6KgmIB9c/IGoOOZiA5iI5ZRc2B0+6OeVgHBFCPDnxnu1U6a+Xmtp6/Wbd3ZFAN/yYef2qq6ur66t7xnnvM9FcZjdf0l9GP19txryFMbEzBrmXJPAM4Qtj8k60LGldF7QblOYLQ7uuZLBF5zrYoTkJKPqf9eWGANsJj4DtkUWE/lygRz3PBnqsOa8jp3NKYBZ0Bd7/TXjNMH6m+5UwtMB2O0HYLDTt84oBMWcb6oKjDWkZLIH3Ex4T/iLsU3Yl7WmiCwL/pnc3mITlSJagUsN5hfPNxfG8wJSUoVARwFcwyQxav0BRIpo4YtnMRxbgRPhZiDisBfeFob0qwV2JNrqRPNo03OnkPutei5rEvDBc6FZ0GHdTtZaqtVStpWotVWupWkvVWqrWUrWWqrVUraVqLVVrqVpL1Vqq1lK1lqq1VK21tzz7n7UkcBJ4np3uRVtVzV0aXosXZDwfx6jYycaV8S0qhHWRtO0itUYZL93W4vNu5ODQkQ1LYZcSfiK8o/ruE7bEim3Rv4TwI2GPKvovAbJwPwLeZjGWV5wk+BRwmrCJ0BI0LeB05IQgJ3xK+J1wkfA6+PYI2vDMijhMGC/ly3+hEXBAD6FO2OqftxFCgf4efH8f73aDlvtzwSPwqREahF5Ck3CO0EdYTBgHFqPvI0KLMIAxNfAI/J7Vw9omw8p4tX8QHhLWoS6dErSskRvQ/nrCA1W7Ms0qQGsq7Ow3+DypauBM1MIPgOfvDM3WsMJ7WO1bSoO5omuCdkBoJNCc8XNvZ8TOTWvYCa2xZn8hDBK2wYOnjGgQdoI9/TZ2YrfQdGacqvn5VcK34M9tJTQ9Dh7ypCEx4xDKzN6FGQziiD9pTKqdYRK0POYO4cNIiNqIsyAL+bE6bE4AnxBeKY2P6ph/H6s8TtjZYQkZhLtC+AHRY5ewY17cF4RPYe/nCRcw5jY+t0FInvMUduEWYYTwZ5t9CxtmO3kD9vrBLO2M7XgRPHu5iCbvEZ6A5hphtYgYjH1AL/oDhsHzCSLStA1bTlfAeepgxOHmBCbtg2C94t15hKaG4XT8fBSOK4XqBZ9RYJEhNONNLXCutt00dNjYz+j7V7zjz7eN47lsozAznUx47s8i1wuZGFd5avZg6GFbO3CpIhcSnK/fuEsIwn0OlBU9/eC9JuIvVwnfVRU/csWHCP8QbqrkIYV7WBIVmoQx43qWcVCEtUnAOt638zZScw67YRtej+QxgudC2WdDvNdpVNJJf+A0fAA+8TXhe/DYgHfBnuvKJ9qcLlOT1EW2k1msUEIMYOJh9OUlAjeEwMcx5jqe+/Ddo86QDlgpcJhgK1bdgpbDamtKY8cw0WrlzXqnBhC+mqAfhUB1oIFo0gLNXiPVzwhr3LmMcBlM70GQIOxXhLPY/hHEVW5jhjmExX9JuCni9RiUUTeqvxrmC3w5Bl8l7JICa6drIcVyhjmnHKAfqVu264Sj1tU+vg8Cx5C5mtaNpHBEzmrDmH8nwt6YTs1Wwe1Kbi2teDlVEtIsel9yyRe78pVjfFFxP1v140yM3s/iGtVX/Mw2zd+pP+3P5WheNWa293Dm2P8EGAB7ny0XXi7C0gAAAABJRU5ErkJggg==);
+        background-size: 22px 28px;
+        -webkit-mask-image: none;
+        pointer-events: none
+    }
+    .my-cart .icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 8px 4px 1px;
+        width: 34px;
+        height: 34px;
+    {if $index_img_s_types[1][0]}
+    background: url({$index_img_s_types[1][0]});
+    {else}
+    background: url(source/plugin/aljbd/template/touch/header/img/badd.png);
+    {/if}
+    background-size: 34px 34px;
+    -webkit-mask-image: none;
+    pointer-events: none
+    }
+    .my-cart .icon_dian {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 12px 4px 1px;
+        width: 24px;
+        height: 24px;
+        background: url(source/plugin/$pluginid/template/touch/view/bdian.png);
+        background-size: 24px 24px;
+        -webkit-mask-image: none;
+        pointer-events: none
+    }
+    .search-bar:before,.sn-search-input:before,.sn-search-top input:before {
+        content: "";
+        position: absolute;
+        left: 14px;
+        top: 16px;
+        width: 14px;
+        height: 16px;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAcCAYAAACQ0cTtAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsSAAALEgHS3X78AAACZUlEQVRIx7WWu2tUQRSHv6yPxcZHBIM2ii+IgogxBkllE6JZxUKLFS1SHSGtBGWDa0xE/QMETxtZLOwSXGIau+jiA60CuoVWIvjASnSRtZiZ3bPXm91N9nqquWdmft+cw9w5p4sWpqr7gSHgBLAX2OqnvgJl4CmwICLvWml1NYEMAleBvlYi3l4Bt0VksW2Yqm4ApoFsm5CoPQQmRORnU5iqbgEeAEeMuwIUgXngJfAJSAM9QC8wDJwF1pk9r4FLIvI9FuYjehQBzfrUfGwWiqruBK4BZyLA8zbCtWbypgH9AXIiMtNO3vxhLqvqInALWOO1poArYV3Kn2wQuGD2T7cLikBnPCxY1mvXYcC4SemsiOhKQQZ436cfrzleg6nqQaDff/8G8qsFGct7LYB+zyAFjJhFcyLyuVOS15gzrpEAO2ac8wlEFac1EGB7jHMpQdhbM94dYN3G2XEKl9HqDrCqcVYShP1jKcA+KdsS1O4x428BVjbOwwnCrFY5wJ4b58kEYcNmXAqwonFmVHVHpxRV3Q6cNq7HACkRWQpkXJm4kUBUk9RLTskzam/jHeq3MqOqox1ENQpk/GfVa1ODiUgJKJg9U6o6tgrQGK6sBCt4baCxnuWBA7g6lAJyqnoUmBSRDy0gu4DrNF6KN0Qe9WhbsBnXFtgmpwIsAE+AF7iXYT3uPzrkAUM0tgUAX4BztuuKa3jSuKp9kSbd1zJWxZWWdBywWSs3gCt8x9sEPQPu4lqKArAxCmx5clXtBU7hysQ+YJOf+gG8x/02xXC9/Z6+GODwStPUtsUAc/8NZoD3gF9A9i+YmrjxJaFx6gAAAABJRU5ErkJggg==);
+        background-size: 14px 16px
+    }
+    .wbox-flex {
+        -webkit-flex: 1!important;
+        -webkit-box-flex: 1
+    }
+    .wbox {
+        display: -webkit-flex!important;
+        display: -webkit-box;
+    }
+    .class {
+        display: block;
+        margin: 8px 6px 2px 5px;
+        width: 34px;
+        height: 34px;
+        background: url({if $index_img_s_types[0][0]}{$index_img_s_types[0][0]}{else}source/plugin/aljbd/template/touch/header/img/btype.png{/if});
+        background-size: 34px 34px
+    }
+    .class_back {
+        display: block;
+        margin: 10px 6px 2px 5px;
+        width: 28px;
+        height: 28px;
+        background: url(source/plugin/aljbd/template/touch/view/bdeta_06.png);
+        background-size: 28px 28px
+    }
+    .pr {
+        position: relative;
+    }
+    .search-bar a.new_search {
+        display: block;
+        position: absolute;
+        height: 44px;
+        width: 100%;
+        z-index: 10
+    }
+    .search-bar form {
+        height: 44px
+    }
+    .search-bar input {
+        border: 0;
+        -webkit-border-radius: 24px;
+        padding: 0 4px 0 34px;
+        width: 100%;
+        height: 34px;
+        line-height: 34px;
+        background: rgba(255,255,255,0.8);
+        font-size: 14px;
+        color: #999;
+        -webkit-appearance: none
+    }
+</style>
+
+
+<header>
+    <div class="header" style="background: none;border-bottom: 0px solid #dd2726;position: absolute;z-index: 100;width:100%;">
+        <div class="search-content wbox" style="position: relative; background: none;">
+            <a class="class" name="index_none_header_syfl" href="{if $index_img_s_types[0][1]}{$index_img_s_types[0][1]}{else}plugin.php?id=aljbd&act=type&mobile=2{/if}"></a>
+            <div class="wbox-flex search-bar pr">
+                <a name="index_none_header_sysc" class="new_search" href="plugin.php?id=$pluginid&act=search"></a>
+                <form><input id="searchInput" name="index_none_header_sysc" type="text" placeholder="{if $config['m_search_default']}$config['m_search_default']{else}&#35831;&#36755;&#20837;&#24744;&#24819;&#25214;&#30340;&#21830;&#21697;&#25110;&#24215;&#38138;{/if}" autocomplete="off"></form>
+            </div>
+            <div class="my-cart pr">
+                <div class="icon"></div>
+                <a name="index_none_header_sygw" id="cartnum" href="{if $index_img_s_types[1][1]}{$index_img_s_types[1][1]}{else}plugin.php?id=aljbd&act=attend&mobile=2{/if}"></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style type="text/css">
+    .aljbd_ad img{width:100%}
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+</style>
+<link rel="stylesheet" media="screen,projection,tv" href="source/plugin/$pluginid/template/touch/round_robin/round_robin.css" /></link>
+
+<!-- {lang aljhtx:index_htm_1} 304X80 -->
+<style type="text/css">
+    .swiper-container {
+        width:100%;
+    height: auto;
+    margin:0 auto;
+    overflow: hidden;
+    }
+</style>
+<div class="swiper-container ">
+    <div class="swiper-wrapper" >
+        {if $settings['aljad_index_lz']['value']}
+        {loop $aljad_index_lz $ad}
+        <div class="swiper-slide" >
+            {$ad}
+        </div>
+        {/loop}
+        {else}
+        {loop $lz_types $k $v}
+        <div class="swiper-slide" >
+            <a href="$v[1]">
+                <img src="$k"  alt="$v[2]" width="100%" height="{if $settings['mobile_lz_height']['value']}{$settings['mobile_lz_height']['value']}px{else}auto{/if}">
+            </a>
+        </div>
+        {/loop}
+        {/if}
+    </div>
+    <div class="water">
+        <div class="water-c">
+            <div class="water-1"></div>
+            <div class="water-2"></div>
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    .search-keyword {
+        background: #ffffff;
+        border: 0px solid #f8f8f8;
+        box-shadow: none;
+    }
+    .search-button {
+        position: absolute;
+        display: inline-block;
+        right: 10px;
+        top: 12px;
+        font-size: 0;
+        line-height: 0;
+        text-indent: -999px;
+        border: 0;
+        width: 30px;
+        height: 25px;
+        background-position: -605px 6px;
+        vertical-align: middle;
+    }
+</style>
+<div class="panel-body search" style="display:none">
+    <form action="plugin.php?id=aljbd&act=dianpu" method="post" enctype="multipart/form-data" style="border:1px solid #eee;" accept-charset="utf-8">
+        <input type="hidden" value="{FORMHASH}" name="formhash">
+        <input type="text" class="search-keyword"  name="kw" placeholder="{lang aljbd:sj_list_3}">
+        <input type="submit" class="icon18 icon18-search search-button" value="{lang aljbd:sj_list_3}" name="submit">
+    </form>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $('#search_l').toggle(function(){$('.search').show();},function(){$('.search').hide();});
+    });
+</script>
+<style type="text/css">
+    .search {
+        position: relative;
+        background: #fff;
+        margin-top:8px;
+    }
+    .icon18 {
+        background: url(source/plugin/aljbd/images/sj/search_v.png) no-repeat center center;
+        background-size:20px
+    }
+</style>
+{if $aljad_index_lz_lower}
+<div style="width:100%; height:auto;" class="aljbd_ad">
+    {$aljad_index_lz_lower}
+</div>
+{/if}
+{if $settings['mobile_index_ad_1']['value']}
+<div style="width:100%; height:auto;" class="aljbd_ad">
+    {eval echo htmlspecialchars_decode($settings['mobile_index_ad_1']['value']);}
+</div>
+{/if}
+
+<div class="activities">
+    <div class="container">
+        <!-- {lang aljhtx:index_htm_2} -->
+
+        <link rel="stylesheet" media="screen,projection,tv" href="source/plugin/$pluginid/template/touch/navigation/navigation.css" /></link>
+        <div class="s_index_icon  swiper-container-horizontal" id="navigation" style="background: #ffffff;padding:0px">
+            <div class="swiper-wrapper" id="c_main_Prefecture" style="padding:10px 0px 0px 0px;">
+                <!-- {lang aljhtx:index_htm_3} -->
+                <ul class="s_index_ul swiper-slide " style="display:block;">
+                    {loop $sj_index_dh_types $k $v}
+                    {if $k && $k%10==0}
+                </ul>
+                <ul class="s_index_ul swiper-slide" >
+                    {/if}
+                    <li >
+                        <a href="{$v['1']}">
+                            <img src="{$v['2']}">
+                            <em style="font-style: normal;">{$v['0']}</em>
+                        </a>
+                    </li>
+                    {/loop}
+                </ul>
+            </div>
+        </div>
+
+        {if !$settings['is_mobile_index_hot']['value']}
+        <style type="text/css">
+            .div-component {
+                position: relative;
+                background: #f6f6f9
+            }
+
+            .div-component .handle {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                top: 0;
+                z-index: 3
+            }
+
+            .div-component.active .actions,.div-component.active .remove-module,.div-component:hover .actions,.div-component:hover .remove-module {
+                display: block;
+                cursor: pointer
+            }
+
+            .div-component .actions {
+                border: 2px dashed #27b9d7;
+                box-sizing: border-box;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                top: 0;
+                z-index: 2;
+                display: none
+            }
+
+            .div-component .remove-module {
+                background: #27b9d7;
+                color: #fff;
+                font-size: 13px;
+                padding: 3px 6px;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                z-index: 8;
+                display: none
+            }
+            .announcement {
+                background: #fff;
+                display: box;
+                display: -webkit-box;
+                display: flex;
+                display: -webkit-flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+
+                padding: 5px 0;
+                height: 55px;
+                line-height: 55px
+            }
+
+            .announ-left,.announ-right,.announcement {
+                align-items: center;
+                -webkit-align-items: center;
+                justify-content: center
+            }
+
+            .announ-left,.announ-right {
+                padding: 0 10px
+            }
+
+            .announ-left {
+                float: left;
+                color: #ec5151;
+                line-height: normal;
+                height: 100%
+            }
+
+            .announ-left img {
+                vertical-align: midden;
+                max-height: 90%;
+                width: auto;
+                margin-top: 5px;
+            }
+
+            .announ-right {
+                float: right;
+                font-size: 14px;
+                padding-bottom: 3px;
+                padding-top: 3px;
+                height: 28px;
+                line-height: 28px;
+                box-sizing: content-box;
+                border-left: 1px solid #f6f6f9;
+                color: #666;
+                position: relative
+            }
+
+            .announ-right a {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0
+            }
+
+            .announ-right i {
+                font-size: 14px;
+                margin-left: 2px
+            }
+
+            .announ-center {
+                overflow: hidden;
+                float: left;
+                width: 64%;
+                -webkit-box-flex: 1;
+                box-flex: 1;
+                flex: 1;
+                -webkit-flex: 1;
+                color: #333;
+                height: 53px;
+                padding: 0 7px;
+                padding-left: 0
+            }
+
+            .announ-center .swiper-container5 {
+                width: 100%;
+                height: 100%
+            }
+
+            .announ-center .swiper-slide .announcement-cont {
+                font-size: 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: left;
+                line-height: 53px;
+                position: relative
+            }
+
+            .announ-center .swiper-slide a {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0
+            }
+        </style>
+        <div class="div-component">
+            <div id="mod-announcement" class="vue-model mod-announcement">
+                <div class="frontend">
+                    <section class="announcement">
+                        <div class="announ-left">
+                            <img src="source/plugin/aljbd/template/touch/round_robin/hot.png" alt="">
+                        </div>
+                        <div class="announ-center">
+                            <div class="swiper-container5 announ-del swiper-container-vertical">
+                                <div class="swiper-wrapper" >
+                                    {loop $gg_types $gk $gv}
+                                    <div class="swiper-no-swiping swiper-slide swiper-slide-prev" style="height: 36px;" data-swiper-slide-index="0">
+                                        <a href="{$gv}">
+                                            <div class="announcement-cont">{$gk}</div>
+                                        </a>
+                                    </div>
+                                    {/loop}
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </div> <!---->
+            </div>
+        </div>
+        {/if}
+        <style type="text/css">
+            .list_title {
+                position: relative;
+                text-indent: 10px;
+                font-size: 15px;
+                padding:5px 0px;
+                line-height:20px;
+                margin-left:10px;
+            }
+            .list_title:before {
+                content: " ";
+                height: 17px;
+                position: absolute;
+                left: 0;
+                top: 6px;
+            border-left: 2px solid {if $settings['mobilenavbackcolor']['value']}{$settings['mobilenavbackcolor']['value']}{else}#DD2726{/if};
+            }
+        </style>
+        <style type="text/css">
+
+            .c_goods_size{
+                width:96%;
+                margin:5px 2%;
+            }
+            .c_goods_size a{
+                display: block;
+                width:100%;
+            }
+            .c_goods_details dd a{
+                width:94%;
+                margin:0px 3%;
+                line-height:24px;
+                font-size:14px;
+                color:#444;
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .c_goods_details dd h2{
+                color:#666;
+                font-size:12px;
+                width:94%;
+                margin:0px 3%;
+                line-height:14px;
+            }
+            .c_goods_details dd p span{
+                margin-left:10%;
+            }
+            .c_goods_details{
+                width:100%;
+                padding-top: 5px;
+                overflow:hidden;
+            }
+
+            .c_goods_details dd{
+                width:50%;
+                float:left;
+                position: relative;
+            }
+            dd {
+                margin-left: 0;
+            }
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            .c_new_goods{
+                width:100%;
+                padding-bottom:10px;
+            }
+            .c_goods_title{
+                width:100%;
+                height:42px;
+                background: #fff;
+                border-bottom: 1px solid #eee;
+            }
+            .c_newgoods_title{
+                position: fixed;
+                top:0px;
+                left:0px;
+                z-index: 20;
+            }
+            .c_goods_title li{
+                float: left;
+                width:25%;
+                line-height:40px;
+                height:40px;
+                text-align: center;
+                font-size:14px;
+                color:#666;
+            }
+            .c_click_see {
+                width: 100%;
+                height: 36px;
+                line-height: 34px;
+                color: #999;
+                margin: 0px 0px 10px 0px;
+
+                font-size: 12px;
+                text-align: center;
+                background: #ffffff;
+                cursor: pointer;
+            }
+            .c_goods_title .c_hot_color{
+                color:#dd2726;
+            }
+            .c_goods_details dd p {
+                color: #666;
+                font-size: 12px;
+                width: 90%;
+                margin: 0px 3% 10px;
+                line-height: 14px;
+            }
+            #dataList dd{border-bottom: 1px solid #f8f8f8;
+                border-right: 1px solid #f8f8f8;}
+
+        </style>
+        <style type="text/css">
+            .hot {
+                overflow: hidden;
+            }
+            .hot .lj_right {
+                width: 50%;
+            }
+            .hot .lj_left {
+                width: 50%;
+                float:left;
+
+            }
+            .lj_right {
+                float: right;
+            }
+
+            img {
+                border: 0;
+                vertical-align: middle;
+            }
+            .hot img{width:100%}
+        </style>
+        {if $settings['aljad_index_sangead']['value'] || $settings['sj_index_dh_ad']['value']}
+        <div class="blank8"></div>
+        <div class="hot">
+            {if $settings['sj_index_dh_ad']['value']}
+            <div style="width:100%; height:auto;" class="aljbd_ad">
+                {eval echo htmlspecialchars_decode($settings['sj_index_dh_ad']['value']);}
+            </div>
+            {/if}
+            {if $settings['aljad_index_sangead']['value']}
+            <div class="lj_left">
+                {$aljad_index_sangead[0]}
+            </div>
+            <div class="lj_right">
+                {$aljad_index_sangead[1]}
+                {$aljad_index_sangead[2]}
+            </div>
+            {/if}
+        </div>
+        {/if}
+
+        {if $settings['aljad_index_four_lattice']['value'] || $settings['aljad_index_four_lattice_up']}
+        <div class="blank8"></div>
+        <div class="hot">
+            {if $settings['aljad_index_four_lattice_up']['value']}
+            <div style="width:100%; height:auto;" class="aljbd_ad">
+                {eval echo htmlspecialchars_decode($settings['aljad_index_four_lattice_up']['value']);}
+            </div>
+            {/if}
+            {if $settings['aljad_index_four_lattice']['value']}
+            <div class="lj_left">
+                {$aljad_index_four_lattice[0]}
+                {$aljad_index_four_lattice[1]}
+            </div>
+            <div class="lj_right">
+                {$aljad_index_four_lattice[2]}
+                {$aljad_index_four_lattice[3]}
+            </div>
+            {/if}
+        </div>
+        {/if}
+        {if $settings['mobile_index_tad']['value']}
+        <div class="blank8"></div>
+        {if $settings['mobile_index_tad_title']['value']}
+        <div class="hot"><img src="{$settings['mobile_index_tad_title']['value']}" /></div>
+        {/if}
+        <div class="hot">
+            <div class="lj_left">
+                <a href="$mobile_index_tad_arr[0][1]" ><img src="$mobile_index_tad_arr[0][0]"></a>
+            </div>
+            <div class="lj_right">
+                <a href="$mobile_index_tad_arr[1][1]" ><img src="$mobile_index_tad_arr[1][0]" alt="" ></a>
+                <a href="$mobile_index_tad_arr[2][1]" ><img src="$mobile_index_tad_arr[2][0]" alt=""></a>
+            </div>
+        </div>
+        {/if}
+        {if $settings['mobile_index_fad']['value']}
+        <div class="blank8"></div>
+        {if $settings['mobile_index_fad_title']['value']}
+        <div class="hot"><img src="{$settings['mobile_index_fad_title']['value']}" /></div>
+        {/if}
+        <div class="hot">
+            <div class="lj_left">
+                <a href="$mobile_index_fad_arr[0][1]" ><img src="$mobile_index_fad_arr[0][0]" style="margin-bottom:2px;"></a>
+                <a href="$mobile_index_fad_arr[1][1]" ><img src="$mobile_index_fad_arr[1][0]" alt="" ></a>
+            </div>
+            <div class="lj_right">
+                <a href="$mobile_index_fad_arr[2][1]" ><img src="$mobile_index_fad_arr[2][0]" alt="" style="margin-bottom:2px;"></a>
+                <a href="$mobile_index_fad_arr[3][1]" ><img src="$mobile_index_fad_arr[3][0]" alt=""></a>
+            </div>
+        </div>
+        {/if}
+        {if $settings['mobile_index_siad']['value']}
+        <style>
+            .floor-container {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                font-size: 0
+            }
+
+            .floor-container img {
+                width: 100%;
+                height: auto;
+                overflow: hidden
+            }
+            .flsPit {
+                height: 120px;
+                background-color: #f5f5f5;
+            }
+            .floor-graphic-item {
+                width: 100%;
+                background: #fff;
+                font-size: 100%;
+                overflow: hidden;
+            }
+            .graphic-col04-bg, .graphic-col04-sm {
+                position: relative;
+                width: 25%;
+                float: left;
+            }
+            .graphic-col04-bg {
+                height: 120px;
+            }
+            .graphic-separation {
+                background: #fff;
+                position: relative;
+                font-family: PingFangSC-Light,PingFang-Medium,PingFangSC-Regular,Helvetica,Droid Sans,Arial,sans-serif;
+                font-size: 0;
+            }
+            .real-show, .show-img {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .show-img img {
+                width: 100%;
+                height: 100%;
+            }
+            .floor-container img {
+                width: 100%;
+                height: auto;
+                overflow: hidden;
+            }
+        </style>
+        <div class="blank8"></div>
+        {if $settings['mobile_index_siad_title']['value']}
+        <div class="hot">
+            <img src="$settings['mobile_index_siad_title']['value']">
+        </div>
+        {/if}
+        <div class="floor-container"><div id="floor-8-0" class="flsPit fls06013" data-index="8" data-sub="0" data-id="5386" load="true"><div class="floor-graphic-item">
+
+
+            <div class="   graphic-separation  graphic-col04-bg">
+                <a  href="$mobile_index_siad_arr[0][1]" class="J_ping">
+
+                    <!-- {lang aljhtx:index_htm_4} -->
+                    <div class="show-img"><img src="$mobile_index_siad_arr[0][0]" class="opa1" style="opacity: 1;"></div>
+
+                </a>
+            </div>
+
+
+            <div class="   graphic-separation  graphic-col04-bg">
+                <a  href="$mobile_index_siad_arr[1][1]" class="J_ping">
+
+                    <!-- {lang aljhtx:index_htm_4} -->
+                    <div class="show-img"><img src="$mobile_index_siad_arr[1][0]" class="opa1" style="opacity: 1;"></div>
+
+                </a>
+            </div>
+
+
+            <div class="   graphic-separation  graphic-col04-bg">
+                <a  href="$mobile_index_siad_arr[2][1]" class="J_ping">
+
+                    <!-- {lang aljhtx:index_htm_4} -->
+                    <div class="show-img"><img src="$mobile_index_siad_arr[2][0]" class="opa1" style="opacity: 1;"></div>
+
+                </a>
+            </div>
+
+
+            <div class="   graphic-separation  graphic-col04-bg">
+                <a  href="$mobile_index_siad_arr[3][1]" class="J_ping">
+
+                    <!-- {lang aljhtx:index_htm_4} -->
+                    <div class="show-img"><img src="$mobile_index_siad_arr[3][0]" class="opa1" style="opacity: 1;"></div>
+
+                </a>
+            </div>
+
+        </div></div></div>
+        {/if}
+        {if $recommendlist_goods_index && !$settings['close_goods']['value'] && !$settings['is_mobile_index_love_type']['value']}
+
+        <div class="blank8"></div>
+        <!--{lang aljhtx:index_htm_8}-->
+
+        <div class="list-view">
+            <div class="list_title">{lang aljbd:index_13}<a style="float:right;margin-right:10px" href="plugin.php?id=aljbd&act=goods">&#26356;&#22810;</a></div>
+            {if !$settings['is_mobile_index_resgoods']['value']}
+
+            <link rel="stylesheet" media="screen,projection,tv" href="source/plugin/$pluginid/template/touch/round_robin/navigation.css" /></link>
+            <div class="s_index_icon swiper-container1 swiper-container-horizontal">
+                <div class="swiper-wrapper" id="c_main_Prefecture">
+                    <!-- {lang aljhtx:index_htm_3} -->
+                    {eval $rk = 0;}
+                    {loop $recommendlist_goods_index $recommend}
+                    {eval $rk++}
+                    {if $rk%2==1}
+                    <dl class="c_goods_details swiper-slide" >
+                        {/if}
+                        <dd >
+                            <div class="c_goods_size">
+                                <a href="plugin.php?id=aljbd&act=goodview&bid={$recommend['bid']}&gid={$recommend[id]}">
+                                    <img  src="{if $recommend['pic1']}$recommend['pic1']{else}source/plugin/aljbd/images/zz.jpg{/if}" class="img-responsive c_img" style="width: 140px;height:140px;margin:0 auto; display: block;" >
+                                </a>
+                            </div>
+                            <a href="plugin.php?id=aljbd&act=goodview&bid={$recommend['bid']}&gid={$recommend[id]}">$recommend['name']</a>
+                            <h2 style="font-size:12px;margin:0;">
+
+                                {if $recommend['price1']}
+                                <strong style="color:red;font-size:12px;">
+                                    {if $_G['cache']['plugin']['aljgwc'][$pluginid]}
+                                    {$price_unit}{eval echo number_format($recommend['price1'],2);}
+                                    {else}
+                                    {if $config['isextcredit'] && $config['extcredit']}
+                                    {$recommend['price1']}{$_G['setting']['extcredits'][$config['extcredit']]['title']}
+                                    {else}
+                                    {$price_unit}{eval echo number_format($recommend['price1'],2);}
+                                    {/if}
+                                    {/if}
+                                </strong>
+                                {if !file_exists("source/plugin/dz_1/dz_1.inc.php")}
+                                {if $recommend['price2']}
+                                <del>
+                                    {if $_G['cache']['plugin']['aljgwc'][$pluginid]}
+                                    {$price_unit}{eval echo number_format($recommend['price2'],2);}
+                                    {else}
+                                    {if $config['isextcredit'] && $config['extcredit']}
+                                    {$recommend['price2']}{$_G['setting']['extcredits'][$config['extcredit']]['title']}
+                                    {else}
+                                    {$price_unit}{eval echo number_format($recommend['price2'],2);}
+                                    {/if}
+                                </del>
+                                {/if}
+                                {/if}
+                                {/if}
+
+                                {else}
+                                <strong style="color:red;">
+                                    {lang aljbd:s271}</strong>
+                                {/if} </h2>
+
+                        </dd>
+                        {if $rk%2==0}
+                    </dl>
+                    {/if}
+                    {/loop}
+                    </dl>
+                </div>
+                <div class=" swiper-pagination swiper-pagination-clickable swiper-pagination2"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span></div>
+            </div>
+
+            {else}
+            <ul class="tuan_ul">
+                <!--{loop $recommendlist_goods_index $recommend}-->
+                <li class="tuan_li">
+                    <a href="plugin.php?id=aljbd&act=goodview&bid={$recommend['bid']}&gid={$recommend[id]}">
+                        <div class="list_item">
+                            <div class="pic">
+                                <img {if $settings['is_lazyload']['value']}src="$loading" data-original="{if $recommend['pic1']}$recommend['pic1']{else}source/plugin/aljbd/images/zz.jpg{/if}"{else}src="{if $recommend['pic1']}$recommend['pic1']{else}source/plugin/aljbd/images/zz.jpg{/if}"{/if} width="85" height="85" >
+
+                            </div>
+                            <div class="info">
+                                <h2 style="height:38px;line-height:20px;margin:0px 0px 25px 0px">$recommend['name']</h2>
+
+                                <div class="tuan_price">
+                                    {if $recommend['price1']}
+                                    <p class="price">
+                                        <em>
+                                            {if $_G['cache']['plugin']['aljgwc'][$pluginid]}
+                                            {$price_unit}{eval echo number_format($recommend['price1'],2);}
+                                            {else}
+                                            {if $config['isextcredit'] && $config['extcredit']}
+                                            {$recommend['price1']}{$_G['setting']['extcredits'][$config['extcredit']]['title']}
+                                            {else}
+                                            {$price_unit}{eval echo number_format($recommend['price1'],2);}
+                                            {/if}
+                                            {/if}
+                                        </em>
+                                        {if $recommend['price2']}
+                                        <del>
+                                            {if $_G['cache']['plugin']['aljgwc'][$pluginid]}
+                                            {$price_unit}{eval echo number_format($recommend['price2'],2);}
+                                            {else}
+                                            {if $config['isextcredit'] && $config['extcredit']}
+                                            {$recommend['price2']}{$_G['setting']['extcredits'][$config['extcredit']]['title']}
+                                            {else}
+                                            {$price_unit}{eval echo number_format($recommend['price2'],2);}
+                                            {/if}
+                                            {/if}
+                                        </del>
+                                        {/if}
+                                    </p>
+
+                                    {else}
+                                    <p class="price">{lang aljbd:s271}</p>
+                                    {/if}
+                                    <p class="bought"><i></i>{lang aljbd:consumeview_13}{$recommend['view']}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <!--{/loop}-->
+            </ul>
+            {/if}
+        </div>
+        {/if}
+        <!--{lang aljhtx:index_htm_8}-->
+        <div class="blank8"></div>
+        {if $config['isyouh'] && $recommendlist_consume_index && !$settings['close_consume']['value']}
+        <!--{lang aljhtx:index_htm_11}-->
+
+        <div class="list-view">
+            <div class="list_title">&#25512;&#33616;&#20248;&#24800;&#21048;</div>
+            <ul class="tuan_ul">
+                <!--{loop $recommendlist_consume_index $c}-->
+                <li class="tuan_li">
+                    <a href="plugin.php?id=aljbd&act=consumeview&bid={$c['bid']}&cid={$c['id']}">
+                        <div class="list_item">
+                            <div class="pic">
+                                <img {if $settings['is_lazyload']['value']}src="$loading" data-original="{$c['pic']}"{else}src="{$c['pic']}"{/if} width="85" height="85" >
+                            </div>
+                            <div class="info">
+                                <h2 style="height:38px;line-height:20px;margin:0px 0px 25px 0px">{$c[subject]}</h2>
+
+                                <div class="tuan_price">
+
+                                    <p class="price">{if $c['end']}<!--{eval echo date('Y-m-d',$c['start']);}-->&nbsp;{lang aljbd:consume_7}&nbsp;<!--{eval echo date('Y-m-d',$c['end']);}-->{else}{lang aljbd:consume_6}&nbsp;&nbsp;{lang aljbd:consume_8}{/if}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <!--{/loop}-->
+            </ul>
+            <div class="see_more">
+                <a href="plugin.php?id=aljbd&act=clist">&#26597;&#30475;&#20840;&#37096;&#20248;&#24800;&#21048;</a>
+            </div>
+        </div>
+        <!--{lang aljhtx:index_htm_11}-->
+        <div class="blank8"></div>
+        {/if}
+        <!-- {lang aljhtx:index_htm_13} -->
+        <style type="text/css">
+            .activities .tabs li a.selected {
+                color: #cc0000;
+                border-bottom: 1px solid #cc0000;
+            }
+            .activities .tabs-hd {
+                background: #ffffff;
+                border-top: 0;
+                border-bottom: 1px solid #eee;
+            }
+            .activities .tabs li {
+                border-right: 0;
+            }
+            .activities .tab-show .subjects li {
+                float: left;
+                width: 32%;
+                height: auto;
+                font-size: 12px;
+                padding: 0 8px 10px 8px;
+            }
+            .app img{border-radius:10px}
+            .tuan_li .list_item .pic {
+                width: 85px;
+                height: 85px;
+            }
+        </style>
+        {if !$settings['is_mobile_index_resdp']['value']}
+        {if $recommendlist}
+        <div class="tabbox swiper-container2" style="margin:0px;background:#fff;width: 100%;overflow: hidden;">
+            <div class="list_title">{lang aljbd:sj_list_19}<a style="float:right;margin-right:10px" href="plugin.php?id=aljbd&act=dianpu">&#26356;&#22810;</a></div>
+            <div class=" swiper-wrapper" data-tab="finer" style="margin:10px 0px 0px 10px">
+                {loop $recommendlist $recommend}
+                <div class="subject-item swiper-slide" style="width:100px;height:110px;">
+                    <a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}"><img src="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}" title="{$recommend['name']}" style="width:100px;height:100px"/></a>
+                </div>
+                {/loop}
+            </div>
+
+        </div>
+        <div class="blank8"></div>
+        {/if}
+        {else}
+        <div class="tabbox" style="margin:0px;background:#fff;">
+            <div class="tabs-hd">
+                <ul class="tabs">
+                    <li data-tab="hot" id="tab2" ><a href="javascript:;"  class="selected" onclick="switchTab('tab2','con2');this.blur();return false;">{lang aljbd:sj_list_19}</a></li>
+                    <li  data-tab="finer" id="tab1"><a href="javascript:;" onclick="switchTab('tab1','con1');this.blur();return false;">{lang aljbd:sj_list_20}</a></li>
+                    <li data-tab="new" id="tab3" ><a href="javascript:;" onclick="switchTab('tab3','con3');this.blur();return false;">{lang aljbd:sj_list_21}</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="tab-show" data-tab="finer" id="con1"  style="display: none">
+                <ul class="subjects">
+                    {loop $viewslist $recommend}
+                    <li>
+                        <div class="subject-item">
+                            <a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}"><img  {if $settings['is_lazyload']['value']}src="$loading" data-original="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{else}src="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{/if} alt="{$recommend['name']}" title="{$recommend['name']}" /></a>
+                            <span class="subject-title"><a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}" title="{$recommend['name']}">{$recommend['name']}</a></span>
+                        </div>
+                    </li>
+                    {/loop}
+
+                </ul>
+            </div>
+            <div class="tab-show " data-tab="hot" id="con2">
+                <ul class="subjects">
+                    {loop $recommendlist $recommend}
+                    <li>
+                        <div class="subject-item">
+                            <a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}">
+                                <img {if $settings['is_lazyload']['value']}src="$loading" data-original="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{else}src="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{/if}  alt="{$recommend['name']}" title="{$recommend['name']}" /></a>
+                            <span class="subject-title"><a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}" title="{$recommend['name']}">{$recommend['name']}</a></span>
+                        </div>
+                    </li>
+                    {/loop}
+                </ul>
+            </div>
+            <div class="tab-show " data-tab="new" id="con3" style="display: none">
+                <ul class="subjects">
+
+                    {loop $timelist $recommend}
+                    <li>
+                        <div class="subject-item">
+                            <a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}">
+                                <img {if $settings['is_lazyload']['value']}src="$loading" data-original="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{else}src="{if $recommend['logo']}$recommend['logo']{else}source/plugin/aljbd/images/zz.jpg{/if}"{/if}  alt="{$recommend['name']}" title="{$recommend['name']}" /></a>
+                            <span class="subject-title"><a href="plugin.php?id=aljbd&act=view&bid={$recommend['id']}" title="{$recommend['name']}">{$recommend['name']}</a></span>
+                        </div>
+                    </li>
+                    {/loop}
+
+                </ul>
+            </div>
+            <script type="text/javascript">
+                function switchTab(ProTag, ProBox) {
+                    for (i = 1; i < 4; i++) {
+                        if ("tab" + i == ProTag) {
+                            document.getElementById(ProTag).getElementsByTagName("a")[0].className = "selected";
+                        } else {
+                            document.getElementById("tab" + i).getElementsByTagName("a")[0].className = "";
+                        }
+                        if ("con" + i == ProBox) {
+                            document.getElementById(ProBox).style.display = "";
+                        } else {
+                            document.getElementById("con" + i).style.display = "none";
+                        }
+                    }
+                }
+                var h = document.body.clientWidth/3.5;
+                $('.subject-item').css({'height':h+'px','width':h+'px','overflow':'hidden'});
+                $('.subject-item img').css({'height':h+'px','width':h+'px','overflow':'hidden'});
+            </script>
+        </div>
+        <div class="blank8"></div>
+        {/if}
+        {if !$config['is_mobile_index_love']}
+        {if $settings['is_mobile_index_love_type']['value']}
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            #topNav {
+                width: 100%;
+                overflow: hidden;
+                font: 16px/32px hiragino sans gb, microsoft yahei, simsun;
+                border-bottom:1px solid #f8f8f8;
+                padding: 5px 0 2px 0;
+            }
+            #topNav .swiper-slide {
+                padding: 0 10px;
+                letter-spacing:2px;
+                width:auto;
+                text-align:center;
+                font-size: 14px;
+            }
+            #topNav .swiper-slide span{
+
+                transition:all .3s ease;
+                display:block;
+            }
+            #topNav .active span:after{
+                content: ' ';
+                width: 12px;
+                height: 2px;
+            background: {if $settings['mobilenavbackcolor']['value']}{$settings['mobilenavbackcolor']['value']}{else}#DD2726{/if};
+            position: absolute;
+            left: 50%;
+            bottom: 0px;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+            border-radius: 10px;
+            transition: all .5s;
+            -moz-transition: all .5s;
+            -webkit-transition: all .5s;
+            -o-transition: all .5s;
+            }
+            #topNav .active span{
+                transform:scale(1.1);
+            color:{if $settings['mobilenavbackcolor']['value']}{$settings['mobilenavbackcolor']['value']}{else}#DD2726{/if};
+            }
+        </style>
+        <div class="b_index_fixed1">
+            <div id="topNav" class="swiper-container1234 bordertop" style="background: #fff;">
+                <div class="swiper-wrapper b_index_fixed">
+                    <div class="swiper-slide {if !$_GET['order']}active{/if}" val-data="recommend" ><span>{lang aljbd:aljbd_list_touch_1}</span></div>
+                    {loop $onetype $k $v}
+                    <div class="swiper-slide " val-data="{$v['id']}" ><span>$v['subject']</span></div>
+                    {/loop}
+                </div>
+            </div>
+        </div>
+        <div class="list-view">
+            <dl class="c_goods_details" id="dataList" >
+
+            </dl>
+            <div id="dataMore" class="more">
+                <div class="c_clear"></div>
+                <div class="c_click_see" id="loading" style="background: none">
+                    <img alt="loading" src="static/image/common/loading.gif" >&#21152;&#36733;&#20013;&#46;&#46;&#46;
+                </div>
+            </div>
+        </div>
+        {else}
+        <div class="list-view">
+            <div class="list_title" >&#29468;&#24744;&#21916;&#27426;</div>
+            <div style="height:1px;background:#eee;"></div>
+            <dl class="c_goods_details" id="dataList" >
+
+            </dl>
+            <div id="dataMore" class="more">
+                <div class="c_clear"></div>
+                <div class="c_click_see" id="loading" style="background: none">
+                    <img alt="loading" src="static/image/common/loading.gif" >&#21152;&#36733;&#20013;&#46;&#46;&#46;
+                </div>
+            </div>
+        </div>
+        {/if}
+        {/if}
+    </div>
+</div>
+{if $settings['mobile_index_ad']['value']}
+<div style="width:100%; height:auto;" class="aljbd_ad">{eval echo htmlspecialchars_decode($settings['mobile_index_ad']['value']);}</div>
+{/if}
+<script src="source/plugin/aljbd/js/sj/jquery.lazyload.min.js"></script>
+<script type="text/javascript">
+
+    function lazyload(page) {
+        console.log(page);
+        //{lang aljhtx:index_htm_14}
+        $("img.lazy" + page).lazyload({
+            effect: "fadeIn",
+            placeholder: "$loading",
+            threshold: 100,
+            failure_limit : 20,
+            skip_invisible: false
+        });
+
+    }
+    $(function() {
+        lazyload(0);
+    });
+</script>
+{eval $ajax_url = 'plugin.php?id='.$pluginid.'&act=mobile_index_goods'}
+<script type="text/javascript">
+    var b='addtime';
+    var typeid='recommend';
+    var page=1;
+    var max=2;
+    var isload = true;
+    function imgwidth(){
+        h = $(".c_goods_size").width()-9;
+        $('.c_img').css({'height':h+'px','width':h+'px','margin':'0 auto','display':'block'});
+    }
+    function xxx(){
+        $(window).scroll(function(){
+
+            if(isload){
+                // {lang aljhtx:index_htm_15}
+                if( $(document).scrollTop() + $(window).height() >= $(document).height() - 10 ) {
+                    if($('#max-page').val()){
+                        max=$('#max-page').val();
+                    }
+
+                    page++;
+                    isload = false;
+                    console.log('xxxx'+page);
+                    if(page<=max){
+
+                        ajaxgetdata();
+                    }else{
+                        $("#dataMore").hide();
+                    }
+                    // {lang aljhtx:index_htm_16}
+                }
+            }
+        });
+    }
+    function ajaxgetdata(swiper) {
+        $("#dataMore").show();
+        $.post('$ajax_url',{"order":b,'page':page,'typeid':typeid},function(data){
+            if(data==0){
+                //console.log(data);
+                $("#dataMore").hide();
+                if(typeof swiper !== 'undefined'){
+                    $("#dataList").html('<div class="c_click_see" id="more" style="float: left;">\u6ca1\u6709\u66f4\u591a\u6570\u636e</div>');
+                }else{
+                    $("#dataList").append('<div class="c_click_see" id="more" style="float: left;">\u6ca1\u6709\u66f4\u591a\u6570\u636e</div>');
+                }
+
+                return false;
+            }else{
+                if(typeof swiper !== 'undefined'){
+                    $("#dataList").html(data);
+                }else{
+                    $("#dataList").append(data);
+                }
+                isload = true;
+            }
+            $("#dataMore").hide();
+            console.log('ajaxgetdata'+page);
+            lazyload(page);
+            imgwidth();
+            xxx();
+        });
+    }
+    $(function() {
+        ajaxgetdata();
+    });
+</script>
+<script  src="source/plugin/$pluginid/template/touch/round_robin/round_robin.js"></script>
+<script>
+
+    var swiper = new Swiper('.swiper-container', {
+        paginationClickable: true,
+        spaceBetween: 30,
+        loop : true,
+        loopAdditionalSlides:1,
+        autoplay: 5000,//{lang aljhtx:index_htm_17}
+        autoHeight: true,//{lang aljhtx:index_htm_18}
+    });
+    new Swiper('.swiper-container2', {
+        scrollbarHide: true,
+        slidesPerView: 'auto',
+        centeredSlides: false,
+        spaceBetween: 10,
+        grabCursor: true,
+        autoHeight: true,//{lang aljhtx:index_htm_18}
+    });
+    new Swiper(".swiper-container1",{pagination:".swiper-pagination2",paginationClickable:!0,spaceBetween:30,loop : true,loopAdditionalSlides:1})
+    imgwidth();
+    var swiper = new Swiper('.swiper-container5', {
+        paginationClickable: true,
+        direction: 'vertical',
+        autoplay: 3000,//{lang aljhtx:index_htm_17}
+        scrollbarHide: true,
+    });
+</script>
+<script>
+    new Swiper("#navigation",{spaceBetween:30,loop:!1,autoHeight: true,})
+</script>
+{if $settings['is_mobile_index_love_type']['value'] && !$config['is_mobile_index_love']}
+<script type="text/javascript">
+    var mySwiper = new Swiper('#topNav', {
+        freeMode: true,
+        freeModeMomentumRatio: 0.5,
+        slidesPerView: 'auto',
+
+    });
+
+    swiperWidth = mySwiper.container[0].clientWidth
+    maxTranslate = mySwiper.maxTranslate();
+    maxWidth = -maxTranslate + swiperWidth / 2
+
+    $("#topNav").on('touchstart', function(e) {
+        e.preventDefault()
+    })
+
+    mySwiper.on('tap', function(swiper, e) {
+
+        slide = swiper.slides[swiper.clickedIndex]
+        slideLeft = slide.offsetLeft
+        slideWidth = slide.clientWidth
+        slideCenter = slideLeft + slideWidth / 2
+        // {lang aljsq:aljsq_htm_17}
+
+        mySwiper.setWrapperTransition(300)
+
+        if (slideCenter < swiperWidth / 2) {
+
+            mySwiper.setWrapperTranslate(0)
+
+        } else if (slideCenter > maxWidth) {
+
+            mySwiper.setWrapperTranslate(maxTranslate)
+
+        } else {
+
+            nowTlanslate = slideCenter - swiperWidth / 2
+
+            mySwiper.setWrapperTranslate(-nowTlanslate)
+
+        }
+
+        $("#topNav .active").removeClass('active')
+
+        $("#topNav .swiper-slide").eq(swiper.clickedIndex).addClass('active')
+        typeid=$("#topNav .active").attr('val-data');
+        //console.log(typeid);
+        page=1;
+        isload = false;
+        //$("#dataList").html('');
+        console.log('topNav'+page);
+        ajaxgetdata(1);
+
+    })
+    function b_fixed(){
+        $(window).scroll(function(){
+            //console.log($(window).scrollTop()+'====='+$("#topNav").offset().top);
+            $(window).scrollTop()>=$(".b_index_fixed1").offset().top?($("#topNav").css({position:"fixed",top:"0",left:"0",zIndex:"149",display:'block'})):($("#topNav").css({position:"relative"}))}
+        )};
+    $(function() {
+        b_fixed();
+    });
+</script>
+{/if}
+
+
+
+</body>
+</html>

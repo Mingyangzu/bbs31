@@ -1,0 +1,78 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe name="submitiframe" id="submitiframe" style="display: none;"></iframe>
+            <form class="layui-form" method="post" action=""  target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <fieldset class="layui-elem-field">
+                    <blockquote class="layui-elem-quote" style="font-size:14px;">{lang aljhtx:aljol_setting_htm_1}/{lang aljhtx:aljol_setting_htm_2}</blockquote>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{lang aljhtx:aljol_setting_htm_3}({lang aljhtx:setting_htm_95})</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="cycle" value="" placeholder=""  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="*">{lang aljhtx:setting_htm_8}</button>
+                    </div>
+                </div>
+                </fieldset>
+            </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('submit(*)', function(data){
+
+                });
+
+            })
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    parent.location.href=parent.location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    parent.location.href=parent.location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

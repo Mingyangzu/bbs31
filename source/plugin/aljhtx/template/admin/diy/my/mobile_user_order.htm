@@ -1,0 +1,89 @@
+<div class="box-body diyDocument" id="{$diy['auto_module']}">
+    {loop $diy['data'] $k $v}
+    <div class="box box-default collapsed-box" skey="{$diy['auto_module']}" data-id="{$k}" id="{$diy['auto_module']}_{$k}">
+        <div class="box-header with-border">
+            <h3 class="box-title">{$v[2]}</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="">
+            <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <input type="hidden" value="{$diy['auto_module']}" name="skey">
+                <input type="hidden" value="{$k}" name="displayorder">
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_5}</label>
+                    <input name="title" value="$v[2]"  class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_6}</label>
+                    <input name="url" value="$v[1]"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="layui-btn layui-btn-primary upload">
+                        <i class="layui-icon">&#xe67c;</i>{lang aljhtx:mobile_view_imgnav_htm_3}
+                    </button>
+                    <div class="upload_img" style="margin-top:5px;">
+                        <img style="height:20px;" src="{$v[0]}">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                    <input type="submit" class="btn btn-submit btn-default" name="deletesubmit" value="{lang aljhtx:setting_htm_9}">
+                </div>
+            </form>
+        </div>
+    </div>
+    {/loop}
+
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{lang aljhtx:mobile_view_imgnav_htm_6}</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" style="">
+            <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                <input type="hidden" value="yes" name="ajax">
+                <input type="hidden" value="{$diy['auto_module']}" name="skey">
+                <input type="hidden" value="{eval echo $k+1;}" name="displayorder" class="max-displayorder">
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_5}</label>
+                    <input name="title"  class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>{lang aljhtx:setting_htm_6}</label>
+                    <input name="url"  class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="layui-btn layui-btn-primary upload">
+                        <i class="layui-icon">&#xe67c;</i>{lang aljhtx:mobile_view_imgnav_htm_9}
+                    </button>
+                    <div class="upload_img" style="margin-top:5px;"></div>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

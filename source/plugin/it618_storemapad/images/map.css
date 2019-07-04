@@ -1,0 +1,22 @@
+.left{float:left;width:20px;height:40px;background:url(left.gif) repeat-x}
+.mid{float:left;height:28px;line-height:28px;background:url(mid.gif) repeat-x}
+.right{float:left;width:9px;height:28px;background:url(right.gif) repeat-x;}
+.text{position:absolute;top:0;left:0;padding:2px 15px;font-size:14px;color:#FFF;overflow:hidden;white-space:nowrap;cursor:pointer; line-height:23px}
+.mid_1{float:left;background:url(mid_1.gif) repeat-x;margin-left:-3px}
+.mid_2{float:left;background:url(mid_2.gif) repeat-x;margin-left:-3px}
+.mid_3{float:left;background:url(mid_3.gif) repeat-x;margin-left:-3px}
+.mid_4{float:left;background:url(mid_4.gif) repeat-x;margin-left:-3px}
+.mid_5{float:left;background:url(mid_5.gif) repeat-x;margin-left:-3px}
+.left_1{float:left;width:20px;height:40px;background:url(left_1.gif) no-repeat}
+.left_2{float:left;width:20px;height:40px;background:url(left_2.gif) no-repeat}
+.left_3{float:left;width:20px;height:40px;background:url(left_3.gif) no-repeat}
+.left_4{float:left;width:20px;height:40px;background:url(left_4.gif) no-repeat}
+.left_5{float:left;width:20px;height:40px;background:url(left_5.gif) no-repeat}
+.right_1{float:left;width:9px;height:28px;background:url(right_1.gif) no-repeat; margin-left:-5px}
+.right_2{float:left;width:9px;height:28px;background:url(right_2.gif) no-repeat; margin-left:-5px}
+.right_3{float:left;width:9px;height:28px;background:url(right_3.gif) no-repeat; margin-left:-5px}
+.right_4{float:left;width:9px;height:28px;background:url(right_4.gif) no-repeat; margin-left:-5px}
+.right_5{float:left;width:9px;height:28px;background:url(right_5.gif) no-repeat; margin-left:-5px}
+.hover .left{background:url(left2.gif) repeat-x}
+.hover .mid{background:url(mid2.gif) repeat-x}
+.hover .right{background:url(right2.gif) repeat-x}

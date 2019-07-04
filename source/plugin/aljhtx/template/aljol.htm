@@ -1,0 +1,157 @@
+<!--{block return}-->
+{if !$_G['cache']['plugin']['aljhtx']['is_jquery']}
+<script src="source/plugin/aljhtx/static/js/jquery-2.2.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script>var jQuery=jQuery.noConflict();</script>
+{/if}
+<script src="source/plugin/aljhtx/static/js/layer/layer.js?20181220" type="text/javascript" charset="utf-8"></script>
+<style>
+    body .layui-layim-min {
+        border: 1px solid #D9D9D9;
+    }
+
+    .aljol-layui-layer-shade {
+        position: fixed;
+        _position: absolute;
+        pointer-events: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 0;
+        padding: 0;
+        top:auto;
+        left:auto;
+        bottom:0;
+        right:0;
+        background-color: #fff;
+        -webkit-background-clip: content;
+        border-radius: 2px;
+        box-shadow: 1px 1px 50px rgba(0,0,0,.3);
+        z-index: 5;
+    }
+    .layui-box, .layui-box * {
+        box-sizing: content-box;
+    }
+    .layui-layer-page .layui-layer-content {
+        position: relative;
+        overflow: auto;
+    }
+    .layui-layim-min .layui-layer-content {
+        margin: 0 5px;
+        padding: 5px 10px;
+        white-space: nowrap;
+    }
+    .layim-chat-list li, .layui-layim-min .layui-layer-content {
+        position: relative;
+        margin: 5px;
+        padding: 5px 30px 5px 5px;
+        line-height: 40px;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    .layim-chat-list li img, .layui-layim-min .layui-layer-content img {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+    .layim-chat-list li *, .layui-layim-min .layui-layer-content * {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: top;
+        font-size: 14px;
+    }
+    .layui-layim-close .layui-layer-content span {
+        width: auto;
+        max-width: 120px;
+    }
+    .layim-chat-list li span, .layui-layim-min .layui-layer-content span {
+        width: 100px;
+        padding-left: 10px;
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .layui-layer-setwin {
+        position: absolute;
+        right: 15px;
+        *right: 0;
+        top: 15px;
+        font-size: 0;
+        line-height: initial;
+    }
+    .ajlol-order-numbers {
+        display: inline-block;
+        text-align: center;
+        position: absolute;
+        bottom: 17px;
+        background-color: #f23030;
+        height: 17px;
+        padding-left: 5px;
+        padding-right: 5px;
+        line-height: 17px;
+        font-style: normal;
+        border-radius: 15px;
+        right: 7px;
+        font-size: 9px;
+        color: #fff;
+        font-family: PingFangSC-Regular,Helvetica,"Droid Sans",Arial,sans-serif;
+        border:1px solid #fff
+    }
+</style>
+
+
+<div onclick="open_aljol()" class="layui-layer aljol-layui-layer-shade layui-layer-page layui-box layui-layim-min layui-layim-close" id="layui-layer5" type="page" times="5" showtime="0" contype="string">
+    <div id="layui-layim-close" class="layui-layer-content">
+        {$avatar}
+        <span>{lang aljhtx:nav_htm_8}</span>
+        <div class="aljol-newscount">
+            {if $newsCount}<i class="ajlol-order-numbers">$newsCount</i>{/if}
+        </div>
+    </div>
+    <span class="layui-layer-setwin">
+
+    </span>
+</div>
+<script>
+    function open_aljol() {
+        layer.open({
+            type: 2
+            ,offset: 'rb'
+            ,title: '&#22312;&#32447;&#32842;&#22825;'
+            ,area: ['414px', '80%']
+            ,content: 'plugin.php?id=aljol' //iframe{lang aljhtx:aljol_htm_17}url
+            ,shade: 0 //{lang aljhtx:aljol_htm_18}
+        });
+    }
+
+    OL = {
+        voice_aljol: function() {
+            var audio = document.createElement("audio");
+            audio.src = '{$_G['cache']['plugin']['aljol']['mp3']}';
+            audio.play();
+        },
+        newsMes_aljol:function () {
+            var url='plugin.php?id=aljol&act=newsnum';
+            jQuery.post(url,function(res){
+                if(res!=null && res!='') {
+                    if(res.newscount>0){
+                        jQuery('.aljol-newscount').html('<i class="ajlol-order-numbers">'+res.newscount+'</i>');
+                    }else{
+                        jQuery('.aljol-newscount').html('');
+                    }
+                    {if $_G['cache']['plugin']['aljol']['mp3']}
+                    if(res.newscnum>0){
+                        OL.voice_aljol();
+                    }
+                    {/if}
+                }
+            },'json');
+        },
+        init:function () {
+            setInterval(function(){
+                OL.newsMes_aljol();
+            },5000)
+        }
+    };
+    OL.init();
+</script>
+<!--{/block}-->

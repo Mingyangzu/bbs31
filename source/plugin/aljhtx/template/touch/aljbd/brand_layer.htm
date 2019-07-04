@@ -1,0 +1,61 @@
+<style>
+    .layui-m-layercont {
+        padding:0px 10px;
+        line-height: 22px;
+        text-align: center;
+    }
+    .layui-m-layerchild h3 {
+
+        height: 40px;
+        line-height: 40px;
+
+    }
+    .layui-m-layerbtn {
+
+        height: 40px;
+        line-height: 40px;
+
+        border-top: 1px solid #f8f8f8;
+        background-color: #f8f8f8;
+    }
+    .layui-m-layer0 .layui-m-layerchild {
+        width: 80%;
+        max-width: 640px;
+    }
+</style>
+<script src="{$common_path}static/js/layer/mobile/layer.js?{$version}" charset="utf-8"></script>
+<script>
+    {if !$_G['cache']['plugin']['aljwx']['is_mini']}
+    jQuery('.ewmbox').qrcode({
+        width: 300,
+        height: 300,
+        text:'{$_G['siteurl']}/plugin.php?id=aljbd&act=view&bid={$bid}'
+    });
+    var canvas=jQuery('.ewmbox canvas')[0];
+    jQuery('.ewmbox').html("<img style='width:120px;padding: 5px;' src='"+canvas.toDataURL('image/jpg')+"' />");
+    {/if}
+    function takeScreenshot() {
+        layer.open({
+            type: 2
+            ,content: '{lang aljhtx:goods_1_htm_5}'
+        });
+        var shareContent = document.getElementById("shareContent");
+        var opts = {
+            useCORS: true
+        };
+        html2canvas(shareContent,opts).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            layer.closeAll()
+            //$.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:goods_1_htm_7}");
+            //{lang aljhtx:goods_1_htm_8}
+            layer.open({
+                title: [
+                    '{lang aljhtx:goods_1_htm_9}',
+                ]
+                ,content: "<img src='"+dataUrl+"' width='90%'/>"
+                ,btn: '{lang aljhtx:goods_1_htm_10}'
+            });
+        });
+    }
+    //takeScreenshot();
+</script>

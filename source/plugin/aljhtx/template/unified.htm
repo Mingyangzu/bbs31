@@ -1,0 +1,82 @@
+{eval include template(PLUGIN_ID.':unified_header')}
+{eval include template(PLUGIN_ID.':stylecss')}
+<style>
+    .content-wrapper,
+    .right-side,
+    .main-footer {
+        margin-left: 50px;
+    }
+    .content-wrapper{
+        position: absolute;
+        width: auto;
+        top: 50px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        overflow: hidden;
+        -o-transition: all 0.2s ease;
+        -ms-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -webkit-transition: all 0.2s ease;
+        padding-bottom: 0px;
+    }
+    .skin-blue .main-header li.user-header{
+        background-color: #333;
+    }
+    .skin-blue .main-header .logo:hover {
+        background-color: #333
+    }
+    .sidebar-menu-min li{cursor: pointer;}
+
+</style>
+<section class="sidebar-min" >
+    <ul class="sidebar-menu-min" >
+        {loop $sidearray $sk $v}
+        {if $v['is_open'] == 1}
+        <li class="header-min {if (strpos($v['url'], DEFAULT_CONTROLLER)!==false && !$_GET['type']) || $_GET['type'] == $sk}active{/if}" data-url="{$v['url']}&type=$sk">
+            {$v['icon']}
+            {$v['name']}
+        </li>
+        {/if}
+        {/loop}
+    </ul>
+</section>
+<div class="content-wrapper">
+<iframe id="unified_iframe" src="{if $framesurl}{$framesurl}{else}{$def_url}{/if}" style="width:100%;height:100%;border: 0px;"></iframe>
+</div>
+<script>
+    $('.sidebar-menu-min li').click(function(){
+        var uid = $_G[uid];
+        var furl = $(this).attr('data-url');
+
+        if(uid <=0){
+            //top.location.href='member.php?mod=logging&action=login&referer='+encodeURI(furl);
+        }
+        layer.load(0, {shade: false});
+        $('.header-min').removeClass('active');
+        $(this).addClass('active');
+        $('#unified_iframe').attr("src",furl);
+    })
+</script>
+<script type="text/javascript">
+    layer.load(0, {shade: false});
+    $(document).ready(function(e){
+        var iframe = document.getElementById("unified_iframe");
+        if (iframe.attachEvent) {
+            iframe.attachEvent("onload", function() {
+                layer.closeAll('loading');
+            });
+        } else {
+            iframe.onload = function () {
+                layer.closeAll('loading');
+            };
+        }
+        })
+    function iframe_refresh() {
+        document.getElementById('unified_iframe').contentWindow.location.reload();
+    }
+    function iframe_demo() {
+        $('#unified_iframe').attr("src",'{$pluginurl}&act=demo');
+    }
+</script>
+{eval include template(PLUGIN_ID.':admin/footer')}

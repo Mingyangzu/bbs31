@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="{CHARSET}">
+        <title>{lang aljhtx:ms_index_htm_1}</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link href="source/plugin/aljhtx/template/admin/activity/css/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="source/plugin/aljhtx/static/js/jquery-2.2.3.min.js"></script>
+        <script type="text/javascript" src="source/plugin/aljhtx/template/admin/activity/js/tab.js"></script>
+    </head>
+    <body>
+
+        <section class="aui-flexView">
+            <header class="aui-navBar aui-navBar-fixed">
+                <a href="javascript:;" class="aui-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a>
+                <div class="aui-center">
+                    <span class="aui-center-title">{lang aljhtx:ms_index_htm_1}</span>
+                </div>
+                <a href="javascript:;" class="aui-navBar-item">
+                    <i class="icon icon-share"></i>
+                </a>
+            </header>
+            <section class="aui-scrollView">
+                <div class="aui-tab" data-ydui-tab>
+                    {if count($activity_list) >1 || 1}
+                    <ul class="tab-nav b-line">
+                        {loop $activity_list $activity}
+                        <li class="tab-nav-item {if $now_activity_id == $activity['id']}tab-active{/if}">
+                            <a href="plugin.php?id=aljhtx&c=activity&a=ms_index&ajax=yes&now_activity_id={$activity[id]}">
+                                <div>{$activity['title']}</div>
+                                <div>{if $first_activity_id == $activity['id'] && strtotime($now_activity['start_time'])<TIMESTAMP}{lang aljhtx:ms_index_htm_3}{else}{lang aljhtx:ms_index_htm_4}{/if}</div>
+                            </a>
+                        </li>
+                        {/loop}
+                    </ul>
+                    {/if}
+
+                    <div class="tab-panel tab-panel-clear-line">
+                        <div class="tab-panel-item  tab-active">
+
+                            <div class="aui-flex b-line">
+                                <div class="aui-flex-box">
+                                    <p>{if $first_activity_id == $now_activity_id && strtotime($now_activity['start_time']) < TIMESTAMP}{lang aljhtx:ms_index_htm_5}{else}{lang aljhtx:ms_index_htm_6}{/if}</p>
+                                </div>
+                                <div class="aui-limit-time clearfix">
+                                    <div class="aui-fl-time">{if $first_activity_id == $now_activity_id && strtotime($now_activity['start_time'])<TIMESTAMP}{lang aljhtx:ms_index_htm_7}{else}{lang aljhtx:ms_index_htm_8}{/if}</div>
+                                    <div class="time-item">
+                                        <span class="hour_show"><s id="h"></s>-- </span>
+                                        <em>:</em>
+                                        <span class="minute_show"><s></s>--</span>
+                                        <em>:</em>
+                                        <span class="second_show"><s></s>--</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {loop $goods_list $goods}
+                            <a href="plugin.php?id=aljbd&act=goodview&gid={$goods['ms_gid']}" class="aui-flex b-line">
+                                <div class="aui-flex-time-img">
+                                    <img src="{$goods['pic1']}" alt="">
+                                </div>
+                                <div class="aui-flex-box">
+                                    <h2>{$goods['name']}</h2>
+                                    {eval $selling_point = explode(',', $goods['selling_point']);}
+                                    <div class="aui-flex-tag">
+                                        {if $selling_point}
+                                        {loop $selling_point $point}
+                                        <span>$point</span>
+                                        {/loop}
+                                        {/if}
+                                    </div>
+                                    <div class="aui-time-seep ">
+                                        <div class="aui-time-seep-go" style="width:{eval echo sprintf("%.2f",$goods['ms_sale_num']/$goods['ms_num']) * 100}%"></div>
+                                        <span>{lang aljhtx:ms_goods_htm_10}{eval echo sprintf("%.2f",$goods['ms_sale_num']/$goods['ms_num']) * 100}%</span>
+                                    </div>
+                                    <div class="aui-text-bottom">
+                                        <h3>
+                                            &#65509;{$goods['ms_price']} <em>{lang aljhtx:ms_goods_htm_8}:{$goods['price1']}</em></h3>
+                                        <h4></h4>
+                                    </div>
+                                    <div class="aui-time-button">
+                                        <button>{lang aljhtx:ms_index_htm_11}</button>
+                                    </div>
+                                </div>
+                            </a>
+                            {/loop}
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </section>
+
+        <script type="text/javascript">
+
+            var intDiff = parseInt({$times});
+            //{lang aljhtx:ms_index_htm_12}
+
+            function timer(intDiff) {
+                window.setInterval(function() {
+                    var day = 00
+                        , hour = 00
+                        , minute = 00
+                        , second = 00;
+                    //{lang aljhtx:ms_index_htm_13}
+                    if (intDiff > 0) {
+                        day = Math.floor(intDiff / (60 * 60 * 24));
+                        hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                        minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                        second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+                    }
+                    if (hour <= 9)
+                        hour = '0' + hour;
+                    if (minute <= 9)
+                        minute = '0' + minute;
+                    if (second <= 9)
+                        second = '0' + second;
+                    $('.hour_show').html('<s id="h"></s>' + hour + ' ');
+                    $('.minute_show').html('<s></s>' + minute + ' ');
+                    $('.second_show').html('<s></s>' + second + ' ');
+                    intDiff--;
+                }, 1000);
+            }
+
+            $(function() {
+                timer(intDiff);
+            });
+        </script>
+
+    </body>
+
+    </body>
+</html>

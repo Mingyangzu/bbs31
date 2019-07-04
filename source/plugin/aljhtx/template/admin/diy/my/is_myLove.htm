@@ -1,0 +1,24 @@
+<!--is_mobile_index_love-->
+<div class="box-body diyDocument" id="{$diy['auto_module']}" style="display: none;">
+    <div class="box-body" style="">
+        <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+            <input type="hidden" value="{FORMHASH}" name="formhash">
+            <input type="hidden" value="yes" name="ajax">
+            <input type="hidden" value="{$diy['auto_module']}" name="skey">
+            <input type="hidden" value="{$k}" name="displayorder">
+            <div class="form-group">
+                <div class="layui-form-item layui-form">
+                    <label>{lang aljhtx:setting_htm_120}</label>
+                    <div>
+                        <input type="radio" name="{$diy['auto_module']}" value="1" title="{lang aljhtx:setting_htm_121}" {if $diy[data]}checked{/if}><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon layui-anim-scaleSpring"></i></div>
+                        <input type="radio" name="{$diy['auto_module']}" value="0" title="{lang aljhtx:setting_htm_122}" {if !$diy[data]}checked{/if}><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:10px;">
+                <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+        </form>
+    </div>
+</div>
+<!--is_mobile_index_love-->

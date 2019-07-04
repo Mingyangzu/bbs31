@@ -1,0 +1,28 @@
+{eval include template($common_template_pluginid.':new/common/header');}
+    <div class="weui-msg">
+     <div class="weui-msg__icon-area">
+         <i class="{$result_info[icon]} weui-icon_msg"></i>
+     </div>
+     <div class="weui-msg__text-area">
+       <h2 class="weui-msg__title">{$result_info[title]}</h2>
+       <p class="weui-msg__desc">{$result_info['desc']}
+       	{if $result_info['label']}
+       	</br>
+		{loop $result_info['label'] $label}
+		<span class="border-global" style="background:#{eval echo randColor()}">{$label}</span>
+		{/loop}
+		{/if}
+       </p>
+     </div>
+     <div class="weui-msg__opr-area">
+       <p class="weui-btn-area">
+           {if $result_info['popup']}
+           <a href="{$result_info[btn_primary][url]}" class="weui-btn weui-btn_primary open-popup" data-target="#{$result_info['popup']}" style="margin: 10px 23px;background-color:#f96767;">{$result_info[btn_primary][value]}</a>
+           {else}
+            <a href="{$result_info[btn_primary][url]}" class="weui-btn weui-btn_primary" style="margin: 10px 23px;background-color:#f96767;">{$result_info[btn_primary][value]}</a>
+           {/if}
+         <a href="{$result_info[btn_default][url]}" class="weui-btn weui-btn_default" style="margin: 10px 23px;">{$result_info[btn_default][value]}</a>
+       </p>
+     </div>
+   </div>
+   {eval include template($common_template_pluginid.':new/common/footer');}

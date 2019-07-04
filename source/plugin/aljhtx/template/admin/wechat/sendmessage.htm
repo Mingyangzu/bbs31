@@ -1,0 +1,157 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+            <form class="layui-form" method="post" action="plugin.php?id=aljhtx&c=wechat&a=sendmessage">
+                <input type="hidden" value="{FORMHASH}" name="formhash">
+                {loop $templateList $tpl}
+                <input type="hidden" value="{$tpl['template_id']}" name="template_id">
+                <fieldset class="layui-elem-field">
+                    <legend style=" width: auto;border-bottom: none;color:#999;font-weight: 400;">{lang aljhtx:getlist_htm_5}</legend>
+                    <div class="layui-field-box">
+
+                        {loop $tpl[newContent] $t}
+                        {if $t[0] && $t[1]}
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">{$t[0]}({$t[1]})</label>
+                                <div class="layui-input-inline" style="width: 400px;margin-right:0;">
+                                    <input type="text" name="{$t[1]}[value]" value="{$tpl[last_content][data][$t[1]][value]}" placeholder="" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid"></div>
+                                <div class="layui-input-inline" style="width: 60px;">
+                                    <input style="padding-left:0px;" type="color" value="{if $tpl[last_content][data][$t[1]][color]}{$tpl[last_content][data][$t[1]][color]}{else}#173177{/if}" name="{$t[1]}[color]" placeholder="{lang aljhtx:bindtemplate_htm_4}" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        {/if}
+                        {/loop}
+
+                    </div>
+                </fieldset>
+                {/loop}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{lang aljhtx:sendmessage_htm_11}</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="url" value="{$tpl[last_content][url]}"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                {eval}
+                    $groupList = DB::fetch_all('select * from %t where type=%s and status=3', array('forum_forum', 'sub'));
+                    if(empty($groupList)){
+                        unset($typeList[7]);
+                    }
+                {/eval}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">{lang aljhtx:sendmessage_htm_12}</label>
+                    <div class="layui-input-block">
+                        {loop $typeList $k $v}
+                        <input type="radio" lay-filter="type" name="type" value="$k" title="$v" {if $k == 1 || $tpl[last_content][type] == $k}checked=""{/if}>
+                        {/loop}
+                    </div>
+                </div>
+
+                <div class="layui-form-item send-type" id="type_4" style="display:none;">
+                    <label class="layui-form-label">OPENID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="openid"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item send-type" id="type_5" style="display:none;">
+                    <label class="layui-form-label">{lang aljhtx:user_htm_13}</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username"  autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item send-type" id="type_6" style="display: none;">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">UID{lang aljhtx:sendmessage_htm_14}</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="uid_min" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="uid_max" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item send-type" id="type_7" style="display: none;">
+                    <label class="layui-form-label">{lang aljhtx:sendmessage_htm_15}</label>
+                    <div class="layui-input-block">
+                        <!--{loop $groupList $groupid $group}-->
+                        <input type="checkbox" name="fids[{$group['fid']}]" title="{eval echo strip_tags($group['name']);}">
+                        <!--{/loop}-->
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item send-type" id="type_3" style="display: none;">
+                    <label class="layui-form-label">{lang aljhtx:sendmessage_htm_16}</label>
+                    <div class="layui-input-block">
+                        <!--{loop $userGroupList $groupid $group}-->
+                        <input type="checkbox" name="gids[{$groupid}]" title="{eval echo strip_tags($group['grouptitle']);}">
+                        <!--{/loop}-->
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">{lang aljhtx:pcdiy_logo_htm_2}</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">{lang aljhtx:pcdiy_logo_htm_3}</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('radio(type)', function(data){
+                    $('.send-type').hide();
+                    $('#type_'+data.value).show();
+                });
+            })
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

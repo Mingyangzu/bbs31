@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs" role="tablist" >
+    <li {if empty($_GET['type']) && $_GET['c']!='log'}class="active"{/if}><a href="plugin.php?id=aljhtx&c=notification&a=getlist">{lang aljhtx:nav_htm_6}</a></li>
+{loop $bindTemplateList $k  $v}
+    <li {if $_GET['type'] == $k}class="active"{/if}><a href="plugin.php?id=aljhtx&c=notification&a=getlist&type={$k}">{$v['name']}</a></li>
+{/loop}
+    <li {if $_GET['a'] == 'aljdx'}class="active"{/if}><a href="plugin.php?id=aljhtx&c=log&a=aljdx">{lang aljhtx:nav_htm_7}</a></li>
+    <li {if $_GET['a'] == 'aljol'}class="active"{/if}><a href="plugin.php?id=aljhtx&c=log&a=aljol">{lang aljhtx:nav_htm_8}</a></li>
+</ul>

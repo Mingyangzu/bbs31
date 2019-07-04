@@ -1,0 +1,217 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .layui-table, .layui-table-view {
+        margin: 3px 0;
+    }
+    .box.box-default {
+        border-top-color: #009688;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 2px solid #009688;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #009688;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-tips-c {
+        line-height: 14px;
+    }
+    .layui-table-cell {
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+    .layui-table-view .layui-table{
+        width:100%!important;
+    }
+    .catpic img{
+        width:40px;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-9">
+                {template aljhtx:admin/qrcode/nav}
+            </div>
+
+            <div class="col-md-3" style="text-align:right">
+                <a href="javascript:;"  class="btn btn-primary reflash"><strong>&nbsp;{lang aljhtx:goods_htm_19}</strong></a>
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <!-- /.box-header -->
+
+                    <iframe style="display:none;" name="submitiframe"></iframe>
+                    <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                        <input type="hidden"  value="0" name="sign" id="sign">
+                        <input type="hidden" name="formhash" value="{FORMHASH}">
+                    </form>
+                    <blockquote class="layui-elem-quote" style="margin-top:10px;font-size:14px;">{lang aljhtx:goods_htm_20}</blockquote>
+                    <table id="demo" lay-filter="test"></table>
+                    <script type="text/html" id="barDemo">
+                        <a class="layui-btn layui-btn-normal layui-btn-xs catpic" lay-event="auto">{lang aljhtx:goods_htm_21}</a>
+                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="push">{lang aljhtx:goods_htm_22}</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">{lang aljhtx:setting_htm_9}</a>
+                    </script>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+    var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+        sendMessage: function(template_id){
+            layer.open({
+                type: 2,
+                title: '{lang aljhtx:goods_htm_24}',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //{lang aljhtx:ms_htm_7}
+                offset: "20px",
+                area: ['993px', '700px'],
+                content: 'plugin.php?id=aljhtx&c=wechat&a=sendmessage&template_id='+template_id
+            });
+        },
+        reflash: function(){
+            $('.reflash').click(function() {
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:goods_htm_19}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    offset: "20px",
+                    area: ['600px', '350px'],
+                    content: 'plugin.php?id=aljhtx&c=qrcode&a=goods_add'
+                });
+            });
+        },
+        enterPress: function(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('.glyphicon-search').click();
+            }
+        },
+        init: function(){
+            layui.use('table', function(){
+                var table = layui.table;
+                var tableIns = table.render({
+                    elem: '#demo'
+                    ,limit: 20
+                    ,url: 'plugin.php?id=aljhtx&c=qrcode&a=goods&ajax=yes&render=yes'
+                    ,page: true
+                    ,skin: 'line'
+                    ,even: true
+                    ,cols: [[
+                        ,{field: 'times', title: '{lang aljhtx:goods_htm_28}', templet: function(d){
+                            return '<span class="catpic"><img src="'+d.qrcode+'">';
+                        }}
+                        ,{field: 'type', title: '{lang aljhtx:goods_htm_29}', templet: function(d){
+                                if(d.type == 1) {
+                                    return '{lang aljhtx:wechat_add_htm_5}';
+                                }else{
+                                    return '{lang aljhtx:wechat_add_htm_4}';
+                                }
+                            }}
+                        ,{field: 'gid', title: '{lang aljhtx:goods_add_htm_2}ID'}
+                        ,{field: 'qrcode', title: '{lang aljhtx:goods_htm_33}'}
+                        ,{field: 'num', title: '{lang aljhtx:goods_htm_34}'}
+                        ,{field: 'dateline', title: '{lang aljhtx:goods_htm_35}'}
+                        ,{align:'center', toolbar: '#barDemo', title: '{lang aljhtx:getlist_htm_7}'}
+                    ]]
+                });
+                table.on('tool(test)', function(obj){
+                    var data = obj.data;
+                    if(obj.event === 'del'){
+                        layer.confirm('{lang aljhtx:getlist_htm_8}', {"offset": "50px"}, function(index){
+                            layer.load(0, {"offset": "50px"});
+                            $.post('plugin.php?id=aljhtx&c=qrcode&a=goods_delete&ajax=yes&qid='+data.id, function(){
+                                layer.alert('{lang aljhtx:ms_htm_14}', {"offset": "50px"}, function(){
+                                    obj.del();
+                                    layer.closeAll();
+                                });
+                            });
+
+                        });
+                    }
+                    if(obj.event === 'push'){
+                        location.href = 'plugin.php?id=aljhtx&c=qrcode&a=goods_download&ajax=yes&qid='+data.id;
+                    }
+                    if(obj.event === 'auto'){
+
+                    }
+                });
+                $('.glyphicon-search').on('click', function(){
+                    tableIns.reload({
+                        where: {
+                            search: $('#search').val()
+                        }
+                        ,page: {
+                            curr: 1
+                        }
+                    });
+                });
+
+            });
+            R.reflash();
+        }
+    }
+    R.init();
+</script>
+<script>
+    $(document).on('click', '.catpic', function(){
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['430px', '430px'],
+            shadeClose: true,
+            content: $(this).parent().parent().parent().find('img').parent().html()
+        });
+    });
+
+</script>
+{eval include template(PLUGIN_ID.':admin/footer')}
+

@@ -1,0 +1,80 @@
+<div id="shareContent" style="max-width: 320px;background: #ffffff;position: absolute;top: -100000px;">
+    <div class=" shop-header" >
+        <div class="swiper-container shop-header" id="goodsPic" {if !$shopdata['shop_img']}style="background:#FC4B64;"{/if}>
+
+
+        {if $shopdata['shop_img']}
+        <img src="$shopdata['shop_img']" width="100%" style ="display:block;" height="auto">
+        {/if}
+    </div>
+        <!-- needData {lang aljhtx:brand_htm_1} -->
+        <div class="shop-header-details" style="position:relative;bottom: 0px;padding-top: 10px;background: #ffffff;">
+            <div class="details-box" style="padding-top: 40px;text-align: center;padding-left: 0px">
+                <div style="top: -50px;left: 50%;margin-left: -12.5%;width: 25%;position: absolute;">
+                    <img  style="width:100%;" {if $settings['is_lazyload']['value']}src="$loading" data-original="{if $bd['logo']}$bd['logo']{else}$noimg{/if}"{else}src="{if $bd['logo']}$bd['logo']{else}$noimg{/if}"{/if}>
+                </div>
+                <div class="shop-tit-a">
+                    <h3 style="color:#333;">$shopdata['shop_name']
+                    </h3>
+                    <span class="provider-grade grade-2"></span>
+                    <i class="medal-level medal-6"></i>
+                </div>
+                <p style="color:#333;">{lang aljhtx:fx_brand_htm_2}</p>
+            </div>
+        </div>
+    </div>
+    <div class="weui-panel weui-panel_access" style="margin-top: 30px">
+        <div class="weui-panel__bd">
+            <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+                <div class="weui-media-box__hd">
+                    <div class="ewmbox">
+
+                    </div>
+                </div>
+                <div class="weui-media-box__bd">
+                    <h4 class="weui-media-box__title" style="font-size: 15px">{lang aljhtx:fx_brand_htm_3}</h4>
+                    <p style="color:#333;font-size: 12px;">{lang aljhtx:fx_brand_htm_4} {$_G['cache']['plugin']['aljbd']['aljbd_plugins']}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<style>
+    .layui-m-layercont {
+        padding: 10px;
+        line-height: 22px;
+        text-align: center;
+    }
+</style>
+<script src="{$common_path}/static/js/html2canvas.js"></script>
+<script src="{$common_path}/static/js/jquery.qrcode.min.js"></script>
+<script src="{$common_path}/static/js/layer/mobile/layer.js?{$version}" charset="utf-8"></script>
+<script>
+
+    $('.ewmbox').qrcode({
+        width: 60,
+        height: 60,
+        text:'{$_G['siteurl']}/plugin.php?id=aljsfx&a=shop&c=distribution&shop_id={$_GET[shop_id]}'
+    });
+
+    function takeScreenshot() {
+        layer.open({
+            type: 2
+            ,content: '{lang aljhtx:goods_htm_7}'
+        });
+        var shareContent = document.getElementById("shareContent");
+        html2canvas(shareContent).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            layer.closeAll()
+            //$.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:pt_goods_htm_9}");
+            //{lang aljhtx:goods_htm_9}
+            layer.open({
+                title: [
+                    '{lang aljhtx:goods_htm_10}',
+                ]
+                ,content: "<img src='"+dataUrl+"' width='100%'/>"
+            });
+        });
+    }
+
+</script>

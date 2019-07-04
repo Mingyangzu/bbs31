@@ -1,0 +1,108 @@
+<style>
+    .share_span_name{
+        font-size: 12px;
+        position: absolute;
+        right: 0px;
+        top: 5%;
+        z-index: 111;
+        background: #f42424;
+
+        font-weight: 600;
+        padding: 5px 10px;
+        border-radius: 10px 0px 0px 10px;
+        color: #ffffff !important;
+    }
+    .ewmbox img{width:120px;height:120px;}
+</style>
+<div class="g-waiting" id="shareContent" style="width: 414px;position: absolute;top: -100000px;padding:10px;">
+    <div style="padding: 10px;border: 1px solid #eee;border-radius: 5px;">
+        <div class="g-card" style="border: 1px solid #f8f8f8;">
+            {if $_G['cache']['plugin']['aljbd']['aljbd_plugins']}
+            <span class="share_span_name">{lang aljhtx:pt_goods_htm_1} {$_G['cache']['plugin']['aljbd']['aljbd_plugins']}</span>
+            {/if}
+            <div class="items">
+                <img src="{$pt_goods['pic1']}" width="100%" height="100%" alt="">
+            </div>
+            <p class="tit">{$pt_goods['name']}</p>
+            <div class="sp">{lang aljhtx:pt_goods_htm_2}<em>{$pt_goods['collage_price']}</em>
+                <span  style="background: #ffffff;" class="mp"><del >{$pt_goods['price2']}</del></span></div>
+            {if $pt_grouporder['groupnumed']>=$pt_grouporder['groupnum'] || $overtime<=0}
+            <div class="time" >{lang aljhtx:pt_goods_htm_3}</div>
+            {else}
+            {eval $day = floor($overtime / (60 * 60 * 24));$hour = floor($overtime / (60 * 60)) - ($day * 24);$allhour = floor($overtime / (60 * 60));$minute = floor($overtime / 60) - ($day * 24 * 60) - ($hour * 60);$second = floor($overtime) - ($day * 24 * 60 * 60) - ($hour * 60 * 60) - ($minute * 60);}
+            <div class="time" >{lang aljhtx:pt_goods_htm_4}{$allhour}:{$minute}:{$second}{lang aljhtx:pt_goods_htm_5}</div>
+
+            {/if}
+        </div>
+        <p class="info" >
+            {if $pt_grouporder['groupnumed']<$pt_grouporder['groupnum']}
+            {lang aljhtx:pt_goods_htm_6}{$pt_grouporder['groupnum']-$pt_grouporder['groupnumed']}{lang aljhtx:pt_goods_htm_7}~
+            {else}
+            {lang aljhtx:pt_goods_htm_8}
+            {/if}
+        </p>
+        <ul class="group" >
+            {loop $pt_ordergroup $tmp_key $tmp_value}
+            <li>{eval echo avatar($tmp_value['uid'])}</li>
+            {/loop}
+            {loop groupOrderAction::getNumberArray($pt_grouporder['groupnum']-$pt_grouporder['groupnumed']) $tmp_value}
+            <li class="empty"></li>
+            {/loop}
+        </ul>
+        <div style="display: block;font-size: 14px;margin-top: 30px;margin-bottom: 10px;">
+            <div class="ewmbox">
+                {eval $pic_logo = (strpos($pt_goods['pic1'],$_G['cache']['plugin']['aljoss']['cdn_domain']) !== false  || strpos($pt_goods['pic1'],$_G['cache']['plugin']['aljoss']['domain'])) !== false ? $pt_goods['pic1'] : $_G['siteurl'].'/'.$pt_goods['pic1']}
+                {if $_G['cache']['plugin']['aljwx']['is_mini']}
+                    <img src="source/plugin/aljwx/qrcode.php?url=plugin.php?id=aljspt%26c=groupOrder%26a=groupOrder%26grouporderid={$groupid}&logo={$pic_logo}" width="100" height="100">
+                {/if}
+            </div>
+            <p style="margin-top: 10px">{lang aljhtx:pt_goods_htm_9}</p>
+        </div>
+    </div>
+</div>
+<style>
+    .weui-dialog__bd img {
+        max-width: 90%;
+    }
+    img {
+        object-fit: cover;
+    }
+</style>
+<script src="source/plugin/aljhtx/static/js/html2canvas.js"></script>
+<script src="source/plugin/aljhtx/static/js/jquery.qrcode.min.js"></script>
+<script>
+    {if !$_G['cache']['plugin']['aljwx']['is_mini']}
+    $('.ewmbox').qrcode({
+        width: 300,
+        height: 300,
+        text:'{$_G['siteurl']}/plugin.php?id=aljspt&c=groupOrder&a=groupOrder&grouporderid={$groupid}'
+    });
+    var canvas=$('.ewmbox canvas')[0];
+    $('.ewmbox').html("<img style='width:120px;padding: 5px;' src='"+canvas.toDataURL('image/jpg')+"' />");
+    {/if}
+    function takeScreenshot() {
+        $.showLoading();
+        var shareContent = document.getElementById("shareContent");
+        var opts = {
+            imageTimeout:0,
+            useCORS: true
+        };
+        html2canvas(shareContent,opts).then(function(canvas) {
+            var dataUrl = canvas.toDataURL();
+            $.hideLoading();
+            $.alert("<img src='"+dataUrl+"' />", "{lang aljhtx:goods_1_htm_7}");
+            $('.weui-dialog__title').css('font-size', '14px');
+            $('.weui-dialog__hd').css('padding', '10px');
+            $('.weui-weui-dialog__bd').css('padding', '0px');
+            $('.weui-dialog__bd').css('padding', '0px');
+        });
+    }
+    {if $_G['uid'] == $pt_grouporder['groupheaduid'] && $pt_grouporder['groupnumed']<$pt_grouporder['groupnum'] && $overtime>0}
+    $(function () {
+        if(window.sessionStorage.getItem("reg_pt_goods_{$groupid}") == null) {
+            takeScreenshot()
+            window.sessionStorage.setItem("reg_pt_goods_{$groupid}", 1);
+        }
+    })
+    {/if}
+</script>

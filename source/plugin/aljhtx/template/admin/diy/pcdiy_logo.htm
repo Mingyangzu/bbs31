@@ -1,0 +1,141 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe style="display:none;" name="submitiframe"></iframe>
+                <form class="layui-form" method="post" action="{$dourl}" target="submitiframe">
+                    <input type="hidden" value="{FORMHASH}" name="formhash">
+
+                    <div class="form-group">
+                        <button type="button" class="layui-btn layui-btn-primary upload">
+                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_47}
+                        </button>
+                        <div class="upload_img" style="margin-top:5px;">
+                            <img style="height:20px;" src="{$logo}">
+                        </div>
+                    </div>
+
+
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="demo1">{lang aljhtx:pcdiy_logo_htm_2}</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">{lang aljhtx:pcdiy_logo_htm_3}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('radio(type)', function(data){
+                    $('.send-type').hide();
+                    $('#type_'+data.value).show();
+                });
+            });
+            R.layuiUpload();
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    parent.location.href=parent.location.href;
+                });
+            }
+        },
+        layuiUpload: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+            });
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                //upload
+                upload.render({
+                    elem: '.upload'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+                upload.render({
+                    elem: '.upload_two'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_two" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_two" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_two').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+            });
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

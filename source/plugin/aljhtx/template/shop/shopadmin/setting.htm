@@ -1,0 +1,395 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    .h_casev_sPhone {
+        width: 550px;
+        float: left;
+        height: 100%;
+        position: relative;
+    }
+    .h_casev_sPhoneBox {
+        width: 345px;
+        height: 663px;
+        margin-left: 55px;
+        background: url({PLUGIN_PATH}/static/img/phoneBg.png) no-repeat
+    }
+
+    .h_casev_sPhoneM {
+        padding-top: 72px;
+        padding-left: 13px
+    }
+
+    .h_casev_sPhoneM .nr {
+        width: 320px;
+        height: 486px;
+        position: relative
+    }
+
+    .h_casev_sPhoneM .scene_title {
+        width: 320px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #1d2224;
+        color: #fff;
+        font-size: 16px;
+        text-align: center
+    }
+</style>
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+</style>
+<script>
+    var R = {
+        options: {
+
+        },
+        init: function(){
+
+        },
+        followChange: function(diyID){
+            $('.diyDocument').hide();
+            $('#'+diyID).show();
+        },
+        tips: function (info,url){
+            if(info == 1){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6},function(){
+                    document.getElementById('caseIframe').contentWindow.location.reload();
+                    layer.closeAll();
+                });
+            }
+
+        },
+        layuiUpload: function(){
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                upload.render({
+                    elem: '.upload'
+                    ,auto: false //{lang aljhtx:setting_htm_3}
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '&#22270;&#29255;&#31867;&#22411;&#38169;&#35823;',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+results.base64+'">';
+                                    domdata += '<input name="uploadPhoto" type="hidden" value="'+results.base64+'">';
+                                    domdata += '<input name="size" type="hidden" value="'+results.base64.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+            });
+        }
+    };
+    $(function(){
+        R.init();
+        R.layuiUpload();
+    });
+</script>
+<div>
+
+    <section class="content" style="padding:0;margin-top: 30px;">
+        <div class="row">
+
+            <!-- /.col -->
+            <iframe style="display:none;" name="submitiframe"></iframe>
+                <div class="col-md-5">
+                    <div class="h_casev_sPhone">
+                        <div class="h_casev_sPhoneBox">
+                            <div class="h_casev_sPhoneM">
+                                <div class="scene_title">
+                                    {lang aljhtx:setting_htm_4}                        </div>
+                                <div class="nr" id="nr">
+                                    <iframe name="caseIframe" id="caseIframe" src="plugin.php?id=aljbd&mobilediy=yes" style="border:0; width:100%; height:100%;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="box-body diyDocument" id="swiper-container-horizontal" style="display: none;">
+                        {loop $sj_index_dh_types $k $v}
+                        <div class="box box-default collapsed-box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="sj_index_dh" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_5}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_6}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:200px;" src="{$v[2]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                        <input type="submit" class="btn btn-submit btn-default" name="deletesubmit" value="{lang aljhtx:setting_htm_9}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{lang aljhtx:setting_htm_10}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="sj_index_dh" name="skey">
+                                    <input type="hidden" value="{eval echo $k+1;}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_5}</label>
+                                        <input name="title"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_6}</label>
+                                        <input name="url"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;"></div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="box-body diyDocument" id="swiper-container">
+                            {loop $lz_types $k $v}
+                            <div class="box box-default collapsed-box">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">{$v[2]}</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body" style="">
+                                    <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                        <input type="hidden" value="{FORMHASH}" name="formhash">
+                                        <input type="hidden" value="yes" name="ajax">
+                                        <input type="hidden" value="sj_img_1" name="skey">
+                                        <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_15}</label>
+                                        <input name="title" value="$v[2]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_16}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                       <img style="height:200px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="submit" class="btn btn-submit btn-default" name="deletesubmit" value="{lang aljhtx:setting_htm_9}">
+                                    </div>
+                                    </form>
+                                </div>
+                        </div>
+                        {/loop}
+
+
+                            <div class="box box-default">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">{lang aljhtx:setting_htm_20}</h3>
+
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- /.box-tools -->
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body" style="">
+                                    <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                        <input type="hidden" value="{FORMHASH}" name="formhash">
+                                        <input type="hidden" value="yes" name="ajax">
+                                        <input type="hidden" value="sj_img_1" name="skey">
+                                        <input type="hidden" value="{eval echo $k+1;}" name="displayorder">
+                                        <div class="form-group">
+                                            <label>{lang aljhtx:setting_htm_15}</label>
+                                            <input name="title"  class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>{lang aljhtx:setting_htm_16}</label>
+                                            <input name="url"  class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="layui-btn layui-btn-primary upload">
+                                                <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                            </button>
+                                            <div class="upload_img" style="margin-top:5px;"></div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                            <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                    </div>
+
+
+                    <div class="box-body diyDocument" id="mobile_index_tad" style="display: none;">
+                        {loop $mobile_index_tad $k $v}
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{lang aljhtx:setting_htm_25}{eval echo $k+1;}{lang aljhtx:setting_htm_26}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="mobile_index_tad" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_27}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:200px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+                    </div>
+
+
+
+                    <div class="box-body diyDocument" id="mobile_index_fad" style="display: none;">
+                        {loop $mobile_index_fad $k $v}
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{lang aljhtx:setting_htm_25}{eval echo $k+1;}{lang aljhtx:setting_htm_26}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="mobile_index_fad" name="skey">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:setting_htm_27}</label>
+                                        <input name="url" value="$v[1]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:setting_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:200px;" src="{$v[0]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+                    </div>
+
+
+
+                </div>
+                <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+{eval include template(PLUGIN_ID.':admin/footer')}

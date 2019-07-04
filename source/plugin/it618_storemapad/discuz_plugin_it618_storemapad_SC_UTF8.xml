@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+	<item id="Title"><![CDATA[Discuz! Plugin]]></item>
+	<item id="Version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,X3.3,X3.4,F1.0]]></item>
+	<item id="Time"><![CDATA[2012-11-07 09:55]]></item>
+	<item id="From"><![CDATA[IT618 (http://www.cnit618.com/)]]></item>
+	<item id="Data">
+		<item id="plugin">
+			<item id="available"><![CDATA[1]]></item>
+			<item id="adminid"><![CDATA[1]]></item>
+			<item id="name"><![CDATA[it618商家地图广告]]></item>
+			<item id="identifier"><![CDATA[it618_storemapad]]></item>
+			<item id="description"><![CDATA[商家可以在二级分类地图上购买标注，标注里可以放广告]]></item>
+			<item id="datatables"><![CDATA[]]></item>
+			<item id="directory"><![CDATA[it618_storemapad/]]></item>
+			<item id="copyright"><![CDATA[IT618]]></item>
+			<item id="version"><![CDATA[v1.7]]></item>
+			<item id="__modules">
+				<item id="0">
+					<item id="name"><![CDATA[storemapad]]></item>
+					<item id="menu"><![CDATA[商家地图广告]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[1]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="1">
+					<item id="name"><![CDATA[admin]]></item>
+					<item id="menu"><![CDATA[地图管理]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[1]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+				<item id="2">
+					<item id="name"><![CDATA[help]]></item>
+					<item id="menu"><![CDATA[<font color=red><b>IT618应用中心</b></font>]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[3]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
+			</item>
+		</item>
+		<item id="version"><![CDATA[X2,X2.5,X3,X3.1,X3.2,X3.3,X3.4,F1.0]]></item>
+		<item id="var">
+			<item id="0">
+				<item id="displayorder"><![CDATA[1]]></item>
+				<item id="title"><![CDATA[SEO标题]]></item>
+				<item id="description"><![CDATA[商家地图广告的标题]]></item>
+				<item id="variable"><![CDATA[seotitle]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[商家地图广告]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="1">
+				<item id="displayorder"><![CDATA[2]]></item>
+				<item id="title"><![CDATA[SEO关键词]]></item>
+				<item id="description"><![CDATA[商家地图广告的关键词]]></item>
+				<item id="variable"><![CDATA[seokeywords]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[商家地图广告]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="2">
+				<item id="displayorder"><![CDATA[3]]></item>
+				<item id="title"><![CDATA[SEO描述]]></item>
+				<item id="description"><![CDATA[商家地图广告的描述]]></item>
+				<item id="variable"><![CDATA[seodescription]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[商家地图广告]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="3">
+				<item id="displayorder"><![CDATA[4]]></item>
+				<item id="title"><![CDATA[是否显示封面]]></item>
+				<item id="description"><![CDATA[如果不显示默认封面，那么默认显示第一个类别地图]]></item>
+				<item id="variable"><![CDATA[ad_isindex]]></item>
+				<item id="type"><![CDATA[radio]]></item>
+				<item id="value"><![CDATA[0]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="4">
+				<item id="displayorder"><![CDATA[5]]></item>
+				<item id="title"><![CDATA[地图标注功能名]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_title]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[我要添加地图标注]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="5">
+				<item id="displayorder"><![CDATA[6]]></item>
+				<item id="title"><![CDATA[封面内容]]></item>
+				<item id="description"><![CDATA[当选择默认显示封面时显示的内容]]></item>
+				<item id="variable"><![CDATA[ad_index]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[<strong>it618首页N格</strong><br>
+一种不可思议的方式与DZ的数据调用完美整合，只要你有创意，论坛数据任你选择。数据方面完全不用我再设计了，一次投入，终生受用。优质的售后服务，让你一定觉得很值。
+最大的优点:
+1、图片区、主题区、版块区与会员区的标题与内容，很直观，很容易修改标题、标题的顺序与内容。
+2、整合了DZ的模块数据调用，模块的性能、效率与操作得到保证。
+3、只要你自己会设计模块，那么也可以调用自己设计的模块，扩展性很好，前提是模块的模板要符合要求，本教程里提供了模板规则。
+4、模块可以有自动加载数据，也可以用推送的方式，内容由管理员自己决定，并且有的图片的模块，还可以裁剪图片，提高缩略图的美观度。
+5、N格、图片区、主题区、版块区、会员区与提示层的风格可以通过设置进行装修，并且还支持宽屏显示。
+6、主题高亮、图片附件、置顶与精华图标同步显示
+7、可以显示伪静态URL地址，只要你的网站支持伪静态，在应用设置开启伪静态就可以了]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="6">
+				<item id="displayorder"><![CDATA[7]]></item>
+				<item id="title"><![CDATA[左侧菜单宽度]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_menuwidth]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[180]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="7">
+				<item id="displayorder"><![CDATA[8]]></item>
+				<item id="title"><![CDATA[左侧子菜单当前背景色]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_menucurbgc]]></item>
+				<item id="type"><![CDATA[color]]></item>
+				<item id="value"><![CDATA[#8ac8e4]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="8">
+				<item id="displayorder"><![CDATA[9]]></item>
+				<item id="title"><![CDATA[左侧子菜单移动背景色]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_menumovebgc]]></item>
+				<item id="type"><![CDATA[color]]></item>
+				<item id="value"><![CDATA[#999]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="9">
+				<item id="displayorder"><![CDATA[10]]></item>
+				<item id="title"><![CDATA[地图标签颜色]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_labelcolor]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[1=蓝色
+2=绿色
+3=浅橙
+4=灰橙
+5=灰色]]></item>
+			</item>
+			<item id="10">
+				<item id="displayorder"><![CDATA[11]]></item>
+				<item id="title"><![CDATA[默认地图中心位置坐标]]></item>
+				<item id="description"><![CDATA[在获取坐标时默认显示的地图]]></item>
+				<item id="variable"><![CDATA[ad_point]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[114.901925, 30.397618]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="11">
+				<item id="displayorder"><![CDATA[12]]></item>
+				<item id="title"><![CDATA[默认地图比例]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_zoom]]></item>
+				<item id="type"><![CDATA[text]]></item>
+				<item id="value"><![CDATA[15]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="12">
+				<item id="displayorder"><![CDATA[13]]></item>
+				<item id="title"><![CDATA[地图高度]]></item>
+				<item id="description"><![CDATA[地图的高度]]></item>
+				<item id="variable"><![CDATA[ad_height]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[800]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="13">
+				<item id="displayorder"><![CDATA[14]]></item>
+				<item id="title"><![CDATA[地图宽度]]></item>
+				<item id="description"><![CDATA[地图的宽度]]></item>
+				<item id="variable"><![CDATA[ad_width]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[767]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="14">
+				<item id="displayorder"><![CDATA[15]]></item>
+				<item id="title"><![CDATA[积分购买类型]]></item>
+				<item id="description"><![CDATA[可以设置不同的扩展积分购买方式]]></item>
+				<item id="variable"><![CDATA[ad_credit]]></item>
+				<item id="type"><![CDATA[extcredit]]></item>
+				<item id="value"><![CDATA[2]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="15">
+				<item id="displayorder"><![CDATA[16]]></item>
+				<item id="title"><![CDATA[购买要支付积分数量]]></item>
+				<item id="description"><![CDATA[设置会员购买标注时需要的自定义积分数量，管理员可以添加标注时可以免费]]></item>
+				<item id="variable"><![CDATA[ad_creditnum]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[5]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="16">
+				<item id="displayorder"><![CDATA[17]]></item>
+				<item id="title"><![CDATA[修改标注要支付积分数量]]></item>
+				<item id="description"><![CDATA[]]></item>
+				<item id="variable"><![CDATA[ad_creditnum_edit]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="17">
+				<item id="displayorder"><![CDATA[18]]></item>
+				<item id="title"><![CDATA[标注购买与修改提示]]></item>
+				<item id="description"><![CDATA[你可以编辑标注提示，可以预定义标签代表积分与数量。
+{creditname}表示自定义积分名称
+{creditnum}表示购买标注需要的自定义积分数
+{creditnum_edit}表示修改标注需要的自定义积分数
+{curcreditnum}表示当前会员的自定义积分数]]></item>
+				<item id="variable"><![CDATA[ad_tips]]></item>
+				<item id="type"><![CDATA[textarea]]></item>
+				<item id="value"><![CDATA[添加标注需要<font color="#FF0000">{creditnum}</font>个{creditname}，修改标注需要<font color="#FF0000">{creditnum_edit}</font>个{creditname}，你现在有<font color="#FF0000">{curcreditnum}</font>个{creditname}。]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="18">
+				<item id="displayorder"><![CDATA[19]]></item>
+				<item id="title"><![CDATA[统计每页记录数]]></item>
+				<item id="description"><![CDATA[后台统计每页显示记录数]]></item>
+				<item id="variable"><![CDATA[pagecount]]></item>
+				<item id="type"><![CDATA[number]]></item>
+				<item id="value"><![CDATA[20]]></item>
+				<item id="extra"><![CDATA[]]></item>
+			</item>
+			<item id="19">
+				<item id="displayorder"><![CDATA[20]]></item>
+				<item id="title"><![CDATA[用户组权限]]></item>
+				<item id="description"><![CDATA[只有有权限的用户才可以标注]]></item>
+				<item id="variable"><![CDATA[ad_groups]]></item>
+				<item id="type"><![CDATA[groups]]></item>
+				<item id="extra"><![CDATA[]]></item>
+				<item id="__value">
+					<item id="0"><![CDATA[1]]></item>
+				</item>
+			</item>
+		</item>
+		<item id="language">
+			<item id="scriptlang">
+				<item id="it618_edit"><![CDATA[编辑]]></item>
+				<item id="it618_del"><![CDATA[删除]]></item>
+				<item id="it618_admin1"><![CDATA[地图类别1]]></item>
+				<item id="it618_admin2"><![CDATA[地图类别2]]></item>
+				<item id="it618_admin3"><![CDATA[地图标注统计]]></item>
+				<item id="it618_admin4"><![CDATA[类别更新成功！(已存在未修改数:]]></item>
+				<item id="it618_admin5"><![CDATA[成功修改数:]]></item>
+				<item id="it618_admin6"><![CDATA[已存在未添加数:]]></item>
+				<item id="it618_admin7"><![CDATA[成功添加数:]]></item>
+				<item id="it618_admin8"><![CDATA[成功删除数:]]></item>
+				<item id="it618_admin9"><![CDATA[查找]]></item>
+				<item id="it618_admin10"><![CDATA[按类别名称]]></item>
+				<item id="it618_admin11"><![CDATA[地图类别数：]]></item>
+				<item id="it618_admin12"><![CDATA[类别名称]]></item>
+				<item id="it618_admin13"><![CDATA[类别排序(数值)]]></item>
+				<item id="it618_admin14"><![CDATA[子类别数]]></item>
+				<item id="it618_admin15"><![CDATA[地图类别2]]></item>
+				<item id="it618_admin16"><![CDATA[类别1]]></item>
+				<item id="it618_admin17"><![CDATA[类别2名称]]></item>
+				<item id="it618_admin18"><![CDATA[地图中心坐标]]></item>
+				<item id="it618_admin19"><![CDATA[地图比例]]></item>
+				<item id="it618_admin20"><![CDATA[类别排序(数值)]]></item>
+				<item id="it618_admin21"><![CDATA[标点数]]></item>
+				<item id="it618_admin22"><![CDATA[获取坐标点]]></item>
+				<item id="it618_admin23"><![CDATA[请选择所属类别]]></item>
+				<item id="it618_admin24"><![CDATA[成功删除数:]]></item>
+				<item id="it618_admin25"><![CDATA[按标注名称]]></item>
+				<item id="it618_admin26"><![CDATA[地图标注数：]]></item>
+				<item id="it618_admin27"><![CDATA[类别1]]></item>
+				<item id="it618_admin28"><![CDATA[类别2]]></item>
+				<item id="it618_admin29"><![CDATA[标注名称]]></item>
+				<item id="it618_admin30"><![CDATA[标注坐标]]></item>
+				<item id="it618_admin31"><![CDATA[标注图片]]></item>
+				<item id="it618_admin32"><![CDATA[标注链接]]></item>
+				<item id="it618_admin33"><![CDATA[标注说明]]></item>
+				<item id="it618_admin34"><![CDATA[会员]]></item>
+				<item id="it618_admin35"><![CDATA[标注时间]]></item>
+				<item id="it618_admin36"><![CDATA[成功删除数:]]></item>
+				<item id="it618_admin37"><![CDATA[，成功更新数:]]></item>
+				<item id="it618_admin38"><![CDATA[按地图类别]]></item>
+				<item id="it618_admin39"><![CDATA[请选择一级分类]]></item>
+				<item id="it618_admin40"><![CDATA[请选择二级分类]]></item>
+				<item id="it618_admin41"><![CDATA[宽度]]></item>
+				<item id="it618_admin42"><![CDATA[高度]]></item>
+			</item>
+			<item id="templatelang">
+				<item id="it618_set1"><![CDATA[你的]]></item>
+				<item id="it618_set2"><![CDATA[不够用来添加标注！]]></item>
+				<item id="it618_set3"><![CDATA[请输入标注坐标！]]></item>
+				<item id="it618_set4"><![CDATA[标注坐标格式不对！]]></item>
+				<item id="it618_set5"><![CDATA[请输入标注名称！]]></item>
+				<item id="it618_set6"><![CDATA[标注添加成功！]]></item>
+				<item id="it618_set7"><![CDATA[不够用来修改标注！]]></item>
+				<item id="it618_set8"><![CDATA[修改标注成功！]]></item>
+				<item id="it618_set9"><![CDATA[标注删除成功！]]></item>
+				<item id="it618_set10"><![CDATA[管理地图标注]]></item>
+				<item id="it618_set11"><![CDATA[标注坐标：]]></item>
+				<item id="it618_set12"><![CDATA[获取坐标]]></item>
+				<item id="it618_set13"><![CDATA[标注名称：]]></item>
+				<item id="it618_set14"><![CDATA[标注图片：]]></item>
+				<item id="it618_set15"><![CDATA[标注链接：]]></item>
+				<item id="it618_set16"><![CDATA[标注说明：]]></item>
+				<item id="it618_set17"><![CDATA[添加标注]]></item>
+				<item id="it618_set18"><![CDATA[修改标注]]></item>
+				<item id="it618_set19"><![CDATA[取消修改]]></item>
+				<item id="it618_set20"><![CDATA[管理标注]]></item>
+				<item id="it618_set21"><![CDATA[提示：标点说明支持discuz代码，可以在发贴或回复框编辑好内容，然后在“高级模式纯文本状态”下复制代码粘贴到这里]]></item>
+				<item id="it618_set22"><![CDATA[选择图片]]></item>
+				<item id="it618_set23"><![CDATA[管理图片]]></item>
+				<item id="it618_pub1"><![CDATA[请输入地图关键词：]]></item>
+				<item id="it618_pub2"><![CDATA[搜索]]></item>
+				<item id="it618_pub3"><![CDATA[获取当前地图比例]]></item>
+				<item id="it618_pub4"><![CDATA[全国]]></item>
+				<item id="it618_getpoint1"><![CDATA[获取地图坐标]]></item>
+				<item id="it618_getpoint2"><![CDATA[(在获取坐标窗体上在想标注的地方点击鼠标就可以了，然后关闭窗体！)]]></item>
+			</item>
+		</item>
+		<item id="installfile"><![CDATA[install.php]]></item>
+		<item id="uninstallfile"><![CDATA[uninstall.php]]></item>
+		<item id="upgradefile"><![CDATA[upgrade.php]]></item>
+	</item>
+</root>

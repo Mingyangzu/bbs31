@@ -1,0 +1,201 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#666;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .layui-table-body{overflow-x: hidden;}
+    .content-wrapper{background-color: #ffffff;}
+    .layui-laypage-limits select{margin-top:2px;}
+    .layui-table, .layui-table-view {
+        margin: 3px 0;
+    }
+    .box.box-default {
+        border-top-color: #009688;
+    }
+    .box {
+        position: relative;
+        border-radius: 3px;
+        background: #fff;
+        border-top: 2px solid #009688;
+        margin-bottom: 20px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .nav-tabs {
+        border-bottom: none;
+    }
+    .box.box-primary {
+        border-top-color: #009688;
+    }
+    .btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-table-tips-c {
+        line-height: 14px;
+    }
+    .layui-table-cell {
+        height: auto;
+        line-height: 28px;
+        padding: 0 15px;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-9">
+                {template aljhtx:admin/notification/nav}
+            </div>
+
+            <div class="col-md-3" style="text-align:right">
+                <a href="javascript:;"  class="btn btn-primary adminUser"><strong>&nbsp;{lang aljhtx:aljol_htm_1}</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" value="$_GET['search']" id="search" class="form-control input-sm" placeholder="{lang aljhtx:bind_nofollow_htm_2}" onkeypress="R.enterPress(event)" onkeydown="R.enterPress()">
+                                <div class="glyphicon glyphicon-search form-control-feedback" style="pointer-events: visible;" onclick="location.href='{$dourl}&search='+$('#search').val()"></div>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="table-responsive mailbox-messages">
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>{lang aljhtx:aljol_htm_3}</th>
+                                    <th>{lang aljhtx:aljol_htm_4}</th>
+                                    <th>{lang aljhtx:getlist_htm_4}</th>
+                                    <th>{lang aljhtx:getlist_htm_6}</th>
+                                    <th>{lang aljhtx:getlist_htm_7}</th>
+                                </tr>
+                                {loop $logList $log}
+                                {if $log['picture']}
+                                    {eval $picture = DB::result_first('select picture from %t where pid=%d', array('aljol_picture', $log['picture']));}
+                                {/if}
+                                <tr>
+                                    <td><font style="color:#FF6633;">{$log['username']}</font>{if $log['friendid']}&#23545;<font style="color:#FF6633;">{$log['friendusername']}</font>{else}&#22312;<font style="color:#FF6633;">&#22312;&#32447;&#32842;&#22825;&#23460;</font>{/if}&#35828;</td>
+                                    <td style="width:400px;">{if $log['type'] == 3}{lang aljhtx:aljol_htm_8}{elseif $log['picture']}<img src="{$picture}" style="width:20px;" class="maxpic"/>{else}{eval echo ubbReplace($log['talk']);}{/if}</td>
+                                    <td>{eval echo dgmdate($log['datetime']);}</td>
+                                    <td>{if $log['talkstate'] == 1}{lang aljhtx:log_htm_19}{else}{lang aljhtx:log_htm_18}{/if}</td>
+                                    <td class="mailbox-attachment">
+                                        <a href="javascript:;" class="sendMessage" data-id="{$log['uid']}" data-username="{$log['username']}" style="color: #009688;">{lang aljhtx:aljol_htm_11}<a>&nbsp;
+                                    </td>
+                                </tr>
+                                {/loop}
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer no-padding">
+                        <div class="mailbox-controls">
+
+                            <div class="pull-right">
+                              {$paging}
+                            </div>
+                                <!-- /.btn-group -->
+                            </div>
+                            <!-- /.pull-right -->
+                        </div>
+                    </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+        sendMessage: function(){
+            $('.sendMessage').on('click', function(){
+                var friendUid =  $(this).attr('data-id');
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:user_htm_30}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    area: ['893px', '600px'],
+                    offset: '100px',
+                    content: 'plugin.php?id=aljhtx&c=user&a=sendmessage&from=log&frienduid='+friendUid
+                });
+            });
+
+        },
+        adminUser: function(){
+            $('.adminUser').click(function(){
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:plugin_htm_20}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    area: ['400px', '300px'],
+                    offset: '100px',
+                    content: 'plugin.php?id=aljhtx&c=log&a=aljol_setting'
+                });
+            });
+
+        },
+        enterPress: function(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('.glyphicon-search').click();
+            }
+        },
+	    init: function(){
+            $('.maxpic').click(function(){
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    area: ['500px', '500px'],
+                    offset: '20px',
+                    shadeClose: true,
+                    content: '<img src="'+$(this).attr('src')+'" style="width:100%;height:100%;"/>'
+                });
+            });
+            R.adminUser();
+            R.sendMessage();
+        }
+    }
+    R.init();
+</script>
+
+{eval include template(PLUGIN_ID.':admin/footer')}
+

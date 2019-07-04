@@ -1,0 +1,224 @@
+{template common/header}
+<script>
+function sendmsg(msgid,msgvalue){
+	document.getElementById(msgid).innerHTML=msgvalue;
+	setTimeout('sendmsg1("'+msgid+'")',3000);
+}
+
+function sendmsg1(msgid){
+	document.getElementById(msgid).innerHTML="";
+}
+
+function it618_point_ajaxpostadd(tid) {
+	var it618_point=document.getElementById('it618_point_add');
+	var it618_pointname=document.getElementById('it618_pointname_add');
+	var it618_pointimg=document.getElementById('it618_pointimg_add');
+	var it618_pointurl=document.getElementById('it618_pointurl_add');
+	var it618_creditname=document.getElementById('it618_creditname');
+	var it618_creditnum=document.getElementById('it618_creditnum');
+	var it618_curcreditnum=document.getElementById('it618_curcreditnum');
+	
+	if(parseFloat(it618_creditnum.value)>parseFloat(it618_curcreditnum.value)){
+		sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set1}"+it618_creditname.value+"{lang it618_storemapad:it618_set2}");
+		return false;
+	}
+	if(it618_point.value==""){
+		sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set3}");
+		return false;
+	}else{
+		var str= new Array();   
+  		str=it618_point.value.split(","); 
+		if(str.length!=2){
+			sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set4}");
+			return false;
+		}
+    	if(isNaN(str[0])||isNaN(str[1])){
+			sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set4}");
+			return false;
+		}
+		
+	}
+	if(it618_pointname.value==""){
+		sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set5}");
+		return false;
+	}
+	
+	it618_point_get();
+	it618_credit_get();
+	
+	ajaxpost('it618_pointform_add');
+	setTimeout('it618_point_get()',1000);
+	setTimeout('it618_credit_get()',1000);
+	sendmsg('it618_pointtips_add',"{lang it618_storemapad:it618_set6}");
+	it618_credit_get();
+	
+	return false;
+}
+
+function it618_point_ajaxpostedit(tid) {
+	var it618_point=document.getElementById('it618_point_edit');
+	var it618_pointname=document.getElementById('it618_pointname_edit');
+	var it618_pointimg=document.getElementById('it618_pointimg_edit');
+	var it618_pointurl=document.getElementById('it618_pointurl_edit');
+	var it618_creditname=document.getElementById('it618_creditname');
+	var it618_creditnum_edit=document.getElementById('it618_creditnum_edit');
+	var it618_curcreditnum=document.getElementById('it618_curcreditnum');
+	
+	if(parseFloat(it618_creditnum_edit.value)>parseFloat(it618_curcreditnum.value)){
+		sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set1}"+it618_creditname.value+"{lang it618_storemapad:it618_set7}");
+		return false;
+	}
+	if(it618_point.value==""){
+		sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set3}");
+		return false;
+	}else{
+		var str= new Array();   
+  		str=it618_point.value.split(","); 
+		if(str.length!=2){
+			sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set4}");
+			return false;
+		}
+    	if(isNaN(str[0])||isNaN(str[1])){
+			sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set4}");
+			return false;
+		}
+		
+	}
+	if(it618_pointname.value==""){
+		sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set5}");
+		return false;
+	}
+	
+	it618_point_get();
+	it618_credit_get();
+	ajaxpost('it618_pointform_edit');
+	sendmsg('it618_pointtips_edit',"{lang it618_storemapad:it618_set8}");
+	setTimeout('it618_point_get()',1000);
+	setTimeout('it618_credit_get()',1000);
+	
+	document.getElementById('it618_pointform_add_div').style.display="";
+	document.getElementById('it618_pointform_edit_div').style.display="none";
+
+	return false;
+}
+
+
+function it618_point_get(){
+	var x = new Ajax('HTML');
+	x.get('{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid=$_GET['cid']&ac=getit618_pointitem&rand='+Math.random(),function(s){it618_storemapaditem.innerHTML=s;});
+}
+
+function it618_credit_get(){
+	var x = new Ajax('HTML');
+	x.get('{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid=$_GET['cid']&ac=getit618_credit&rand='+Math.random(),function(s){it618_credittips.innerHTML=s;});
+}
+
+function it618_point_edit(id){
+	
+	document.getElementById('it618_pointid_edit').value=document.getElementById('it618_pointid_'+id).value;
+	document.getElementById('it618_point_edit').value=document.getElementById('it618_point_'+id).value;
+	document.getElementById('it618_pointname_edit').value=document.getElementById('it618_pointname_'+id).value;
+	document.getElementById('it618_pointimg_edit').value=document.getElementById('it618_pointimg_'+id).value;
+	document.getElementById('it618_pointurl_edit').value=document.getElementById('it618_pointurl_'+id).value;
+	document.getElementById('it618_pointabout_edit').value=document.getElementById('it618_pointabout_'+id).value;
+	document.getElementById('it618_width_edit').value=document.getElementById('it618_width_'+id).value;
+	document.getElementById('it618_height_edit').value=document.getElementById('it618_height_'+id).value;
+
+	document.getElementById('it618_pointform_add_div').style.display="none";
+	document.getElementById('it618_pointform_edit_div').style.display="";
+}
+
+function it618_point_del(id){
+	it618_point_get();
+	var x = new Ajax('HTML');
+	x.get('{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid=$_GET['cid']&pointid='+id+'&ac=it618_pointdel');
+	setTimeout('it618_point_get()',1000);
+	sendmsg('it618_pointtips',"{lang it618_storemapad:it618_set9}");
+
+	document.getElementById('it618_point_add').value="";
+	document.getElementById('it618_pointname_add').value="";
+	document.getElementById('it618_pointimg_add').value="";
+	document.getElementById('it618_pointurl_add').value="";
+	document.getElementById('it618_pointabout_add').value="";
+	document.getElementById('it618_width_add').value="400";
+	document.getElementById('it618_height_add').value="300";
+	
+	document.getElementById('it618_pointform_add_div').style.display="";
+	document.getElementById('it618_pointform_edit_div').style.display="none";
+}
+
+function it618_noedit(){
+	document.getElementById('it618_point_add').value="";
+	document.getElementById('it618_pointname_add').value="";
+	document.getElementById('it618_pointimg_add').value="";
+	document.getElementById('it618_pointurl_add').value="";
+	document.getElementById('it618_pointabout_add').value="";
+	document.getElementById('it618_width_add').value="400";
+	document.getElementById('it618_height_add').value="300";
+	
+	document.getElementById('it618_pointform_add_div').style.display="";
+	document.getElementById('it618_pointform_edit_div').style.display="none";
+}
+</script>
+<div class="bm bw0">
+	<h3 class="flb" style="font-size:14px">	
+    <em>{lang it618_storemapad:it618_set10}&nbsp;&nbsp;&nbsp;<font id="it618_pointtips" class="txtred"></font></em>
+    <!--{if $_G[inajax]}-->
+		<span><a href="javascript:;" class="flbc" onclick="hideWindow('it618_storemapad')" ></a></span>
+	<!--{/if}-->
+	</h3>
+    
+	<div class="c it618_storemapad" style="width:750px;height:450px">
+<span id="it618_credittips">{$ad_tips}</span>
+        <div id="it618_pointform_add_div">
+        <form id="it618_pointform_add" autocomplete="off" enctype="multipart/form-data" action="{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid=$_GET['cid']&ac=it618_point_add" method="post" class="mbm" onsubmit="return it618_point_ajaxpostadd();">
+               
+        	<ul>
+            <li class="it618add1">{lang it618_storemapad:it618_set11}<input type="text" class="px vm it618w175" id="it618_point_add" name="it618_point_add"/><button type="button" class="pn vm" onclick="showWindow('it618_getpoint','{$_G['siteurl']}plugin.php?id=it618_storemapad:getpoint&pointtype=it618_point_add')"><em>{lang it618_storemapad:it618_set12}</em></button><font color="red">{lang it618_storemapad:it618_getpoint2}</font></li>
+            <li>{lang it618_storemapad:it618_set13}<input type="text" class="px vm it618w251" id="it618_pointname_add" name="it618_pointname_add"/></li>
+            <li>{lang it618_storemapad:it618_set14}<input type="text" class="px vm it618w251" id="it618_pointimg_add" name="it618_pointimg_add"/><!--{if $it618_images_ok==1}--><button type="button" class="pn vm" onclick="showWindow('it618_getimgurl','{$_G['siteurl']}plugin.php?id=it618_images:getimgurl&inputid=it618_pointimg_add')"><em>{lang it618_storemapad:it618_set22}</em></button><button type="button" class="pn vm" onclick="window.open('{$_G['siteurl']}plugin.php?id=it618_images:images')"><em>{lang it618_storemapad:it618_set23}</em></button><!--{/if}--></li>
+            <li>{lang it618_storemapad:it618_set15}<input type="text" class="px vm it618w251" id="it618_pointurl_add" name="it618_pointurl_add"/> µ¯´°¿í¶È£º<input type="text" class="px vm it618w50" id="it618_width_add" name="it618_width_add" value="400"/> µ¯´°¸ß¶È£º<input type="text" class="px vm it618w50" id="it618_height_add" name="it618_height_add" value="300"/></li>
+            <li>{lang it618_storemapad:it618_set16}<textarea class="pt vm it618w670 it618h70" id="it618_pointabout_add" name="it618_pointabout_add"></textarea><br /><span style="float:right; margin-right:10px;color:red">{lang it618_storemapad:it618_set21}</span></li>
+            <li><button type="submit" class="pn vm" id="it618_pointsubmitadd" {$poweradd}><em>{lang it618_storemapad:it618_set17}</em></button><span id="it618_pointtips_add" class="txtred"></span></li>
+            </ul>
+
+        </form>
+        </div>
+        
+        <div id="it618_pointform_edit_div" style="display:none">
+        <form id="it618_pointform_edit" autocomplete="off" enctype="multipart/form-data" action="{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid=$_GET['cid']&ac=it618_point_edit" method="post" class="mbm" onsubmit="return it618_point_ajaxpostedit();">
+            <input id="it618_pointid_edit" name="it618_pointid_edit" type="hidden"/>
+               
+        	<ul>
+            <li class="it618add1">{lang it618_storemapad:it618_set11}<input type="text" class="px vm it618w175" id="it618_point_edit" name="it618_point_edit"/><button type="button" class="pn vm" onclick="showWindow('it618_getpoint','{$_G['siteurl']}plugin.php?id=it618_storemapad:getpoint&pointtype=it618_point_edit')"><em>{lang it618_storemapad:it618_set12}</em></button><font color="red">{lang it618_storemapad:it618_getpoint2}</font></li>
+            <li>{lang it618_storemapad:it618_set13}<input type="text" class="px vm it618w251" id="it618_pointname_edit" name="it618_pointname_edit"/></li>
+            <li>{lang it618_storemapad:it618_set14}<input type="text" class="px vm it618w251" id="it618_pointimg_edit" name="it618_pointimg_edit"/><!--{if $it618_images_ok==1}--><button type="button" class="pn vm" onclick="showWindow('it618_getimgurl','{$_G['siteurl']}plugin.php?id=it618_images:getimgurl&inputid=it618_pointimg_edit')"><em>{lang it618_storemapad:it618_set22}</em></button><button type="button" class="pn vm" onclick="window.open('{$_G['siteurl']}plugin.php?id=it618_images:images')"><em>{lang it618_storemapad:it618_set23}</em></button><!--{/if}--></li>
+            <li>{lang it618_storemapad:it618_set15}<input type="text" class="px vm it618w251" id="it618_pointurl_edit" name="it618_pointurl_edit"/> µ¯´°¿í¶È£º<input type="text" class="px vm it618w50" id="it618_width_edit" name="it618_width_edit" value="400"/> µ¯´°¸ß¶È£º<input type="text" class="px vm it618w50" id="it618_height_edit" name="it618_height_edit" value="300"/></li>
+            <li>{lang it618_storemapad:it618_set16}<textarea class="pt vm it618w670 it618h70" id="it618_pointabout_edit" name="it618_pointabout_edit"></textarea><br /><span style="float:right; margin-right:10px;color:red">{lang it618_storemapad:it618_set21}</span></li>
+            <li><button type="submit" class="pn vm" id="it618_pointsubmitedit"><em>{lang it618_storemapad:it618_set18}</em></button><button type="button" class="pn vm" id="it618_pointsubmitnoedit" onclick="it618_noedit()"><em>{lang it618_storemapad:it618_set19}</em></button><span id="it618_pointtips_edit" class="txtred"></span></li>
+            </ul>
+        	
+        </form>
+        </div>
+
+        <ul>
+        <li class="it618add2"><strong>{lang it618_storemapad:it618_set20}</strong>
+        <li id="it618_storemapaditem">{$it618_point_get}</li>
+        </ul>
+    </div>
+
+</div>
+<style>
+.it618_storemapad li{float:left; width:750px; padding-bottom:3px;}
+#it618_storemapaditem span{float:left; margin-top:5px; margin-right:5px; background-color:#e8e8e8; padding:5px}
+#it618_storemapaditem span a{color:#06F; cursor:pointer}
+.it618_storemapad li.it618add1{border-top:#CCC 1px solid; padding-top:8px; margin-top:10px}
+.it618_storemapad li.it618add2{border-top:#CCC 1px solid; margin-top:8px}
+.it618w175{width:169px}
+.it618w50{width:50px}
+.it618w251{width:251px}
+.it618w670{width:670px}
+.it618h70{height:70px}
+.txtred{color:red}
+</style>
+{template common/footer}

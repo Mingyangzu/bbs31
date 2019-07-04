@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gbk">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{lang aljhtx:unified_header_htm_1}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/AdminLTE.css">
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/blue.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{PLUGIN_PATH}/static/css/skins/_all-skins.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="{PLUGIN_PATH}/static/js/html5shiv.min.js"></script>
+    <script src="{PLUGIN_PATH}/static/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery 2.2.3 -->
+    <script src="{PLUGIN_PATH}/static/js/jquery-2.2.3.min.js"></script>
+    <script src="{PLUGIN_PATH}/static/js/layer/layer.js"></script>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header" style="position: absolute;width:100%;">
+        <!-- Logo -->
+        <div  class="logo" >
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <a href="plugin.php?id=aljhtx" class="logo-mini" style="display: block;width:50px;text-align: left;float: left;color:#ffffff;">
+                <img src="$_G['cache']['plugin']['aljhtx']['logo']" width="30"/>
+            </a>
+            <a href="javascript:;" class="logo-mini" onclick="iframe_refresh();" style="display: block;width:50px;text-align: left;float: left;color:#ffffff;"><i class="fa fa-refresh"></i></a>
+            <!-- logo for regular state and mobile devices -->
+        </div>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <!--a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a-->
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{eval echo avatar($_G['uid'],'big',true);}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">$_G['username']</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="{eval echo avatar($_G['uid'],'big',true);}" class="img-circle" alt="User Image">
+
+                                <p>
+                                    $_G['username']
+                                    <small>$group_array[$_G['groupid']]['grouptitle']</small>
+                                </p>
+                            </li>
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a href="member.php?mod=logging&action=logout&formhash={FORMHASH}" class="btn btn-default btn-flat">{lang aljhtx:unified_header_htm_2}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>

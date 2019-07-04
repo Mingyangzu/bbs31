@@ -1,0 +1,192 @@
+{eval include template(PLUGIN_ID.':stylecss')}
+<aside class="main-sidebar">
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+<!--
+        <li class="{if $op == 'aljqb' || !$op}active{/if} treeview">
+            <a href="#">
+                <span>{lang aljhtx:aside_htm_1}</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li {if !$do}class="active"{/if} data-url="plugin.php?id=aljht&act=admin&op=orderlist"><a href="javascript:;">{lang aljhtx:aside_htm_2}</a></li>
+                <li {if $do == 'walletuser'}class="active"{/if} data-url="plugin.php?id=aljht&act=admin&op=orderlist"><a href="javascript:;">{lang aljhtx:aside_htm_2}2</a></li>
+
+            </ul>
+        </li>
+        <li class="{if $op == 'aljbd'}active{/if} treeview">
+            <a href="#">
+                <span>{lang aljhtx:aside_htm_4}</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+                <li {if !$do}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&identity=aljqb"> {lang aljhtx:aside_htm_5}</a></li>
+                <li {if $do == 'walletuser'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=walletuser&identity=aljqb"> {lang aljhtx:aside_htm_6}</a></li>
+                <li {if $do == 'secretkey'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=secretkey&identity=aljqb"> {lang aljhtx:aside_htm_7}</a></li>
+                <li {if $do == 'paysetting'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=paysetting&identity=aljqb"> {lang aljhtx:aside_htm_8}</a></li>
+                <li {if $do == 'diary'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=diary&identity=aljqb"> {lang aljhtx:aside_htm_9}</a></li>
+                <li {if $do == 'order'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=order&identity=aljqb"> {lang aljhtx:aside_htm_10}</a></li>
+                <li {if $do == 'rechargelog'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=rechargelog&identity=aljqb"> {lang aljhtx:aside_htm_11}</a></li>
+                <li {if $do == 'cashierlog'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=cashierlog&identity=aljqb"> {lang aljhtx:aside_htm_12}</a></li>
+                <li {if $do == 'errorlog'}class="active"{/if}><a href="{$pluginurl}&act=admin&op=aljqb&do=errorlog&identity=aljqb"> {lang aljhtx:aside_htm_13}</a></li>
+            </ul>
+        </li>
+
+          -->
+          {eval $sidearray = Page::loadConfig('first_nav');}
+        {loop $sidearray[$_GET['type']]['nav'] $onek $onev}
+		<li class="{if ($onek==0 && !$_GET['onek']) || $onek==$_GET['onek']}active{/if} treeview">
+            <a href="#">
+                {$onev['icon']}<span>$onev['name']</span>
+                <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+            </a>
+            <ul class="treeview-menu">
+
+                {loop $onev['navlist'] $twok $twov}
+                {if $twov['is_open'] == 1}
+                <li {if ($twok == 0 && !$_GET['twok']) || $_GET['twok'] == $twok}class="active"{/if} data-url="{$twov['url']}"><a href="javascript:;"> {$twov['icon']}{$twov['name']}</a></li>
+                {/if}
+                {/loop}
+            </ul>
+        </li>
+        {/loop}
+
+</section>
+<!-- /.sidebar -->
+</aside>
+<style>
+	.content-wrapper{top:0px}
+	.main-sidebar{padding-top:0px}
+</style>
+<style>
+    .rowform li {
+        overflow: hidden;
+        float: left;
+        margin-right: 10px;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+    .rowform ul,.itemtitle ul{
+        padding: 0px;
+        margin: 0px;
+    }
+    .itemtitle li{
+        display: inline-block;
+        padding:2px 10px;
+        border-radius: 3px;
+    }
+    .itemtitle li.current{
+        background: #3c8dbc;
+        color:#ffffff;
+
+    }
+    .itemtitle li.current a{
+        color:#ffffff;
+    }
+    .rowform .radio {
+        margin-top: -2px !important;
+        display: inline-block;
+    }
+    .radio, .checkbox, .pr, .pc {
+        border: none;
+        background: none;
+        vertical-align: middle;
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #ffffff;
+    }
+    .txt{width:320px}
+    .color-text{padding-left:0px;padding-top: 5px}
+    .rowform select {
+        margin-right: 10px;
+        width: 256px;
+    }
+    .txt, select, .vmiddle {
+        vertical-align: middle;
+    }
+    .partition {
+        padding: 5px;
+        line-height: 21px;
+        font-size: 12px;
+        color:#3c8dbc;
+    }
+</style>
+<style type="text/css">
+    .board {
+        background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll -240px -550px;
+        padding-left: 55px;
+        position: relative;
+        margin-left:5px;
+    }
+    .boardnext {
+        background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll -185px -600px;
+        padding-left: 110px;
+        position: relative;
+        margin-left:5px;
+    }
+    .addtr {
+        background: rgba(0, 0, 0, 0) url("static/image/admincp/bg_repno.gif") no-repeat scroll 0 -598px;
+        color: #3c8dbc;
+        line-height: 25px;
+        padding-left: 17px;
+    }
+    .deleterow {
+        background: rgba(0, 0, 0, 0) url("static/image/admincp/close.gif") no-repeat scroll 0 50%;
+        padding-left: 15px;
+        color: #fff;
+        line-height: 25px;
+        margin-right: 5px;
+
+        right:90px;
+        top: 6px;
+    }
+
+    .lj_right{padding-right: 55px;
+        position: relative;}
+
+    .lj_input{
+        width:66%;
+        border-radius: 6px;
+    }
+
+    .sort_input{
+        width:50px;
+        float:left;
+        margin-right:10px;
+
+        border-radius: 6px;
+        text-align:center;
+    }
+
+    .breadcrumbs{
+        margin-bottom: 5px;
+        list-style: none;
+        margin-left: 30px;
+
+    }
+    .breadcrumbs > li {
+        display: inline-block;
+        padding-right:30px;
+        color: #FF6600;
+    }
+    .submit_bin{
+        line-height:1.8;
+        margin-left:3%;
+        width:65px;
+    }
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 12px 20px;
+    }
+    .lj-edit-a{right:10px;top: 8px;}
+</style>

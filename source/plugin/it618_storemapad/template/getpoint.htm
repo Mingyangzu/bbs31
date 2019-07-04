@@ -1,0 +1,17 @@
+{template common/header}
+
+<div class="bm bw0">
+	<h3 class="flb" style="font-size:14px">	
+    <em>{lang it618_storemapad:it618_getpoint1}&nbsp;<font style="font-weight:normal;color:red; font-size:22px">{lang it618_storemapad:it618_getpoint2}</font></em>		
+    <!--{if $_G[inajax]}-->
+		<span><a href="javascript:;" class="flbc" onclick="hideWindow('it618_getpoint')" ></a></span>
+	<!--{/if}-->
+	</h3>
+    
+	<div class="c it618_storemapad" style="width:800px;height:450px">
+	<iframe name='it618_storemapad' width='800px' height='450px' marginwidth='0' marginheight='0'  frameborder='no' scrolling='no'  src={$_G['siteurl']}plugin.php?id=it618_storemapad:getpointtmp&pointtype={$_GET['pointtype']}></iframe>
+	</div>
+
+</div>
+
+{template common/footer}

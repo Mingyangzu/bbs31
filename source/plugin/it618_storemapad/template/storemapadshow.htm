@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<style type="text/css">
+body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0; padding:0}
+#allmap{height:{$allmapheight}px;width:{$it618_storemapad["ad_width"]}px;float:left;}
+#r-find{height:30px;width:{$it618_storemapad["ad_width"]}px;float:left; font-size:12px; line-height:28px}
+</style>
+<link rel="stylesheet" type="text/css" href="source/plugin/it618_storemapad/images/map.css"/>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<SCRIPT src="source/plugin/it618_storemapad/js/jquery.js" type=text/javascript></SCRIPT>
+<title></title>
+</head>
+<body>
+<form method="post" action="{$_G['siteurl']}plugin.php?id=it618_storemapad:storemapadshow&ac=find&cid={$cid}">
+<div id="r-find">{lang it618_storemapad:it618_pub1}<input type="text" id="findkey" name="findkey" value="{$_POST['findkey']}" /><input type="submit" value="{lang it618_storemapad:it618_pub2}"/>{$powerbtn}</div>
+</form>
+<div id="allmap"></div>
+<div id="storemapads" style="display: none">{$it618_storemapad_points}</div>
+<script>
+map = new BMap.Map(document.getElementById("allmap"),{maptype:BMAP_PERSPECTIVE_MAP,minZoom:1,maxZoom:19});
+map.centerAndZoom(new BMap.Point({$it618_storemapad_point}), {$it618_storemapad_zoom});
+map.addControl(new BMap.NavigationControl());
+geocoder = new BMap.LocalSearch();
+//地图类型
+map.addControl(new BMap.MapTypeControl({type:BMAP_MAPTYPE_CONTROL_HORIZONTAL,mapTypes:[BMAP_NORMAL_MAP ,BMAP_SATELLITE_MAP]}));
+map.enableScrollWheelZoom();
+
+function strlen(str){
+	var tmp = (window.charset || document.characterSet) == 'utf-8' ? '***' : '**';
+	return str.replace(/[^\x00-\xff]/g, tmp).length;
+}
+
+var _index = 1;
+var markers=[];
+function getmarkers(){
+	var storemapads=LP_JQ("#storemapads ul");
+	markers.length=0;
+	
+	for(var i=0;i<storemapads.length;i++){
+		
+		var house=LP_JQ(storemapads[i]);
+		a = {
+			point : new BMap.Point(house.find(".pointx").html(), house.find(".pointy").html()),
+			aid : house.find(".aid").html(),
+			color : house.find(".color").html(),
+			title : k = house.find(".title").html(),
+			content : house.find(".content").html(),
+			winwidth : house.find(".width").html(),
+			winheight : house.find(".height").html(),
+			content : house.find(".content").html(),
+			width : strlen(k) * 8-5
+		}
+		markers.push(a);
+		
+	}
+	
+	map.clearOverlays();
+	map.setCenter(map.getCenter());
+	
+	for(var a=0;a<markers.length;a++){
+		m = markers[a];
+		
+		h = new KMarker(a, '', '<div id="outDiv' + m.aid + '"><div class="left left_' + m.color + '" id="waleft' + m.aid + '"></div><div class="mid mid_' + m.color + '" id="wahaha' + m.aid + '" style="width:' + m.width + 'px;"></div><div class="right right_' + m.color + '" id="waright' + m.aid + '"></div></div><div class="text">' + m.title + '</div>', {index: 1});
+		map.addOverlay(h);
+	}
+	
+}
+
+function showad(aid,title,width,height){
+	parent.zOpenD('{$_G['siteurl']}plugin.php?id=it618_storemapad:showad&aid='+aid,title,width,height);
+}
+
+</script>
+<script type="text/javascript">
+function KMarker(a, b, c, d) {
+	this._offset = a;
+	this._latlng = markers[a].point;
+	this._tip = b;
+	this._markerContent = c;
+	this._clickParamer = d
+}
+KMarker.prototype = new BMap.Overlay();
+KMarker.prototype.initialize = function(a) {
+	var c, m = this, b = document.createElement("div");
+	b.innerHTML = m._markerContent;
+	with(b.style){
+		position = 'absolute';
+		width = markers[this._offset].width + 29 + 'px';
+		height = '28px';
+		cursor = 'pointer';
+	}
+	//a.getPane(G_MAP_MARKER_PANE).appendChild(b);
+	a.getPanes().markerPane.appendChild(b);
+	m._map = a;
+	var cur=this._offset;
+	b.onclick = function(){
+		showad(markers[cur].aid,markers[cur].title,markers[cur].winwidth,markers[cur].winheight);
+	}
+	b.onmouseover = function(){
+		_index++;
+		c && (c.style.zIndex = _index);
+		b.style.zIndex = _index;
+		kmarkerMOver(m._offset);
+	}
+	b.onmouseout = function(){
+		kmarkerMOut(m._offset);
+	}
+	this._markerHtml = b;
+	if(m._tip){
+		c = document.createElement("div");
+		c.innerHTML = m._tip;
+		with(c.style){
+			position = "absolute";
+			display = "none";
+		}
+		a.getPanes().markerPane.appendChild(c);
+		c.onmouseover = function(){
+			_index++;
+			c.style.zIndex = _index;
+			b.style.zIndex = _index
+		};
+		this._markerTip = c
+	}
+};
+KMarker.prototype.remove = function() {
+	this._markerHtml.parentNode.removeChild(this._markerHtml);
+	this._markerTip && this._markerTip.parentNode.removeChild(this._markerTip)
+};
+KMarker.prototype.copy = function() {
+	return new this._clickParamer
+};
+KMarker.prototype.draw = function() {
+	var a = this._map.pointToOverlayPixel(this._latlng);
+	with(this._markerHtml.style){
+		left = a.x + "px";
+		top = a.y - 39 + "px";
+	}
+	var x;
+	if(x = this._markerTip){
+		with(x.style){
+			left = a.x + 16 + "px";
+			top = a.y - 38 + "px"
+		}
+	}
+};
+KMarker.prototype.getLatLng = function() {
+	return this._latlng
+};
+KMarker.prototype.getMarkerHtml = function() {
+	return this._markerHtml
+};
+KMarker.prototype.getMarkerTip = function() {
+	return this._markerTip
+};
+KMarker.prototype.getTip = function() {
+	return this._tip
+};
+KMarker.prototype.setLatLng = function(a) {
+	this._latlng = a
+};
+function kmarkerMOver(a) {
+	var width, m = markers[a], tip = LP_JQ('#outDiv' + m.aid);
+	tip.addClass('hover').parent().css('zIndex', ++_index);
+	if(m._width){
+		width = m.width + m._width + 14;
+		tip.parent().width(width + 29).find('.text').width(width);
+		tip.find('.mid').width(m._width + 28);
+	}
+}
+function kmarkerMOut(a) {
+	var m = markers[a], tip = LP_JQ('#outDiv' + m.aid);
+	tip.removeClass('hover');
+	if(m._width){
+		tip.parent().width(m.width + 29).find('.text').width(m.width);
+		tip.find('.mid').width(m.width);
+	}
+}
+function onDmsgLi(tar){
+	LP_JQ(tar).css('cursor','pointer');
+	LP_JQ(tar).css('background-color','#fffae9');
+	LP_JQ(tar).css('border-bottom','1px solid #feb673');
+	LP_JQ(tar).children(".proname").children(".ptitle").css('color','#EB6100').css("text-decoration","underline");
+}
+function outDmsgLi(tar){
+	LP_JQ(tar).css('background-color','white');
+	LP_JQ(tar).css('border-bottom','1px solid #dadccb ');
+	LP_JQ(tar).children(".proname").children(".ptitle").css('color','#026B4B').css("text-decoration","none");
+}
+
+onerror=handleErr
+function handleErr(){
+	//return true;
+}
+
+getmarkers();
+</script>
+
+</body>
+</html>

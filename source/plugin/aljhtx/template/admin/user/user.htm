@@ -1,0 +1,410 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body{ font-size: 14px; }
+    tr th{
+        color:#333;
+        font-size: 14px;
+    }
+    tr td{
+        color:#333;
+        font-size: 14px;
+    }
+    .info-box-number{
+        margin-top:5px;
+        margin-left:5px;
+    }
+    .info-box-text{
+        margin-top:10px;
+    }
+    .box.box-primary {
+        border-top-color: #009688;
+    }
+    .btn-primary:hover,.btn-primary:active,.btn-primary {
+        background-color: #009688;
+        border-color: #009688;
+    }
+    .layui-layer-btn .layui-layer-btn0,.layui-layer-btn .layui-layer-btn1,.layui-layer-btn .layui-layer-btn2,.layui-layer-btn .layui-layer-btn3 {
+        border-color: #367fa9;
+        background-color: #3c8dbc;
+        color: #fff;
+    }
+</style>
+<div class="content-wrapper" style="margin-left:0px">
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$userNum}</b></span>
+                        <span class="info-box-text">{lang aljhtx:user_htm_1}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="fa fa-wechat"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$wechatUserNum}</b></span>
+                        <span class="info-box-text">{lang aljhtx:user_htm_2}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green"><i class="fa fa-qq"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$qqUserNum}</b></span>
+                        <span class="info-box-text">QQ{lang aljhtx:user_htm_3}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow"><i class="fa fa-mobile"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$mobileUserNum}</b></span>
+                        <span class="info-box-text">{lang aljhtx:user_htm_4}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$bdUserNum}</b></span>
+                        <span class="info-box-text">{lang aljhtx:user_htm_5}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="ion ion-social-usd-outline"></i></span>
+
+                    <div class="info-box-content">
+
+                        <span class="info-box-number"><b style="color:red;">{$countOrderMoney}{lang aljhtx:setting_htm_93}</b></span>
+                        <span class="info-box-text">{lang aljhtx:user_htm_7}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="nav nav-tabs" role="tablist" >
+                    <li class="active"><a href="{$dourl}">{lang aljhtx:user_htm_8}</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4" style="text-align:right">
+                <a href="javascript:;"  class="btn btn-primary import-data"><strong>&nbsp;{lang aljhtx:user_htm_9}&nbsp;</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;"  class="btn btn-primary adminMessage"><strong>&nbsp;{lang aljhtx:user_htm_10}&nbsp;</strong></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:;"  class="btn btn-primary sendGroupMessage"><strong>&nbsp;{lang aljhtx:user_htm_11}&nbsp;</strong></a>&nbsp;
+            </div>
+            <!-- /.col -->
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+
+                        <div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" value="$_GET['search']" id="search" class="form-control input-sm" placeholder="{lang aljhtx:user_htm_12}" onkeypress="R.enterPress(event)" onkeydown="R.enterPress()">
+                                <div class="glyphicon glyphicon-search form-control-feedback" style="pointer-events: visible;" onclick="location.href='{A_URL}&search='+$('#search').val()"></div>
+                            </div>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body no-padding">
+                        <div class="table-responsive mailbox-messages">
+                            <iframe style="display:none;" name="submitiframe"></iframe>
+                            <form name="cpform" id="admingoodssubmit" method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                <input type="hidden"  value="0" name="sign" id="sign">
+                                <input type="hidden" name="formhash" value="{FORMHASH}">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>UID<br>{lang aljhtx:user_htm_13}</th>
+                                    <th>{lang aljhtx:user_htm_14}<br>{lang aljhtx:user_htm_15}</th>
+                                    <th>{lang aljhtx:user_htm_16}<br>{lang aljhtx:user_htm_17}</th>
+                                    <th>{lang aljhtx:user_htm_18}<br>{lang aljhtx:goods_1_htm_3}</th>
+                                    <th>{lang aljhtx:user_htm_20}<br>{lang aljhtx:user_htm_21}</th>
+                                    <th>{lang aljhtx:user_htm_22}<br>QQ</th>
+                                    <th>{lang aljhtx:getlist_htm_7}</th>
+                                </tr>
+                                {loop $userList $user}
+                                <tr>
+
+                                    <td class="mailbox-subject">{$userGroupList[$user[groupid]][grouptitle]}<br>{$user['uid']}-{$user['username']}
+                                    </td>
+                                    <td class="mailbox-subject">{if $user['email']}{$user['email']}{else}--{/if}<br>{if $user['mobile']}{$user['mobile']}{else}--{/if}
+                                    </td>
+                                    <td class="mailbox-subject">{if $user['chargenumber']}{$user['chargenumber']}{else}0{/if}{lang aljhtx:setting_htm_93}<br>{if $user['balance']}{$user['balance']}{else}0{/if}{lang aljhtx:setting_htm_93}
+                                    </td>
+                                    <td class="mailbox-subject">{$user['posts']}<br>{$user['credits']}
+                                    </td>
+                                    <td class="mailbox-subject">{$user['regdate']}<br>{$user['lastvisit']}
+                                    </td>
+                                    <td>{if $user['wxid']}{lang aljhtx:user_htm_26}{else}{lang aljhtx:user_htm_27}{/if}<br>{if $user['qqid']}{lang aljhtx:user_htm_28}QQ{else}{lang aljhtx:user_htm_27}{/if}</td>
+
+
+                                    <td class="mailbox-attachment">
+									<a href="javascript:;" class="sendMessage" data-id="{$user['uid']}" data-username="{$user['username']}">{lang aljhtx:user_htm_30}<a>&nbsp;
+                                            <a href="javascript:;" class="unbindWechat" data-id="{$user['uid']}" data-username="{$user['username']}">{lang aljhtx:user_htm_31}<a><br>
+                                        <a href="javascript:;" class="changePassword" data-id="{$user['uid']}" data-username="{$user['username']}">{lang aljhtx:user_htm_32}<a>&nbsp;
+                                            <a href="javascript:;" class="unbindQq" data-id="{$user['uid']}" data-username="{$user['username']}">{lang aljhtx:user_htm_33}QQ<a>
+									</td>
+                                </tr>
+                                {/loop}
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <!-- /.mail-box-messages -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer no-padding">
+                        <div class="mailbox-controls">
+
+                            <div class="pull-right">
+                              {$paging}
+                            </div>
+                                <!-- /.btn-group -->
+                            </div>
+                            <!-- /.pull-right -->
+                        </div>
+                    </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+<script>
+
+
+	var R = {
+        options: {
+            formhash: '{FORMHASH}',
+        },
+        unbindQq: function(){
+            $('.unbindQq').on('click', function(){
+                var friendUid =  $(this).attr('data-id');
+                var username =  $(this).attr('data-username');
+                layer.confirm('{lang aljhtx:user_htm_34}?('+username+')', function(index){
+                    var load = layer.load(1);
+                    $.post('plugin.php?id=aljhtx&c=user&a=unbindQq&ajax=yes&frienduid='+friendUid+'&formhash='+R.options.formhash, function(){
+                        layer.close(load);
+                        layer.close(index);
+                        layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(tips){
+                            layer.close(tips);
+                        });
+
+                    });
+                });
+            });
+
+        },
+        unbindWechat: function(){
+            $('.unbindWechat').on('click', function(){
+                var friendUid =  $(this).attr('data-id');
+                var username =  $(this).attr('data-username');
+                layer.confirm('{lang aljhtx:user_htm_36}?('+username+')', function(index){
+                    var load = layer.load(1);
+                    $.post('plugin.php?id=aljhtx&c=user&a=unbindWechat&ajax=yes&frienduid='+friendUid+'&formhash='+R.options.formhash, function(){
+                        layer.close(load);
+                        layer.close(index);
+                        layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(tips){
+                            layer.close(tips);
+                        });
+
+                    });
+                });
+            });
+
+        },
+        chagePassword: function(){
+            $('.changePassword').on('click', function(){
+                var friendUid =  $(this).attr('data-id');
+                var username =  $(this).attr('data-username');
+                layer.prompt({
+                    formType: 0,
+                    value: '',
+                    title: '{lang aljhtx:user_htm_38}('+username+')',
+                }, function(value, index, elem){
+                    var load = layer.load(1);
+                    $.post('plugin.php?id=aljhtx&c=user&a=changepassword&ajax=yes&frienduid='+friendUid+'&password='+value+'&formhash='+R.options.formhash, function(){
+                        layer.close(load);
+                        layer.close(index);
+                        layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(tips){
+                            layer.close(tips);
+                        });
+
+                    });
+                });
+            });
+
+        },
+	    sendMessage: function(){
+            $('.sendMessage').on('click', function(){
+                var friendUid =  $(this).attr('data-id');
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:user_htm_30}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    area: ['893px', '600px'],
+                    offset: '100px',
+                    content: 'plugin.php?id=aljhtx&c=user&a=sendmessage&frienduid='+friendUid
+                });
+            });
+
+        },
+        sendGroupMessage: function(){
+            $('.sendGroupMessage').on('click', function() {
+                layer.open({
+                    type: 2,
+                    title: '{lang aljhtx:user_htm_11}',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: true, //{lang aljhtx:ms_htm_7}
+                    area: ['893px', '600px'],
+                    offset: '100px',
+                    content: 'plugin.php?id=aljhtx&c=user&a=sendgroupmessage'
+                });
+            });
+        },
+        adminMessage: function(){
+            $('.adminMessage').on('click', function() {
+                location.href = 'plugin.php?id=aljhtx&c=notification&a=getlist';
+            });
+        },
+        importData: function(){
+            $('.import-data').on('click', function() {
+                layer.alert('{lang aljhtx:user_htm_44}<br>{lang aljhtx:user_htm_45}', {
+                    title: '{lang aljhtx:user_htm_9}',
+                    offset: '100px',
+                    area: ['450px', '180px'],
+                    btn: ['{lang aljhtx:user_htm_47}', '{lang aljhtx:user_htm_48}', '{lang aljhtx:user_htm_49}','{lang aljhtx:user_htm_50}','{lang aljhtx:user_htm_51}'],
+                    yes: function(){
+                        var index = layer.load();
+                        $.post('plugin.php?id=aljhtx&c=user&a=importcheck&i=1&ajax=yes', function(result){
+                            if(result.code == '40002'){
+                                layer.msg('{lang aljhtx:user_htm_52}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            if(result.code == '40001'){
+                                layer.msg('{lang aljhtx:user_htm_53}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            location.href = 'plugin.php?id=aljhtx&c=user&a=import&i=1';
+                        }, 'json');
+                }, btn2: function(){
+                        var index = layer.load();
+                        $.post('plugin.php?id=aljhtx&c=user&a=importcheck&i=2&ajax=yes', function(result){
+                            if(result.code == '40002'){
+                                layer.msg('{lang aljhtx:user_htm_52}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            if(result.code == '40001'){
+                                layer.msg('{lang aljhtx:user_htm_55}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            location.href = 'plugin.php?id=aljhtx&c=user&a=import&i=2';
+                        }, 'json');
+                }, btn3: function(){
+                        var index = layer.load();
+                        $.post('plugin.php?id=aljhtx&c=user&a=importcheck&i=3&ajax=yes', function(result){
+                            if(result.code == '40002'){
+                                layer.msg('{lang aljhtx:user_htm_52}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            if(result.code == '40001'){
+                                layer.msg('{lang aljhtx:user_htm_57}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            location.href = 'plugin.php?id=aljhtx&c=user&a=import&i=3';
+                        }, 'json');
+                }, btn4: function(){
+                        var index = layer.load();
+                        $.post('plugin.php?id=aljhtx&c=user&a=importcheck&i=4&ajax=yes', function(result){
+                            if(result.code == '40002'){
+                                layer.msg('{lang aljhtx:user_htm_52}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            if(result.code == '40001'){
+                                layer.msg('{lang aljhtx:user_htm_59}', {offset: '100px'});
+                                layer.close(index);
+                                return;
+                            }
+                            location.href = 'plugin.php?id=aljhtx&c=user&a=import&i=4';
+                        }, 'json');
+                    }
+                });
+            });
+        },
+        enterPress: function(e){
+            var e = e || window.event;
+            if(e.keyCode == 13){
+                $('.glyphicon-search').click();
+            }
+        },
+	    init: function(){
+            R.adminMessage();
+            R.unbindQq();
+            R.unbindWechat();
+            R.chagePassword();
+            R.sendMessage();
+            R.sendGroupMessage();
+            R.importData();
+        }
+    }
+    R.init();
+</script>
+
+{eval include template(PLUGIN_ID.':admin/footer')}
+

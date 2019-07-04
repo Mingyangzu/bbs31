@@ -1,0 +1,43 @@
+{template common/header}
+<link rel="stylesheet" type="text/css" href="source/plugin/it618_storemapad/images/sdmenu.css" />
+<style>
+div.sdmenu{width:{$it618_storemapad["ad_menuwidth"]}px}
+div.sdmenu div span {background-position:{$spanwidth}px center}
+.it618_storemapad_table{width:100%; margin-top:10px;margin-bottom:10px;table-layout: fixed; background-color:#FFF}
+.it618_storemapad_table tr td{text-align:left;border-width:0;vertical-align:top}
+</style>
+<script type="text/javascript" src="source/plugin/it618_storemapad/js/sdmenu.js"></script>
+<script type="text/javascript" src="source/plugin/it618_storemapad/win/Dialog.js"></script>
+<script type="text/javascript">
+function zOpenD(url,title,width,height){
+	var diag = new Dialog("Diag1");
+	diag.Width = width*1;
+	diag.Height = height*1;
+	diag.Title = title;
+	diag.URL = url;
+	diag.show();
+}
+</script>
+<table class="it618_storemapad_table" cellpadding="0" cellspacing="0" >
+<tr>
+<td width="{$it618_storemapad["ad_menuwidth"]}">
+<div id="it618_storemapad_menu" class="sdmenu">
+     {$strmenu}
+</div>
+</td>
+<td style="padding-left:10px">
+<input type="hidden" id="currentclassid" value="{$defaultcid}" />
+<iframe id='it618_storemapad_frame' width='{$it618_storemapad["ad_width"]}' height='{$it618_storemapad["ad_height"]}' marginwidth='0' marginheight='0'  frameborder='no' scrolling='no'  src="{$_G['siteurl']}plugin.php?id=it618_storemapad:storemapadshow&cid={$defaultcid}"></iframe>
+</td></tr>
+
+</table>
+
+<script type="text/javascript">
+	myMenu = new SDMenu("it618_storemapad_menu");
+	myMenu.init();
+	
+	function it618_showwindow(){
+	showWindow('it618_storemapad','{$_G['siteurl']}plugin.php?id=it618_storemapad:setstoremapad&cid='+document.getElementById('currentclassid').value+'&ac=main')	
+	}
+</script>
+{template common/footer}

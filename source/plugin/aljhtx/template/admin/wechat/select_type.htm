@@ -1,0 +1,93 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+            <form class="layui-form" method="post" action="plugin.php?id=aljhtx&c=wechat&a=bindtemplate&ajax=yes">
+                <input type="hidden" value="{$tpl['template_id']}" name="template_id">
+                <fieldset class="layui-elem-field">
+                    <blockquote class="layui-elem-quote" style="font-size:14px;">{lang aljhtx:select_type_htm_1}</blockquote>
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">{lang aljhtx:select_type_htm_2}</label>
+                            <div class="layui-input-block">
+                                <select name="type" id="type" lay-filter="aihao">
+                                    {loop $typeList $k $v}
+                                    <option value="$k">$v['name']<option>
+                                    {/loop}
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="*">{lang aljhtx:select_type_htm_3}</button>
+                    </div>
+                </div>
+                </fieldset>
+            </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('submit(*)', function(data){
+                    console.log(data.elem) //{lang aljhtx:select_type_htm_4}
+                    console.log(data.form) //{lang aljhtx:select_type_htm_5}
+                    console.log(data.field) //{lang aljhtx:select_type_htm_6}{name: value}
+                    parent.layer.open({
+                        type: 2,
+                        title: '{lang aljhtx:select_type_htm_7}',
+                        shadeClose: true,
+                        shade: false,
+                        maxmin: true, //{lang aljhtx:ms_htm_7}
+                        offset: "20px",
+                        area: ['993px', '700px'],
+                        content: 'plugin.php?id=aljhtx&c=wechat&a=bindtemplate&ajax=yes&template_id={$template_id}&type='+$('#type').val(),
+                    });
+                    return false; //{lang aljhtx:select_type_htm_9}
+                });
+
+            })
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

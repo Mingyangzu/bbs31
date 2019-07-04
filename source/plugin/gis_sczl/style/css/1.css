@@ -1,0 +1,503 @@
+.section {
+	background-color: #fff;
+	position: relative;
+}
+
+.logo {
+	background: url('/source/plugin/gis_sczl/style/images/sl_logo_05.png') no-repeat center;
+	background-size: contain;
+	margin-left:3%;
+	position: fixed;
+	z-index: 9999;
+	width: 249px;
+}
+
+
+@media screen and (max-width: 1920px) {
+	.logo {
+		height:60px;
+		width: 249px;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.logo {
+		height:60px;
+		width: 2.5rem;
+		margin-left:3%;
+	}
+}
+
+.sl_logo {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	height:60px;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 900000;
+}
+
+#my_top {
+	width: 100%;
+	display: block;
+	position: absolute;
+	top: 0;
+}
+
+#sl_last {
+	display: none;
+}
+
+@media screen and (max-width: 1920px) {
+	.sl_logo {
+		height: 60px;
+		background: rgba(0, 0, 0, 0.6);
+		z-index: 900000;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.sl_logo {
+		height:60px;
+		background: rgba(0, 0, 0, 0.6);
+		z-index: 900000;
+	}
+}
+
+
+/* map-start */
+
+.sl_map {
+	width: 100%;
+	padding-bottom: 66px;
+	height: 100%;
+}
+
+.sl_map_box {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.sl_map_box,
+.sl_map_box .gd_map {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.sl_map_box .google_map {
+	height: 0px;
+}
+
+.sl_map .sl_map_search {
+	position: absolute;
+	left: 22%;
+	top: 18%;
+	width: 180px;
+	height: 30px;
+	display: flex;
+	flex-direction: row;
+}
+
+.sl_map .sl_map_search .luxian {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 29px;
+	background: #002147;
+	margin-top: 0.5px;
+}
+
+.sl_map .sl_map_search select {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #bbb;
+}
+
+
+/* map-end */
+
+.sl_down {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #002147;
+}
+
+#full_down {
+	position: absolute;
+	background: url('/source/plugin/gis_sczl/style/images/sl_down.gif') no-repeat center;
+	background-size: contain;
+}
+#full_top{
+	position: absolute;
+	background: url('/source/plugin/gis_sczl/style/images/sl_up.gif') no-repeat center;
+	background-size: contain;
+	color:#fff;
+}
+
+@media screen and (max-width: 1920px) {
+	.sl_map .button-group {
+		position: absolute;
+		right: 20px;
+		bottom: 20px;
+		width: 250px;
+		height: 30px;
+	}
+	
+	.sl_map .button-group .btn {
+		color: #fff;
+		background-color: #0D9BF2;
+		width: 120px;
+		height: 30px;
+	}
+	.sl_down {
+		height: 66px;
+	}
+	#full_down {
+		width: 20px;
+		height: 20px;
+	}
+	#full_top {
+		width: 20px;
+		height: 20px;
+	}
+	.sl_logo .down_text {
+		z-index: 200;
+		position: fixed;
+		left: 78%;
+		height:40px;
+		margin-top:10px;
+	}
+	.sl_logo .down_text a {
+		color: #fff;
+		font-weight: bolder;
+		font-size: 14px;
+		padding: 15px;
+		height: 100%;
+		line-height:40px;
+	}
+	.sl_last .bg_color {
+		width: 60%;
+		height: 100%;
+		position: absolute;
+		display: flex;
+		flex-direction: row;
+		left: 20%;
+		overflow: hidden;
+	}
+	.sl_last .bg_color .dv_box {
+		position: relative;
+		top: 100%;
+		width: 20%;
+		height: 60%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.current {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 20%;
+		height: 60%;
+		top: 25%;
+		transition: top 0.5s, transform 0.5s;
+	}
+	.beijing:hover {
+		position: relative;
+		width: 100%;
+		height: 145%;
+		background: #002147;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.current1 {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 20%;
+		height: 60%;
+		top: 25%;
+		transition: top 1s, transform 1s;
+	}
+	.beijing1:hover {
+		position: relative;
+		width: 100%;
+		height: 146%;
+		background: #002147;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.current2 {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 20%;
+		height: 60%;
+		top: 25%;
+		transition: top 1.5s, transform 1.5s;
+	}
+	.beijing2:hover {
+		position: relative;
+		width: 100%;
+		height: 146%;
+		background: #002147;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.current3 {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 20%;
+		height: 60%;
+		top: 25%;
+		transition: top 2s, transform 2s;
+	}
+	.beijing3:hover {
+		position: relative;
+		width: 100%;
+		height: 146%;
+		background: #002147;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.current4 {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		width: 20%;
+		height: 60%;
+		top: 25%;
+		transition: top 2.5s, transform 2.5s;
+	}
+	.beijing4:hover {
+		position: relative;
+		width: 100%;
+		height: 146%;
+		background: #002147;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+	}
+	.sl_last .bg_color .beijing .wenzi {
+		text-align: center;
+		color: #fff;
+		font-size: 18px;
+		margin:15px 0;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.sl_map .button-group {
+		position: absolute;
+		right:0;
+		left:0;
+		bottom: 20px;
+		width:80%;
+		height: 30px;
+		margin:0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.sl_map .button-group .btn {
+		color: #fff;
+		background-color: #0D9BF2;
+		width:40%;
+		height: 30px;
+		padding:6px 0;
+	}
+	.sl_logo {
+		height: 60px;
+	}
+	.sl_down {
+		height: 1rem;
+	}
+	#full_down {
+		width: .5rem;
+		height: .5rem;
+	}
+	#full_top {
+		width: 20px;
+		height: 20px;
+	}
+	.sl_logo .down_text {
+		position: fixed;
+		left: 45%;
+		width: 50%;
+		height:40px;
+		border: none;
+	}
+	.sl_map .sl_map_search {
+		position: absolute;
+		top: 15%;
+		left: 6%;
+	}
+	.sl_map_box {
+		width: 100%;
+		height: 105%;
+	}
+	.sl_logo .down_text a {
+		color: #b5b4b4;
+		font-size: .28rem;
+		height: 100%;
+		padding: 0;
+		line-height:40px;
+		margin: 0 3px;
+		color: #fff;
+	}
+	.sl_last .bg_color {
+		width: 100%;
+		height:90%;
+		position:relative;
+		left: 0;
+		top:10%;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		background-image: url(/source/plugin/gis_sczl/style/images/wapb.jpg);
+		background-size: 100% 100%;
+	}
+	.sl_last .bg_color>div{
+		position: initial;
+		width:90%;
+		height:15%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		margin:3px auto;
+	}
+	.beijing{
+		width:70%;
+		margin:0 auto;
+	}
+	.beijing a{
+		display: flex;
+		flex-direction: row;
+		justify-content:space-between;
+		align-items: center;
+	}
+	.beijing a>div{
+		display: flex;
+		flex-direction: column;
+		justify-content:center;
+		align-items: center;
+	}
+	.beijing a .rightw{
+		width:50%;
+	}
+	.ttu{
+		width:35px;
+		height:40px;
+	}
+	.jiao{
+		width:55px;
+		height:25px;
+	}
+	.sl_last .bg_color .beijing .wenzi {
+		font-size:14px;
+		padding:6px 0;
+		margin:0;
+		text-align: center;
+		color: #fff;
+	}
+}
+
+a {
+	color: #fff;
+	font-size: 18px;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+@media screen and (min-width: 414px) and (max-width: 1920px) {
+	.sl_last {
+		background: url("/source/plugin/gis_sczl/style/images/last.png");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 100% 100%;
+	}
+	.sl_last .bg_text>span {
+		background-color: white;
+		display: inline-block;
+		width: 3px;
+		height: 3px;
+	}
+	.sl_last .bg_text>p {
+		font-size: 11px;
+	}
+	.sl_last .bg_text>div {
+		font-size: 21px;
+		font-family: '方正正大黑简体';
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.sl_last {
+		background: url('/source/plugin/gis_sczl/style/images/1.png') no-repeat center;
+		background-size: 100% 100%;
+	}
+	.bg_text {
+		position: absolute;
+		z-index: 3;
+		color: white;
+	}
+	.bg_text>p {
+		display: none;
+	}
+	.bg_text>div {
+		padding-left: 20px;
+		width: 30px;
+		margin: 0 auto;
+		line-height: 24px;
+		font-size: 20px;
+		margin-top: 250px;
+	}
+}

@@ -1,0 +1,171 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+    .layui-form-checkbox i {
+        height: 30px;
+    }
+</style>
+<div style="padding:5px;margin-left:0px;">
+    <div class="layui-tab layui-tab-card" style="margin:0;">
+        <ul class="layui-tab-title">
+            {loop $date_list $k $v}
+            <li {if $ms_date == $k}class="layui-this"{/if}><a href="plugin.php?id=aljhtx&c=activity&a=ms_enter&ms_date={$k}&ms_gid={$ms_gid}">{$v}</a></li>
+            {/loop}
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <section class="content" style="padding:0;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <iframe name="submitiframe" id="submitiframe" style="display: none;"></iframe>
+                            <input type="hidden" value="yes" name="ajax">
+                            <form class="layui-form" method="post" action=""  target="submitiframe">
+                                <input type="hidden" value="{FORMHASH}" name="formhash">
+                                <input type="hidden" value="{$ms_date}" name="ms_date">
+                                <input type="hidden" value="{$goods['id']}" name="ms_gid">
+                                <fieldset class="layui-elem-field">
+                                    <div class="layui-field-box">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline" style="width:100px">
+                                                {lang aljhtx:ms_enter_htm_1}
+                                            </div>
+                                            {if $goods['attr_sku']}
+                                            <div class="layui-inline" style="width:200px">
+                                                {lang aljhtx:ms_enter_htm_2}SKU
+
+                                            </div>
+                                            {else}
+                                            <div class="layui-inline" style="width:100px">
+                                                {lang aljhtx:ms_enter_htm_3}
+                                            </div>
+                                            {/if}
+                                            <div class="layui-inline" style="width:100px">
+                                                {lang aljhtx:ms_enter_htm_4}
+
+                                            </div>
+                                            <div class="layui-inline" style="width:100px">
+                                                {lang aljhtx:ms_enter_htm_5}
+                                            </div>
+                                            <div class="layui-inline" style="width:100px">
+                                                {lang aljhtx:ms_enter_htm_6}
+                                            </div>
+                                        </div>
+                                        {loop $activity_list $activity}
+
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline" style="width:100px">
+                                                <div class="layui-input-inline">
+                                                    <input type="checkbox" {if $ms_enter[$activity[id]]}checked{/if} name="ms_activity[]" title="{$activity['title']}" value="{$activity['id']}">
+                                                </div>
+                                            </div>
+                                            {if $goods['attr_sku']}
+                                            <div class="layui-inline" style="width:200px">
+
+                                                <div class="layui-input-inline">
+                                                    <select name="ms_sku[{$activity[id]}]" lay-filter="aihao">
+                                                        {loop $goods['attr_sku'] $sku}
+                                                        <option value="{$sku['path']}" {if $ms_enter[$activity[id]][sku] == $sku[sid]}selected{/if}>{$sku['ch']},{$sku['saleprice']}{lang aljhtx:setting_htm_93}</option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            {else}
+                                            <div class="layui-inline" style="width:100px">
+
+                                                <div class="layui-input-inline">
+                                                    <label class="layui-form-label" style="width:100%;text-align: left;">&#165;{$goods['price1']}</label>
+                                                </div>
+                                            </div>
+                                            {/if}
+                                            <div class="layui-inline" style="width:100px">
+
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="ms_price[{$activity[id]}]" value="{$ms_enter[$activity[id]]['ms_price']}"  autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline" style="width:100px">
+
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="ms_num[{$activity[id]}]" value="{$ms_enter[$activity[id]]['ms_num']}"  autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline" style="width:100px">
+
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="ms_limit_num[{$activity[id]}]" value="{$ms_enter[$activity[id]]['ms_limit_num']}" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/loop}
+
+
+
+                                    </div>
+
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="*">{lang aljhtx:setting_htm_8}</button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </section>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('laydate', function(){
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#start_time'
+                    ,type: 'time'
+                });
+                laydate.render({
+                    elem: '#end_time'
+                    ,type: 'time'
+                });
+            });
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('submit(*)', function(data){
+
+                });
+
+            })
+
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    parent.location.href=parent.location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    parent.location.href=parent.location.href;
+                });
+            }
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>

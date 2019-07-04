@@ -1,0 +1,291 @@
+{eval include template(PLUGIN_ID.':admin/header')}
+<style>
+    body,button,input,select,textarea{ font-family: "Segoe UI", \5b8b\4f53, "Lucida Grande", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif; }
+    body{ font-size: 13px; }
+    * {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+</style>
+<div style="padding:20px;margin-left:0px;">
+
+    <section class="content" style="padding:0;">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe style="display:none;" name="submitiframe"></iframe>
+                <form class="layui-form" method="post" action="{$dourl}" target="submitiframe">
+                    <input type="hidden" value="{FORMHASH}" name="formhash">
+
+                    <div class="box-body diyDocument" id="swiper-container">
+                        {loop $lz_types $k $v}
+                        <div class="box box-default collapsed-box" skey="HomePageModuleContent_1" data-id="{$k}">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">{$v[0]}  {$v[1]}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool up-displayorder"><i class="fa fa-arrow-up"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool down-displayorder"><i class="fa fa-arrow-down"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body" style="">
+                                <form name="cpform"  method="post" autocomplete="off" action="{$dourl}" target="submitiframe">
+                                    <input type="hidden" value="{FORMHASH}" name="formhash">
+                                    <input type="hidden" value="yes" name="ajax">
+                                    <input type="hidden" value="{$k}" name="displayorder">
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_1}</label>
+                                        <input name="main_title" value="result"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_2}</label>
+                                        <input name="title" value="$v[0]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_3}</label>
+                                        <input name="sub_title" value="$v[1]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_4}</label>
+                                        <input name="button_title" value="$v[4]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_5}</label>
+                                        <input name="button_color" type="color" value="$v[5]"  class="form-control">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{lang aljhtx:pcdiy_rec_htm_6}</label>
+                                        <input name="url" value="$v[6]"  class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_rec_htm_7}
+                                        </button>
+                                        <div class="upload_img" style="margin-top:5px;">
+                                            <img style="height:200px;" src="{$v[2]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="layui-btn layui-btn-primary upload_two">
+                                            <i class="layui-icon">&#xe67c;</i>{lang aljhtx:pcdiy_rec_htm_8}
+                                        </button>
+                                        <div class="upload_img_two" style="margin-top:5px;">
+                                            <img style="height:200px;" src="{$v[3]}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top:10px;">
+                                        <input type="submit" class="btn btn-submit btn-primary" value="{lang aljhtx:setting_htm_8}">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {/loop}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+<script>
+    var R = {
+        init: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+                form.on('radio(type)', function(data){
+                    $('.send-type').hide();
+                    $('#type_'+data.value).show();
+                });
+            });
+            R.layuiUpload();
+            R.faArrowDown();
+            R.faArrowUp();
+        },
+        faArrowDown: function () {
+            $('.down-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(parseInt(displayorder)+1 == $(this).parents('.diyDocument').find('.down-displayorder').length){
+                    layer.alert('{lang aljhtx:shop_htm_3}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowdown&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').next().attr('data-id'));
+                    $(that).parents('.collapsed-box').next().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').next().insertBefore($(that).parents('.collapsed-box'));
+                    location.href = location.href;
+                    layer.close(index);
+                });
+            });
+        },
+        faArrowUp: function () {
+            $('.up-displayorder').on('click', function(){
+                var that = this;
+                var displayorder  = $(this).parents('.collapsed-box').attr('data-id');
+                if(displayorder == 0){
+                    layer.alert('{lang aljhtx:shop_htm_4}');
+                    return;
+                }
+                var index = layer.load();
+                $.post('plugin.php?id=aljhtx&c=diy&a=faarrowup&ajax=yes&displayorder='+displayorder+'&skey='+$(this).parents('.collapsed-box').attr('skey'), function(result){
+                    $(that).parents('.collapsed-box').attr('data-id', $(that).parents('.collapsed-box').prev().attr('data-id'));
+                    $(that).parents('.collapsed-box').prev().attr('data-id', displayorder);
+                    $(that).parents('.collapsed-box').prev().insertAfter($(that).parents('.collapsed-box'));
+                    location.href = location.href;
+                    layer.close(index);
+                });
+            });
+        },
+        tips: function(info,url){
+            if(info == 0){
+                layer.alert('{lang aljhtx:footer_htm_1}', {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }else if(typeof (url) !== 'undefined'){
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=url;
+                });
+            }else{
+                layer.alert(info, {icon: 6, shade: 0},function(){
+                    location.href=location.href;
+                });
+            }
+        },
+        layuiUpload: function(){
+            layui.use('form', function(){
+                var form = layui.form;
+            });
+            layui.use('upload', function(){
+                var upload = layui.upload;
+                //upload
+                upload.render({
+                    elem: '.upload'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+                upload.render({
+                    elem: '.upload_two'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_two" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_two" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_two').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+                upload.render({
+                    elem: '.upload_three'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_three" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_three" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_three').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+                upload.render({
+                    elem: '.upload_four'
+                    ,auto: false
+                    ,choose: function(obj){
+                        var item = this.item;
+                        obj.preview(function(index, file, result){
+
+                            if (!file.type.match('image.*')) {
+                                layer.open({content: '{lang aljhtx:shop_htm_8}',skin: 'msg',time: 2});
+                                return false;
+                            }
+                            lrz(file, {
+                                width:600,
+                                done: function (results) {
+                                    var domdata ='<img  style="height:200px;" src="'+result+'">';
+                                    domdata += '<input name="uploadPhoto_four" type="hidden" value="'+result+'">';
+                                    domdata += '<input name="size_four" type="hidden" value="'+result.length+'">';
+                                    //console.log(domdata);
+                                    $(item).parent().find('.upload_img_four').html(domdata);
+                                }
+
+                            });
+                        });
+
+                    }
+                });
+
+
+            });
+        }
+    };
+    $(function() {
+        R.init();
+    });
+</script>
+{eval include template(PLUGIN_ID.':admin/footer')}
