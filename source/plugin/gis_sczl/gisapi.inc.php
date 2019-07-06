@@ -10,13 +10,13 @@ $response = array('code' => 0, 'data' => array(), 'msg' => '', 'time' => time())
 
 $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
-$postmd = array('gisinput', 'gisdel', 'searchlist', 'getgis', 'getresgis');
+$postmd = array('gisinput', 'gisdel', 'searchlist', 'getgis', 'getresgis', 'getres', 'getdefaultgis');
 $getmd = array('getreslist', 'getindex');  // 上线后关闭 getindex
 
 //提交数据 验证用户是否管理员权限
 $umsg = true; //isadminuser($_G);  //测试不验证cookie,正式打开
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && in_array($_GET['mod'], $getmd)) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && in_array($_GET['mod'], $getmd)) { 
      switch ($_GET['mod']) {
             case 'getreslist':
                 getreslist($_GET);
@@ -54,6 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
             case 'getresgis':
                 getresgis($_POST);
                 break;
+            case 'getres':
+                getres($_POST);
+                break;
+            case 'getdefaultgis':
+                getdefaultgis($_POST);
+                break;
             default:
                 $response['msg'] = '请求接口有误';
      }
@@ -77,7 +83,7 @@ function jsonresponse($res) {
 
 
 function getindex($data){
-    echo file_get_contents( template('gis_sczl:index'));
+    include template('gis_sczl:index');
     die;
 }
 
@@ -120,7 +126,7 @@ function gisinput($data) {
         $info = C::t('#gis_sczl#common_gis')->inster($savedata);
     }
     
-        jsonresponse($info);
+//        jsonresponse($info);
     
     if($info == true){
         $response['code'] = 200;
@@ -294,6 +300,64 @@ function getresgis($data){
 }
 
 
+
+//根据资源目录获取 默认标注信息
+function getdefaultgis($data){
+    global  $response;
+    
+    if(empty($data['resid'])){
+        $response['msg'] = '提交参数有误';
+        jsonresponse($response);
+    }
+ 
+    $residarr = is_array($data['resid']) ? implode(',', $data['resid']) : $data['resid'];
+    $condition_str = ' resid3 in ('.$residarr.') ' ;
+    $options = 'id,name,types,lnglat,resid3,texts,imgs,icon,color';
+    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 1, 1000);
+//    jsonresponse($info);    
+    
+    if(!empty($info) && is_array($info)){
+        $response['code'] = 200;
+        $response['msg'] = 'success';
+        $response['data'] = $info;
+    }else{
+        $response['msg'] = '获取失败!';
+    }
+    
+    jsonresponse($response);
+}
+
+
+
+
+
+
+// 获取资源目录 三级联动
+function  getres($data){
+    global  $response;
+    
+    $data['resid'] = (int)$data['resid'];
+
+    $options = 'id,name,fid,types';
+    $data['resid'] >= 0  && $condition_str = ' WHERE fid = '. $data['resid'];
+    $info = C::t('#gis_sczl#common_resources')->findlist($condition_str, $options) ;
+//    jsonresponse($info);
+    
+    if(!empty($info) && is_array($info)){
+        $response['code'] = 200;
+        $response['msg'] = 'success';
+        $response['data'] = $info;
+    }else{
+        $response['msg'] = '无更多数据!';
+    }
+    
+    jsonresponse($response);
+}
+
+
+
+
+
 // 验证参数
 function checkoptions($data, $mustoptions = array()){
     $msg = true;
@@ -334,6 +398,7 @@ function checkoptions($data, $mustoptions = array()){
 
 
 function upfiles($data){
+        global  $response;
     
         if($data["error"] > 0){
             $response['msg'] = '上传错误 ' . $data["error"];

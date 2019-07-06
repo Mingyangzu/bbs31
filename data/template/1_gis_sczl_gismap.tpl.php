@@ -30,7 +30,7 @@
 <!-- 解决页面抖动 -->
 <div class="sl_map_box">
 <div class="gd_map">
-<iframe name="gd_map_iframe" id="gd_map_iframe" src="/plugin.php?id=gis_sczl:gismap_map" frameborder="0" align="left" width="100%" height="100%" scrolling="no"></iframe>
+<iframe name="gd_map_iframe" id="gd_map_iframe" src="/plugin.php?id=gis_sczl:gismap_map&amp;mod=index" frameborder="0" align="left" width="100%" height="100%" scrolling="no"></iframe>
 </div>
 </div>
 </div>

@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS `pre_common_resources` (
   key `resources_types` (`types`)
 ) ENGINE=innodb  DEFAULT CHARSET=utf8 comment '资源目录'; 
 
+insert into `pre_common_plugin` (available,adminid,name,identifier,,description,datatables,directory,copyright,modules,version) values(1,0,'地理信息标注','gis_sczl','','','gis_sczl/','','a:4:{i:0;a:11:{s:4:"name";s:6:"gismap";s:5:"param";s:0:"";s:4:"menu";s:24:"丝绸之路地理信息";s:3:"url";s:0:"";s:4:"type";s:1:"1";s:7:"adminid";s:1:"0";s:12:"displayorder";i:0;s:8:"navtitle";s:0:"";s:7:"navicon";s:0:"";s:10:"navsubname";s:0:"";s:9:"navsuburl";s:0:"";}i:1;a:11:{s:4:"name";s:10:"gismap_map";s:5:"param";s:0:"";s:4:"menu";s:18:"地理信息管理";s:3:"url";s:0:"";s:4:"type";s:1:"3";s:7:"adminid";s:1:"0";s:12:"displayorder";i:1;s:8:"navtitle";s:0:"";s:7:"navicon";s:0:"";s:10:"navsubname";s:0:"";s:9:"navsuburl";s:0:"";}i:2;a:11:{s:4:"name";s:13:"gismap_import";s:5:"param";s:11:"&ac=article";s:4:"menu";s:18:"地理信息导入";s:3:"url";s:0:"";s:4:"type";s:1:"3";s:7:"adminid";s:1:"0";s:12:"displayorder";i:8;s:8:"navtitle";s:0:"";s:7:"navicon";s:0:"";s:10:"navsubname";s:0:"";s:9:"navsuburl";s:0:"";}i:3;a:11:{s:4:"name";s:3:"gis";s:5:"param";s:0:"";s:4:"menu";s:0:"";s:3:"url";s:0:"";s:4:"type";s:2:"11";s:7:"adminid";s:1:"0";s:12:"displayorder";i:9;s:8:"navtitle";s:0:"";s:7:"navicon";s:0:"";s:10:"navsubname";s:0:"";s:9:"navsuburl";s:0:"";}}','1.0.1');
+
 EOF;
 
 runquery($sql);
