@@ -25,11 +25,13 @@ switch ($_GET['mod']) {
     case 'article':
         $defaultgis = getdefaultgis($_GET['res']);
         $defaultgis = $defaultgis !== false ? json_encode($defaultgis) : false ; 
-//        print_r($defaultgis); die;
         include template('gis_sczl:gismap_article');
         break;
     case 'index':
         include template('gis_sczl:gd_iframe');
+        break;
+    case 'articlegis':
+        addarticle($_POST);
         break;
     default:
         $mapboxtop = $_GET['mod'] == 'addmap' ? 5 : 50;

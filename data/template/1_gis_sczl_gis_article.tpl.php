@@ -8,17 +8,19 @@
     var res = 8;
     function editmap() {
 //        res++; console.log(res);
-        $.ajax({
-            url: 'http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi',
-            type: 'post',
-            dataType: 'json',
-            success: function(res){
-                
-            },
-            error: function(res){
-                
-            },
-        });
+//        $.ajax({
+//            url: 'http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi',
+//            type: 'post',
+//            dataType: 'json',
+//            async: false,
+//            data: {"citys": citys},
+//            success: function(res){
+//                
+//            },
+//            error: function(res){
+//                
+//            },
+//        });
 
         var editp = window.frames['uchome-ifrHtmlEditor'];
         var editobj = editp.window.frames['HtmlEditor'];

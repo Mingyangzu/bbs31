@@ -10,12 +10,12 @@ var map = new AMap.Map('container', {
 	],
 	resizeEnable: true
 });
-var articlemap = '';
+
 //marker标记
 var infoWindow = new AMap.InfoWindow({
 	offset: new AMap.Pixel(0, -30)
 });
-for (var i = 0, marker; i < citys.length; i++) {  articlemap = citys;
+for (var i = 0, marker; i < citys.length; i++) {
 	var marker = new AMap.Marker({
 		position: citys[i].lnglat,
 		title: citys[i].name,

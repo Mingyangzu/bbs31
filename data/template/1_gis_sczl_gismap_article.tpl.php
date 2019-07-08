@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-<title>地图</title>
+<title>地图 文章</title>
 <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>css/index.css" />
 <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>css/zTreeStyle/zTreeStyle.css" />
 <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
