@@ -18,7 +18,12 @@
 	</head>
 	<body>
 		<div id="container" style="top:5px;"></div>
-		
+                <!--{if !empty($defaultgis)}-->
+		<script> citys = JSON.parse('$defaultgis') ;
+//                    console.log(citysss);
+//                console.log(citys);
+                </script>
+                <!--{/if}-->
 		<script src="$_G['gis']['dirstyle']js/biaozhu.js"></script>
 	</body>
       

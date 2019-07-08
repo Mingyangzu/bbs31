@@ -3,8 +3,8 @@
 <head>
 <script src="http://www.w3school.com.cn/jquery/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
-//    var domainstr = 'http://silu.topmy.cn';
-    var domainstr = 'http://bbs31.com';
+    var domainstr = 'http://silu.topmy.cn';
+//    domainstr = 'http://bbs31.com';
     
 $(document).ready(function(){
     //资源目录

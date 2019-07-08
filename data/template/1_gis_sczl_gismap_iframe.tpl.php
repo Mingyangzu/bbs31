@@ -84,6 +84,7 @@
                                                         </form>
                                                     <?php } ?>
 </div>
+                                        </div>
 </section>
 </div>
 </div>
@@ -107,7 +108,7 @@
 </li>
 </ul>
 </div>
-<div class="baiozhu" style="display: none;">
+<div class="baiozhu" style="display: none; z-index: 200;">
 <div class="title">
 <div style="display: flex;flex-direction: row;">
 <div style="width:20px;height:20px;margin:5px 5px 0;"><img src="<?php echo $_G['gis']['dirstyle'];?>images/map.png" class="imgs" /></div>
@@ -373,7 +374,7 @@
 </div>
 </div>
 </div>
-<div class="sousuo" style="display: none;">
+<div class="sousuo" style="display: none; z-index: 200;">
 <div class="title">
 <div style="display: flex;flex-direction: row;">
 <div style="width:20px;height:20px;margin:5px 5px 0;"><img src="<?php echo $_G['gis']['dirstyle'];?>images/zuobiao.png" class="imgs" /></div>

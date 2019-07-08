@@ -19,7 +19,12 @@
 </head>
 <body>
 <div id="container" style="top:5px;"></div>
-
+                <?php if(!empty($defaultgis)) { ?>
+<script> citys = JSON.parse('<?php echo $defaultgis;?>') ;
+//                    console.log(citysss);
+//                console.log(citys);
+                </script>
+                <?php } ?>
 <script src="<?php echo $_G['gis']['dirstyle'];?>js/biaozhu.js" type="text/javascript"></script>
 </body>
       

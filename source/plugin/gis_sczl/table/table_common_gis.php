@@ -35,6 +35,12 @@ class table_common_gis extends discuz_table{
         return $data;
     }
     
+    public function counts($condition_str){
+//        $data = DB::query("select count(`id`) counts from ".DB::table($this->_table). " WHERE ".$condition_str);
+        $data = C::t('#gis_sczl#common_gis')->findlist($condition_str, 'id', 0, 1000);
+        return count($data);
+    }
+    
     
 }
 

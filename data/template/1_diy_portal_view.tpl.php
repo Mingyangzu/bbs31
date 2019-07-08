@@ -1,7 +1,7 @@
 <?php if(!defined('IN_DISCUZ')) exit('Access Denied'); hookscriptoutput('view');
 0
-|| checktplrefresh('./template/default/portal/view.htm', './template/default/portal/portal_comment.htm', 1562145674, 'diy', './data/template/1_diy_portal_view.tpl.php', './template/default', 'portal/view')
-|| checktplrefresh('./template/default/portal/view.htm', './template/default/common/seccheck.htm', 1562145674, 'diy', './data/template/1_diy_portal_view.tpl.php', './template/default', 'portal/view')
+|| checktplrefresh('./template/default/portal/view.htm', './template/default/portal/portal_comment.htm', 1562558222, 'diy', './data/template/1_diy_portal_view.tpl.php', './template/default', 'portal/view')
+|| checktplrefresh('./template/default/portal/view.htm', './template/default/common/seccheck.htm', 1562558222, 'diy', './data/template/1_diy_portal_view.tpl.php', './template/default', 'portal/view')
 ;?><?php include template('common/header'); ?><!--[name]!portalcategory_viewtplname![/name]-->
 
 <script src="<?php echo $_G['setting']['jspath'];?>forum_viewthread.js?<?php echo VERHASH;?>" type="text/javascript"></script>

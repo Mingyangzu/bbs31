@@ -1,8 +1,8 @@
 <?php if(!defined('IN_DISCUZ')) exit('Access Denied'); hookscriptoutput('portalcp_article');
 0
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/home/editor_image_menu.htm', 1562133428, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/seccheck.htm', 1562133428, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/upload.htm', 1562133428, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/home/editor_image_menu.htm', 1562549342, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/seccheck.htm', 1562549342, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/upload.htm', 1562549342, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
 ;?><?php include template('common/header'); if($op == 'delete') { ?>
 
 <h3 class="flb">
