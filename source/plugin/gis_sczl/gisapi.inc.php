@@ -4,13 +4,13 @@ if (!defined('IN_DISCUZ')) {
     exit('Access Denied');
 }
 
-$response = array('code' => 0, 'data' => array(), 'msg' => '', 'time' => time());
-
+$response = array('code' => 500, 'data' => array(), 'msg' => '');
+$siturl = $_G['siteurl'];
 //jsonresponse(C::app()->session);
 
 $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
-$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis');
+$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis');
 $getmd = array('getreslist', 'getindex', 'searchlist');  // 上线后关闭 getindex
 //提交数据 验证用户是否管理员权限
 $umsg = true; //isadminuser($_G);  //测试不验证cookie,正式打开
@@ -58,6 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
             break;
         case 'getdefaultgis':
             getdefaultgis($_POST);
+            break;
+        case 'articlegis':
+            if ($umsg !== true) {
+                $response['msg'] = '请重新登录';
+                jsonresponse($response);
+            }
+            articlegis($_POST);
             break;
         default:
             $response['msg'] = '请求接口有误';
@@ -126,7 +133,7 @@ function gisinput($data) {
 //        jsonresponse($info);
 
     if ($info == true) {
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
     } else {
         $response['msg'] = '保存失败!';
@@ -149,7 +156,7 @@ function gisdel($data) {
 //    jsonresponse($info);
 
     if ($info == true) {
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
     } else {
         $response['msg'] = '删除失败!';
@@ -174,16 +181,16 @@ function searchlist($data) {
     $condition_str = '';
     !empty($data['types']) && $condition_str .= ' types = ' . $data['types'];
     !empty($data['name']) && $condition_str .= " and name like'%" . $data['name'] . "%' ";
-    
+
     $options = 'id,name';
     $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, $pages * $limit, $limit);
 //    jsonresponse($info);
-    
-    $counts = C::t('#gis_sczl#common_gis')->counts($condition_str); 
+
+    $counts = C::t('#gis_sczl#common_gis')->counts($condition_str);
 //    jsonresponse($counts);
 
     if (!empty($info) && is_array($info)) {
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $info;
         $response['count'] = $counts;
@@ -211,7 +218,7 @@ function getgis($data) {
 //    jsonresponse($info);
 
     if (!empty($info) && is_array($info)) {
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
@@ -258,7 +265,7 @@ function getreslist($data) {
         }
 
 //        jsonresponse($onelist);  die;
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $onelist;
     } else {
@@ -291,7 +298,7 @@ function getresgis($data) {
             $info[$k]['http'] = 'http://baidu.com';
             $info[$k]['style'] = 2;
         }
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
@@ -322,7 +329,7 @@ function getdefaultgis($data) {
             $info[$k]['http'] = 'http://baidu.com';
             $info[$k]['style'] = 2;
         }
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
@@ -344,7 +351,7 @@ function getres($data) {
 //    jsonresponse($info);
 
     if (!empty($info) && is_array($info)) {
-        $response['code'] = 200;
+        $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
@@ -440,5 +447,34 @@ function upfiles($data) {
     }
 
     $response['msg'] = '上传失败';
+    jsonresponse($response);
+}
+
+// 文章编辑页 加入地图数据入库
+function articlegis($data) {
+    global $response;
+
+    if (empty($data['texts'])) {
+        $response['msg'] = '提交参数有误';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
+
+    $savedata = array();
+    $savedata['texts'] = base64_decode($data['texts']);
+    $savedata['create_time'] = time();
+    $info = C::t('#gis_sczl#common_gis_article')->inster($savedata);
+
+//    jsonresponse($info);
+
+    if ($info == true) {
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = DB::insert_id();
+    } else {
+        $response['msg'] = '保存失败!';
+        $response['data'] = '';
+    }
+
     jsonresponse($response);
 }
