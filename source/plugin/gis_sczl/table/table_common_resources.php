@@ -86,4 +86,13 @@ class table_common_resources extends discuz_table {
         return DB::insert($this->_table, $data, false, true);
     }
 
+    public function querylist($condition_str, $options = 'a.name', $start = 1, $limit = 10) {
+        $sql = "select $options from ". DB::table($this->_table) ." a left join ". DB::table($this->_table) ." b on a.fid = b.id $condition_str limit $start,$limit;";
+        return DB::fetch_all($sql);
+    }
+    
+    public function updateres($data, $condition, $unbuffered = false, $low_priority = false) {
+       return DB::update($this->_table, $data, $condition, $unbuffered, $low_priority);
+    }
+
 }

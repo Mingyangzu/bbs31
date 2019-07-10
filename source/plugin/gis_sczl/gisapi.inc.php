@@ -176,7 +176,7 @@ function searchlist($data) {
     }
 
     $limit = 15;
-    $pages = ($data['pages'] < 2) ? 0 : (int) $data['pages'] - 1;
+    $pages = ($data['page'] < 2) ? 0 : (int) $data['page'] - 1;
 
     $condition_str = '';
     !empty($data['types']) && $condition_str .= ' types = ' . $data['types'];
@@ -195,6 +195,7 @@ function searchlist($data) {
         $response['data'] = $info;
         $response['count'] = $counts;
     } else {
+        $response['code'] = 0;
         $response['msg'] = '无更多数据!';
         $response['count'] = 0;
     }
@@ -269,6 +270,7 @@ function getreslist($data) {
         $response['msg'] = 'success';
         $response['data'] = $onelist;
     } else {
+        $response['code'] = 0;
         $response['msg'] = '无更多数据!';
     }
 
@@ -302,7 +304,9 @@ function getresgis($data) {
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
-        $response['msg'] = '获取失败!';
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = [];
     }
 
     jsonresponse($response);
@@ -355,6 +359,7 @@ function getres($data) {
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
+        $response['code'] = 0;
         $response['msg'] = '无更多数据!';
     }
 
