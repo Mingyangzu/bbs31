@@ -70,7 +70,7 @@
 
 
         <script src="/source/plugin/gis_sczl/style/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-        <script src="/source/plugin/gis_sczl/style/js/jquery-1.4.4.min.js" type="text/javascript"></script>
+        <!--<script src="/source/plugin/gis_sczl/style/js/jquery-1.4.4.min.js" type="text/javascript"></script>-->
 
         <script>
             layui.use(['table', 'form', 'jquery'], function () {
@@ -126,6 +126,10 @@
                                 content: $('#contentbox'),
                                 cancel: function (index, res) {
                                     $('#contentbox').css({'display': 'none'});
+                                    changelevel(level1, 'level0');
+                                    changelevel([], 'level1');
+                                    $("input[name=name]").val('');
+                                    $("input[name=editres]").val('');
                                 }
                             });
                             break;
@@ -153,6 +157,10 @@
                                 content: $('#contentbox'),
                                 cancel: function (index, res) {
                                     $('#contentbox').css({'display': 'none'});
+                                    changelevel(level1, 'level0');
+                                    changelevel([], 'level1');
+                                    $("input[name=name]").val('');
+                                    $("input[name=editres]").val('');
                                 }
                             });
                             break;

@@ -10,7 +10,7 @@ $siturl = $_G['siteurl'];
 
 $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
-$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis');
+$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis', 'upimgs');
 $getmd = array('getreslist', 'getindex', 'searchlist');  // 上线后关闭 getindex
 //提交数据 验证用户是否管理员权限
 $umsg = true; //isadminuser($_G);  //测试不验证cookie,正式打开
@@ -66,6 +66,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
             }
             articlegis($_POST);
             break;
+        case 'upimgs':
+            if ($umsg !== true) {
+                $response['msg'] = '请重新登录';
+                jsonresponse($response);
+            }
+            upimgs($_FILES, $_POST);
+            break;
         default:
             $response['msg'] = '请求接口有误';
     }
@@ -112,14 +119,11 @@ function gisinput($data) {
     !empty($data['texts']) && $savedata['texts'] = $data['texts'];
     !empty($data['icon']) && $savedata['icon'] = $data['icon'];
     !empty($data['color']) && $savedata['color'] = $data['color'];
-
-
-    if (!empty($_FILES)) {
-        $savedata['imgs'] = upfiles($_FILES['imgs']);
+    if(!empty($data['imgs'])){
+        $savedata['imgs'] = $data['imgs'];
     }
-
+    
 //    jsonresponse($savedata);
-
 
     if (isset($data['gisid'])) {
         $savedata['update_time'] = time();
@@ -280,19 +284,26 @@ function getreslist($data) {
 // 获取资源目录下 标注信息
 function getresgis($data) {
     global $response;
-    $data['resid'] = (int) $data['resid'];
-    $data['level'] = (int) $data['level'];
 
-    if (empty($data['resid']) || !in_array($data['level'], array(1, 2, 3))) {
-        $response['msg'] = '提交参数有误';
-        jsonresponse($response);
+    if (empty($data['resid3']) && empty($data['resid2'])) {
+            $response['msg'] = '提交参数为空';
+            jsonresponse($response);
     }
-
-    $level = array(1 => 'resid', 2 => 'resid2', 3 => 'resid3');
-
-    $condition_str = $level[$data['level']] . ' = ' . $data['resid'];
+    
+    $condition_str = '';
+    if(!empty($data['resid3'])){
+        $resid3 = is_array($data['resid3']) ? implode(',', $data['resid3']) : $data['resid3'];
+        $condition_str = ' resid3 in(' . $resid3 . ')';
+    }
+    
+    if(!empty($data['resid2'])){
+        $resid2 = is_array($data['resid2']) ? implode(',', $data['resid2']) : $data['resid2'];
+        $condition_str != '' && $condition_str .= ' or ';
+        $condition_str .= ' ( resid3 = 0 and resid2 in(' . $resid2 . ') )' ;
+    }
+    
     $options = 'id,name,types,lnglat,texts,imgs,icon,color';
-    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 1, 150);
+    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 150);
 //    jsonresponse($info);
 
     if (!empty($info) && is_array($info)) {
@@ -325,7 +336,7 @@ function getdefaultgis($data) {
     $residarr = is_array($data['resid']) ? implode(',', $data['resid']) : $data['resid'];
     $condition_str = ' resid3 in (' . $residarr . ') ';
     $options = 'id,name,types,lnglat,resid3,texts,imgs,icon,color';
-    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 1, 1000);
+    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 1000);
 //    jsonresponse($info);    
 
     if (!empty($info) && is_array($info)) {
@@ -482,4 +493,22 @@ function articlegis($data) {
     }
 
     jsonresponse($response);
+}
+
+
+// 上传文件
+function upimgs($fiels, $data = []){
+    global $response;
+    
+     if (empty($fiels)) {
+        $response['msg'] = '未获取到文件';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
+    
+    $response['code'] = 0;
+    $response['msg'] = 'success';
+    $response['data'] = upfiles($fiels['file']);
+    jsonresponse($response);
+    
 }

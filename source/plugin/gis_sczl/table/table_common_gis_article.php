@@ -30,7 +30,7 @@ class table_common_gis_article extends discuz_table{
         return $data;
     }
     
-    public function findlist($condition_str, $options = 'texts', $start = 1, $limit = 15){
+    public function findlist($condition_str, $options = 'texts', $start = 0, $limit = 15){
         $data = DB::fetch_all('SELECT '. $options .' FROM '.DB::table($this->_table).' WHERE '.$condition_str . " limit $start,$limit");
         return $data;
     }

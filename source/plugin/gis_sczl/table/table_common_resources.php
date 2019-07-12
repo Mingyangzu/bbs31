@@ -69,7 +69,7 @@ class table_common_resources extends discuz_table {
         return DB::fetch_all('SELECT ' . $options . ' FROM ' . DB::table($this->_table) . $condition_str);
     }
 
-    public function listarr($condition_str, $options = 'name', $start = 1, $limit = 10) {
+    public function listarr($condition_str, $options = 'name', $start = 0, $limit = 10) {
         $data = DB::fetch_all('SELECT ' . $options . ' FROM ' . DB::table($this->_table) . $condition_str . " limit $start,$limit");
         return $data;
     }
@@ -86,7 +86,7 @@ class table_common_resources extends discuz_table {
         return DB::insert($this->_table, $data, false, true);
     }
 
-    public function querylist($condition_str, $options = 'a.name', $start = 1, $limit = 10) {
+    public function querylist($condition_str, $options = 'a.name', $start = 0, $limit = 10) {
         $sql = "select $options from ". DB::table($this->_table) ." a left join ". DB::table($this->_table) ." b on a.fid = b.id $condition_str limit $start,$limit;";
         return DB::fetch_all($sql);
     }

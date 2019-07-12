@@ -1,6 +1,7 @@
+<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); ?>
 <html>
 <head>
-<script type="text/javascript" src="http://www.w3school.com.cn/jquery/jquery.js"></script>
+<script src="http://www.w3school.com.cn/jquery/jquery.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/source/plugin/gis_sczl/style/layui/css/layui.css" media="all">
 
 <script type="text/javascript">
@@ -93,7 +94,7 @@ $(document).ready(function(){
   <i class="layui-icon">&#xe67c;</i>上传图片
 </button>
  
-<script src="/source/plugin/gis_sczl/style/layui/layui.js"></script>
+<script src="/source/plugin/gis_sczl/style/layui/layui.js" type="text/javascript"></script>
 <script>
 layui.use('upload', function(){
   var upload = layui.upload;
@@ -108,7 +109,7 @@ layui.use('upload', function(){
     ,accept: 'images'
     ,acceptMime: 'image/jpg, image/png, image/gif'
     ,before: function(res){
-        index = layer.load(1);
+        index = layer.load(2);
         console.log(index);
     }
     ,done: function(res){
