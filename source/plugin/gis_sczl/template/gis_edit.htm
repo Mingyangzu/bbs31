@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="$_G['gis']['dirstyle']layui/css/layui.css" />
+        <script src="$_G['gis']['dirstyle']layui/layui.js"></script>
+    </head>
+
+    <body>
+        <form class="layui-form" style="padding-top:10px;">
+            <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="L_username" name="username" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom:10px;">
+                <label for="L_username" class="layui-form-label">一级目录</label>
+                <div class="layui-input-inline">
+                    <select name="resid" lay-filter="resid">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom:10px;">
+                <label for="L_username" class="layui-form-label">二级目录</label>
+                <div class="layui-input-inline">
+                    <select name="resid2" lay-filter="resid2">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom:10px;">
+                <label for="L_username" class="layui-form-label">三级目录</label>
+                <div class="layui-input-inline">
+                    <select name="resid3" lay-filter="resid3">
+
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">内容</label>
+                <div class="layui-input-inline">
+                    <textarea name="texts" lay-verify="required" autocomplete="off" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">图片上传</label>
+                <div class="layui-upload">
+                    <button type="button" class="layui-btn layui-btn-danger" id="test7"><i class="layui-icon"></i>上传图片</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"></label>
+                <div style="width: 216px; margin-left:100px;">
+                    <button type="button" class="layui-btn layui-btn-fluid" lay-filter="add" lay-submit="">确定</button>
+                </div>
+                <input type="hidden" value="" id="xgid" />
+            </div>
+        </form>
+        <script>
+                    layui.use(['form', 'jquery', 'util', 'layer', 'upload'], function () {
+                        var form = layui.form,
+                                $ = layui.jquery,
+                                util = layui.util,
+                                upload = layui.upload,
+                                layer = layui.layer;
+
+                        var id = $("#xgid").val(); //修改的ID
+                        $.ajax({
+                            type: "POST",
+                            url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+                            dataType: "json",
+                            data: {
+                                "gisid": id,
+                                "mod": "getgis"
+                            },
+                            success: function (res) {
+                                var data = res.data[0];
+                                console.log(data)
+                                $("input[name=username]").val(data.name)
+                                $("textarea[name=texts]").val(data.texts)
+                                $.ajax({
+                                    type: "GET",
+                                    url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi&mod=getreslist",
+                                    contentType: "application/x-www-form-urlencoded",
+                                    dataType: "json",
+                                    success: function (res) {
+                                        if (res.code == 0) {
+                                            var lists = res.data;
+                                            console.log(lists)
+                                            var htmls = '';
+                                            for (var i = 0; i < lists.length; i++) {
+                                                if (lists[i].id == data.resid) {
+                                                    htmls += '<option value="' + lists[i].id + '" selected="">' + lists[i].title + '</option>'
+                                                    $.ajax({//获取二级目录
+                                                        type: "POST",
+                                                        url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+                                                        contentType: "application/x-www-form-urlencoded",
+                                                        dataType: "json",
+                                                        data: {
+                                                            "resid": data.resid,
+                                                            "mod": "getres"
+                                                        },
+                                                        success: function (res) {
+                                                            if (res.code == 0) {
+                                                                var erji = res.data;
+                                                                var wwpp = '';
+                                                                for (var i = 0; i < erji.length; i++) {
+                                                                    if (data.resid2 == erji[i].id) {
+                                                                        wwpp += '<option value="' + erji[i].id + '" selected="">' + erji[i].name + '</option>'
+                                                                        $.ajax({//获取三级目录
+                                                                            type: "POST",
+                                                                            url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+                                                                            contentType: "application/x-www-form-urlencoded",
+                                                                            dataType: "json",
+                                                                            data: {
+                                                                                "resid": data.resid2,
+                                                                                "mod": "getres"
+                                                                            },
+                                                                            success: function (res) {
+                                                                                if (res.code == 0) {
+                                                                                    var sanji = res.data;
+                                                                                    console.log(sanji)
+                                                                                    var wwpp = '';
+                                                                                    for (var i = 0; i < sanji.length; i++) {
+                                                                                        if (data.resid3 == sanji[i].id) {
+                                                                                            wwpp += '<option value="' + sanji[i].id + '" selected="">' + sanji[i].name + '</option>'
+                                                                                        } else {
+                                                                                            wwpp += '<option value="' + sanji[i].id + '">' + sanji[i].name + '</option>'
+                                                                                        }
+
+                                                                                    }
+                                                                                    $("select[name=resid3]").append(wwpp);
+                                                                                    form.render();
+                                                                                    form.on('select(resid3)', function (proData) {
+                                                                                        var pp = proData.value; //三级id
+                                                                                    })
+                                                                                }
+                                                                            }
+                                                                        })
+                                                                    } else {
+                                                                        wwpp += '<option value="' + erji[i].id + '">' + erji[i].name + '</option>'
+                                                                    }
+                                                                }
+                                                                $("select[name=resid2]").append(wwpp);
+                                                                form.render();
+                                                            }
+                                                        }
+                                                    })
+                                                } else {
+                                                    htmls += '<option value="' + lists[i].id + '">' + lists[i].title + '</option>'
+                                                }
+                                            }
+                                            $("select[name=resid]").append(htmls);
+                                            form.render();
+                                        }
+                                    }
+                                })
+                            }
+                        })
+
+                        var tupian;
+                        //添加上传文件
+                        upload.render({
+                            elem: '#test7',
+                            url: 'http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi',
+                            data: {
+                                "mod": "upimgs"
+                            },
+                            done: function (res) {
+                                tupian = res.data;
+                                console.log(res.data)
+                            }
+                        });
+                        //监听提交
+                        form.on('submit(add)', function (data) {
+                            var field = data.field; //提交的数据
+                            $.ajax({
+                                type: "POST",
+                                url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+                                dataType: "json",
+                                data: {
+                                    "name": field.username,
+                                    "resid": field.resid,
+                                    "resid2": field.resid2,
+                                    "resid3": field.resid3,
+                                    "texts": field.texts,
+                                    "file": tupian,
+                                    "gisid": id,
+                                    "mod": "gisinput"
+                                },
+                                success: function (res) {
+                                    console.log(res)
+                                    if (res.code == 0) {
+                                        layer.alert("修改成功", {
+                                            icon: 6
+                                        }, function () {
+                                            // 获得frame索引
+                                            var index = parent.layer.getFrameIndex(window.name);
+                                            //关闭当前frame
+                                            parent.layer.close(index);
+                                        });
+                                    }
+                                }
+                            })
+                        });
+
+                    });
+        </script>
+    </body>
+
+</html>

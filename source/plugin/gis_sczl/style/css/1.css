@@ -7,7 +7,7 @@
 	background: url('/source/plugin/gis_sczl/style/images/sl_logo_05.png') no-repeat center;
 	background-size: contain;
 	margin-left:3%;
-	position: fixed;
+	position: absolute;
 	z-index: 9999;
 	width: 249px;
 }
@@ -459,7 +459,7 @@ a:hover {
 
 @media screen and (min-width: 414px) and (max-width: 1920px) {
 	.sl_last {
-		background: url("/source/plugin/gis_sczl/style/images/last.png");
+		background: url('/source/plugin/gis_sczl/style/images/last.png');
 		background-repeat: no-repeat;
 		background-position: center;
 		background-size: 100% 100%;
@@ -501,3 +501,4 @@ a:hover {
 		margin-top: 250px;
 	}
 }
+

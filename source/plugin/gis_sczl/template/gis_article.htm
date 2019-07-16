@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/source/plugin/gis_sczl/style/layui/css/layui.css"  media="all">
 
-<button type="button" id="mapbox" class="pn vm" onclick="return ''; "  style="margin-left: 10px;"><em>添加地图</em></button>
+<button type="button" id="mapbox" class="pn vm" style="margin-left: 10px;"><em>添加地图</em></button>
 
 <script src="/source/plugin/gis_sczl/style/js/base64.js"></script>
 <script src="/source/plugin/gis_sczl/style/layui/layui.js" charset="utf-8"></script>
@@ -35,7 +35,8 @@
                     if (res.data != '') {
                         argis = res.data;
                     } else {
-                        alert(res.msg);
+                        layer.msg(res.msg);
+                        layer.close(index);
                         return false;
                     }
                 },

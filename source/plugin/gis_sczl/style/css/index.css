@@ -124,6 +124,8 @@ nav.header .logo {
 	margin: 0;
 	display: block;
 	padding: 0 5px;
+	display: flex;
+	flex-direction: row;
 }
 
 .leftHeadTab li {
@@ -327,10 +329,11 @@ nav.header .logo {
 	height: 300px;
 	background: #ffff;
 	left: 40%;
-	top: 50%;
+	top:40%;
 	border-radius: 5px;
 	min-height: 252px;
 	max-width: 620px;
+	z-index:9000000;
 }
 
 .baiozhu .title {
@@ -753,18 +756,6 @@ nav.header .logo {
 }
 
 /* ---------------------------搜索 */
-.sousuo {
-	position: absolute;
-	width: 520px;
-	height: 300px;
-	background: #ffff;
-	left: 40%;
-	top: 50%;
-	border-radius: 5px;
-	min-height: 252px;
-	max-width: 620px;
-}
-
 .sousuo .title {
 	width: 100%;
 	background: #002147;
@@ -846,8 +837,6 @@ button {
 .xxlr button {
 	width: 40%;
 	height: 35px;
-	margin-left: 20%;
-	margin-top: 30px;
 	background: #2f5fa5;
 	color: #fff;
 	border: none;
@@ -890,7 +879,7 @@ button {
 	position: absolute;
 	left:40%;
 	top:10%;
-	width:30%;
+	width:40%;
 	height:600px;
 	background: #fff;
 	border-radius:10px;

@@ -102,7 +102,8 @@ function getindex($data) {
 function gisinput($data) {
     global $response;
 
-    $mustarr = empty($data['gisig']) ? array() : array('name', 'types', 'lnglat', 'resid', 'resid2');
+    $mustarr = empty($data['gisig']) ? array() : array('name', 'types', 'lnglat', 'resid', 'resid2');    
+    
     $checkst = checkoptions($data, $mustarr);
     if ($checkst !== true) {
         $response['msg'] = $checkst;
@@ -119,10 +120,12 @@ function gisinput($data) {
     !empty($data['texts']) && $savedata['texts'] = $data['texts'];
     !empty($data['icon']) && $savedata['icon'] = $data['icon'];
     !empty($data['color']) && $savedata['color'] = $data['color'];
-    if(!empty($data['imgs'])){
-        $savedata['imgs'] = $data['imgs'];
+    if(!empty($data['file'])){
+        $savedata['imgs'] = $data['file'];
     }
-    
+//    if(!empty($_FILES)){
+//        $savedata['imgs'] = upfiles($_FILES['file']);
+//    }
 //    jsonresponse($savedata);
 
     if (isset($data['gisid'])) {
@@ -328,7 +331,7 @@ function getdefaultgis($data) {
     global $response;
 
     if (empty($data['resid'])) {
-        $data['resid'] = '9';
+        $data['resid'] = '8';
         // $response['msg'] = '提交参数有误';
         // jsonresponse($response);
     }
@@ -497,10 +500,10 @@ function articlegis($data) {
 
 
 // 上传文件
-function upimgs($fiels, $data = []){
+function upimgs($files, $data = []){
     global $response;
-    
-     if (empty($fiels)) {
+//    jsonresponse($files);
+     if (empty($files)) {
         $response['msg'] = '未获取到文件';
         $response['data'] = '';
         jsonresponse($response);
@@ -508,7 +511,7 @@ function upimgs($fiels, $data = []){
     
     $response['code'] = 0;
     $response['msg'] = 'success';
-    $response['data'] = upfiles($fiels['file']);
+    $response['data'] = upfiles($files['file']);
     jsonresponse($response);
     
 }

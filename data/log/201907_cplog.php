@@ -1077,3 +1077,18 @@
 <?PHP exit;?>	1562900908	admin	1	127.0.0.1	nav	GET={}; POST={};
 <?PHP exit;?>	1562900908	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
 <?PHP exit;?>	1562900908	admin	1	127.0.0.1	nav	GET={}; POST={};
+<?PHP exit;?>	1563006601	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
+<?PHP exit;?>	1563006601	admin	1	127.0.0.1	nav	GET={}; POST={};
+<?PHP exit;?>	1563006603	admin	1	127.0.0.1	plugins	GET={}; POST={};
+<?PHP exit;?>	1563006606	admin	1	127.0.0.1	plugins	GET={operation=config; do=13; }; POST={};
+<?PHP exit;?>	1563150946	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
+<?PHP exit;?>	1563150946	admin	1	127.0.0.1	nav	GET={}; POST={};
+<?PHP exit;?>	1563150990	admin	1	127.0.0.1	plugins	GET={}; POST={};
+<?PHP exit;?>	1563150998	admin	1	127.0.0.1	plugins	GET={operation=config; do=14; }; POST={};
+<?PHP exit;?>	1563151008	admin	1	127.0.0.1	plugins	GET={operation=config; do=14; varsnew={is_open=1; }; editsubmit=提交; }; POST={varsnew={is_open=1; }; editsubmit=提交; };
+<?PHP exit;?>	1563151012	admin	1	127.0.0.1	plugins	GET={operation=config; do=14; }; POST={};
+<?PHP exit;?>	1563239790	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
+<?PHP exit;?>	1563239814	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
+<?PHP exit;?>	1563239815	admin	1	127.0.0.1	nav	GET={}; POST={};
+<?PHP exit;?>	1563239817	admin	1	127.0.0.1	nav	GET={frames=yes; }; POST={};
+<?PHP exit;?>	1563239818	admin	1	127.0.0.1	nav	GET={}; POST={};

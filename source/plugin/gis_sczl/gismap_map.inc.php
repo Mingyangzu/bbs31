@@ -31,6 +31,12 @@ switch ($_GET['mod']) {
     case 'index':
         include template('gis_sczl:gd_iframe');
         break;
+    case 'search':
+        include template('gis_sczl:gis_search');
+        break;
+    case 'edit':
+        include template('gis_sczl:gis_edit');
+        break;
     default:
         $mapboxtop = $_GET['mod'] == 'addmap' ? 5 : 50;
         include template('gis_sczl:gismap_iframe');
