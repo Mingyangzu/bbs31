@@ -28,7 +28,9 @@
 					<div class="title_bg_img title_bg_img_nav">
 						<ul class="leftHeadTab">
 							<li class="dtcx_Resourcecatalog active">资源目录</li>
+                                                        <!--{if  $umsg }-->
 							<li class="dtcx_displayControl">信息录入</li>
+                                                        <!--{/if}-->
 						</ul>
 					</div>
 					<div class="leftOverflow">
@@ -36,14 +38,15 @@
 							<!-- 资源目录 -->
 							<div id="test12" class="demo-tree-more"></div>
 						</div>
+                                                <!--{if  $umsg }-->
 						<div class="xxlr" style="display: none;">
-							<form class="layui-form" action="" style="height:700px;margin-left:40px;">
+							<form class="layui-form" action="" style="min-height:400px;margin-left:40px;">
 								<div class="layui-form-item">
 									<div class="layui-input-inline">
 										<input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
 									</div>
 								</div>
-								<div class="layui-form-item">
+								<!--<div class="layui-form-item">
 									<div class="layui-input-inline">
 										<select name="types">
 											<option value="">请选择类型</option>
@@ -52,11 +55,11 @@
 											<option value="3">面</option>
 										</select>
 									</div>
-								</div>
+								</div>-->
 								<div class="layui-form-item">
 									<div class="layui-input-inline" style="margin-bottom:10px;">
 										<select name="resid" lay-filter="resid">
-											<option value="">请选择资源目录</option>
+											<option value="">请选择一级目录</option>
 										</select>
 									</div>
 									<div class="layui-input-inline" style="margin-bottom:10px;">
@@ -97,6 +100,7 @@
 								</div>
 							</form>
 						</div>
+                                                <!--{/if}-->
 				</section>
 			</div>
 		</div>
@@ -109,7 +113,7 @@
 					<li class="iStyle" title="标注">
 						<i class="my-icon-maptool4 my-maptool-label" value="0"></i>
 					</li>
-					<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 400)">
+					<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 600)">
 						<i class="my-icon-maptool7 my-maptool-location" value="0"></i>
 					</li>
 					<li class="iStyle" title="保存">
@@ -121,7 +125,7 @@
 				</ul>
 			</div>
 			<div class="baiozhu" style="display: none;">
-				<div class="title">
+				<div class="title" id="moveArea">
 					<div style="display: flex;flex-direction: row;">
 						<div style="width:20px;height:20px;margin:0 5px;"><img src="$_G['gis']['dirstyle']images/map.png" class="imgs" /></div>
 						<div>地图标注</div>
@@ -158,9 +162,9 @@
 				<div id="srxpo">
 					<div class="wkkh baiohg">
 						<div class="jwd">
-							<div><span>经度：</span><input type="text" id="lats" /></div>
-							<div><span>维度：</span><input type="text" id="lngs" /></div>
-							<button>确定</button>
+							<div><span>经度：</span><input type="text" id="lngs" /></div>
+							<div><span>纬度：</span><input type="text" id="lats" /></div>
+							<button id="drawPointBtn">确定</button>
 						</div>
 						<div class="icon">
 							<div class="left">
@@ -315,7 +319,7 @@
 					<div class="wkkh">
 						<div class="sytf" style="margin-top:10px;">
 							<div>
-								<div class="vvcx">颜色：</div>
+								<div class="vvcx">填充颜色：</div>
 								<div>
 									<ul class="sxutr">
 										<li class="xxes1 yanse"></li>
@@ -340,6 +344,7 @@
 				<div style="width:25px;height:25px;margin-left:95%;cursor: pointer;" id="pppnv">
 					<img src="$_G['gis']['dirstyle']images/deletewp.png" class="imgs" />
 				</div>
+                            <!--{if  $umsg }-->
 				<form class="layui-form" action="" style="height:700px;margin-left:40px;">
 					<div class="layui-form-item">
 						<div class="layui-input-inline">
@@ -359,28 +364,17 @@
 					<div class="layui-form-item">
 						<div class="layui-input-inline" style="margin-bottom:10px;">
 							<select name="quiz2">
-								<option value="">请选择资源目录</option>
-								<option value="浙江">浙江省</option>
-								<option value="你的工号">江西省</option>
-								<option value="你最喜欢的老师">福建省</option>
+								<option value="">请选择一级目录</option>
 							</select>
 						</div>
 						<div class="layui-input-inline" style="margin-bottom:10px;">
 							<select name="quiz3">
-								<option value="">请选择二级</option>
-								<option value="杭州">杭州</option>
-								<option value="宁波">宁波</option>
-								<option value="温州">温州</option>
-								<option value="温州">台州</option>
-								<option value="温州">绍兴</option>
+								<option value="">请选择二级目录</option>
 							</select>
 						</div>
 						<div class="layui-input-inline" style="margin-bottom:10px;">
 							<select name="quiz4">
-								<option value="">请选择三级</option>
-								<option value="西湖区">西湖区</option>
-								<option value="余杭区">余杭区</option>
-								<option value="拱墅区">临安市</option>
+								<option value="">请选择三级目录</option>
 							</select>
 						</div>
 						<div class="layui-form-item">
@@ -390,7 +384,7 @@
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-input-inline">
-								<input type="text" name="lats" lay-verify="title" autocomplete="off" placeholder="请在地图上拾取维度" class="layui-input">
+								<input type="text" name="lats" lay-verify="title" autocomplete="off" placeholder="请在地图上拾取纬度" class="layui-input">
 							</div>
 						</div>
 						<div class="layui-form-item layui-form-text">
@@ -410,6 +404,7 @@
 						</div>
 					</div>
 				</form>
+                            <!--{/if}-->
 			</div>
 		</div>
 		</div>
@@ -417,5 +412,39 @@
 		<script src="$_G['gis']['dirstyle']js/index.js"></script>
 		<script src="$_G['gis']['dirstyle']js/fafang.js"></script>
 	</body>
+        <script type="text/javascript">
+   $(function(){
+    //    可移动弹出框
+             var eject_move = $("#moveArea");
+             var eject = $(".baiozhu");
+             eject_move.mousedown(function(e){
+                 var max_x = $(window).width() - 500;            //获取浏览页面的宽度
+                 var max_y = $(window).height() -300;
+                 var ev = window.event || e;      
+                 var old_mouse_x = ev.clientX;                        //获取鼠标开始的横轴位置
+                 var old_mouse_y = ev.clientY;                        //获取鼠标开始的纵轴位置
+                 var position_l = eject.offset().left;            //弹出框距离的横轴位置
+                 var position_t = eject.offset().top;            //弹出框距离的纵轴位置
+                 eject_move.bind('mousemove',function(n){
+                     var nv = window.event || n;
+                     var new_mouse_x = nv.clientX;                    //获取鼠标现在的横轴位置
+                     var new_mouse_y = nv.clientY;                    //获取鼠标现在的纵轴位置
+                     var new_x = new_mouse_x - old_mouse_x +position_l;    //弹出框现在的横轴位置
+                     var new_y = new_mouse_y - old_mouse_y +position_t;    //弹出框现在的纵轴位置
+                     //三元表达式 判断有没有超出边界，有的话置于相应的值
+                     new_x = (new_x < 0 )?0:new_x;
+                     new_y = (new_y < 0 )?0:new_y;
+                     new_x = (new_x > max_x)?max_x:new_x;
+                     new_y = (new_y > max_y)?max_y:new_y;
+                     eject.css({'left':new_x,'top':new_y});
+                 });
+                 
+             });
+         //    鼠标抬起
+             eject.mouseup(function(){
+                 eject_move.unbind('mousemove');
+             });        
+   })
+  </script>
 
 </html>

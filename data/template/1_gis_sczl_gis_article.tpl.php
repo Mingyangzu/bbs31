@@ -1,9 +1,10 @@
+<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); ?>
 <link rel="stylesheet" href="/source/plugin/gis_sczl/style/layui/css/layui.css"  media="all">
 
 <button type="button" id="mapbox" class="pn vm" style="margin-left: 10px;"><em>添加地图</em></button>
 
-<script src="/source/plugin/gis_sczl/style/js/base64.js"></script>
-<script src="/source/plugin/gis_sczl/style/layui/layui.js" charset="utf-8"></script>
+<script src="/source/plugin/gis_sczl/style/js/base64.js" type="text/javascript"></script>
+<script src="/source/plugin/gis_sczl/style/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 
 <style>
     body .editmapbox .layui-layer-btn{padding: 5px; background-color: #F8F8F8;}
@@ -53,7 +54,7 @@
                 var editp = window.frames['uchome-ifrHtmlEditor'];
                 var editobj = editp.window.frames['HtmlEditor'];
                 var editInfos = editobj.document.body.innerHTML;
-                editobj.document.body.innerHTML = editInfos + '<br/> <br/><div><iframe name="gd_map_iframe" id="gd_map_iframe" src="/plugin.php?id=gis_sczl:gismap_map&mod=article&argis=' + argis + '" frameborder="0" align="left" width="99%"  scrolling="no" style="min-height: 500px;position: relative;"></iframe></div> <div><br></div><div><br></div> ';
+                editobj.document.body.innerHTML = editInfos + '<br/> <br/><div><iframe name="gd_map_iframe" id="gd_map_iframe" src="/plugin.php?id=gis_sczl:gismap_map&amp;mod=article&amp;argis=' + argis + '" frameborder="0" align="left" width="99%"  scrolling="no" style="min-height: 500px;position: relative;"></iframe></div> <div><br></div><div><br></div> ';
                 layer.close(index);
                 layui.sessionData('allMarkers', {key: 'marker', value: []});
                 return true;
@@ -67,7 +68,7 @@
         $('#mapbox').click(function () {
             layer.open({
                 type: 2,
-                title: '地理标注信息',
+                title: '地理标注信息选则',
                 area: ['100%', '100%'],
                 content: '/plugin.php?id=gis_sczl:gismap_map&mod=addmap',
                 btn: ['添加到文章'],

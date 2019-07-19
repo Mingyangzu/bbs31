@@ -9,13 +9,15 @@ $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
 $siturl = $_G['siteurl'];
 
+$response = array('code' => 500, 'msg' => '', 'data' => array(), 'count' => 0);
+
+
 //提交数据 验证用户是否管理员权限
 $umsg = isadminuser($_G);  
 if ($umsg == false) {
-    jsonresponse('请重新登录后操作!');
+    $response['msg'] = '请重新登录后操作!';
+    jsonresponse($response);
 }
-
-$response = array('code' => 500, 'msg' => '', 'data' => array(), 'count' => 0);
 
 switch ($_REQUEST['mod']) {
     case 'resgislist':
@@ -46,6 +48,7 @@ function isadminuser($_G) {
 }
 
 function jsonresponse($res) {
+    header('Access-Control-Allow-Origin:*');  // 接口调试 开放跨域请求, 上线后关闭
     header("content:application/json;chartset=uft-8");
     echo json_encode($res);
     die;
@@ -170,7 +173,7 @@ function resgisarr($data){
     global $response;
     
     if(empty($data['fid'])){
-        $condition_str = ' types = 0 ';
+        $condition_str = ' where types = 1 and fid = 0 ';
     }else{
         $condition_str = ' where fid = '. $data['fid'] ;
     }   

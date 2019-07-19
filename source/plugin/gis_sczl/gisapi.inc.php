@@ -114,12 +114,36 @@ function gisinput($data) {
     !empty($data['name']) && $savedata['name'] = $data['name'];
     !empty($data['types']) && $savedata['types'] = $data['types'];
     !empty($data['lnglat']) && $savedata['lnglat'] = str_replace('"', '', json_encode($data['lnglat']));  // 去除双引号
-    !empty($data['resid']) && $savedata['resid'] = $data['resid'];
-    !empty($data['resid2']) && $savedata['resid2'] = $data['resid2'];
-    !empty($data['resid3']) && $savedata['resid3'] = $data['resid3'];
-    !empty($data['texts']) && $savedata['texts'] = $data['texts'];
     !empty($data['icon']) && $savedata['icon'] = $data['icon'];
     !empty($data['color']) && $savedata['color'] = $data['color'];
+    !empty($data['radius']) && $savedata['radius'] = $data['radius'];
+    if(empty($data['resid'])){
+        $response['msg'] = '请选择一级目录';
+        jsonresponse($response);
+    }  
+    $savedata['resid'] = $data['resid'];
+    
+    if(empty($data['resid2'])){
+        $response['msg'] = '请选择二级目录';
+        jsonresponse($response);
+    } 
+    $savedata['resid2'] = $data['resid2'];
+    
+    // 二级目录下有三级目录时,三级目录为必选项
+    if(empty($data['resid3'])){
+        $leves3 = C::t('#gis_sczl#common_resources')->counts(" where fid = ".$data['resid2']);
+        if($leves3[0]['count'] > 0){
+            $response['msg'] = '所选二级目录下有三级目录,请选择三级目录';
+            $response['count'] = $leves3[0]['count'];
+            jsonresponse($response);
+        }
+    }else{
+        $savedata['resid3'] = $data['resid3'];
+    }
+    
+    $savedata['texts'] = $data['texts'];
+    
+    
     if(!empty($data['file'])){
         $savedata['imgs'] = $data['file'];
     }
@@ -178,16 +202,18 @@ function searchlist($data) {
 
     !empty($data['types']) && $data['types'] = (int) $data['types'];
     if (empty($data['types']) && empty($data['name'])) {
-        $response['msg'] = '提交数据有误!';
+        $response['code'] = 0;
+        $response['msg'] = '';  //'提交数据有误!';
         jsonresponse($response);
     }
 
-    $limit = 15;
+    $limit = empty($data['limit']) ? 10 : $data['limit'];
     $pages = ($data['page'] < 2) ? 0 : (int) $data['page'] - 1;
 
     $condition_str = '';
     !empty($data['types']) && $condition_str .= ' types = ' . $data['types'];
-    !empty($data['name']) && $condition_str .= " and name like'%" . $data['name'] . "%' ";
+    !empty($data['types']) && !empty($data['name']) && $condition_str .= ' and ';
+    !empty($data['name']) && $condition_str .= " name like'%" . $data['name'] . "%' ";
 
     $options = 'id,name';
     $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, $pages * $limit, $limit);
@@ -221,7 +247,7 @@ function getgis($data) {
     }
 
     $condition_str = " id = " . $data['gisid'];
-    $options = 'name,types,lnglat,resid,resid2,resid3,texts,imgs,icon,color';
+    $options = 'name,types,lnglat,radius,resid,resid2,resid3,texts,imgs,icon,color';
     $info = C::t('#gis_sczl#common_gis')->findinfo($condition_str, $options);
 //    jsonresponse($info);
 
@@ -305,8 +331,8 @@ function getresgis($data) {
         $condition_str .= ' ( resid3 = 0 and resid2 in(' . $resid2 . ') )' ;
     }
     
-    $options = 'id,name,types,lnglat,texts,imgs,icon,color';
-    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 150);
+    $options = 'id,name,types,lnglat,radius,texts,imgs,icon,color';
+    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 500);
 //    jsonresponse($info);
 
     if (!empty($info) && is_array($info)) {
@@ -338,7 +364,7 @@ function getdefaultgis($data) {
 
     $residarr = is_array($data['resid']) ? implode(',', $data['resid']) : $data['resid'];
     $condition_str = ' resid3 in (' . $residarr . ') ';
-    $options = 'id,name,types,lnglat,resid3,texts,imgs,icon,color';
+    $options = 'id,name,types,lnglat,radius,resid3,texts,imgs,icon,color';
     $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 1000);
 //    jsonresponse($info);    
 
@@ -351,7 +377,8 @@ function getdefaultgis($data) {
         $response['msg'] = 'success';
         $response['data'] = $info;
     } else {
-        $response['msg'] = '获取失败!';
+        $response['code'] = 0;
+        $response['msg'] = '无更多数据!';
     }
 
     jsonresponse($response);
@@ -361,10 +388,14 @@ function getdefaultgis($data) {
 function getres($data) {
     global $response;
 
-    $data['resid'] = (int) $data['resid'];
+    if(empty($data['resid'])){
+        $data['resid'] = 0;
+    }else{
+        $data['resid'] = (int) $data['resid'];
+    }
 
     $options = 'id,name,fid,types';
-    $data['resid'] >= 0 && $condition_str = ' WHERE fid = ' . $data['resid'];
+    $condition_str = ' WHERE fid = ' . $data['resid'];
     $info = C::t('#gis_sczl#common_resources')->findlist($condition_str, $options);
 //    jsonresponse($info);
 

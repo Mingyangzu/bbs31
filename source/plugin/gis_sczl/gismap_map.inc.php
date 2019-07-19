@@ -39,6 +39,7 @@ switch ($_GET['mod']) {
         break;
     default:
         $mapboxtop = $_GET['mod'] == 'addmap' ? 5 : 50;
+        $float = $_GET['mod'] == 'addmap' ? false : true;
         include template('gis_sczl:gismap_iframe');
 }
 

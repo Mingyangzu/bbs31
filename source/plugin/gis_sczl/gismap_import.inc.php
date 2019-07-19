@@ -100,7 +100,7 @@ function saveArrtodb($data, $tablepre = '') {
     $savearr = array();
     $createtime = time();
     foreach ($data as $key => $val) {
-        $savearr[] = "('{$val['name']}', {$val['types']}, '{$val['lnglat']}', {$val['resid']}, {$val['resid2']}, {$val['resid3']}, '{$val['texts']}', {$createtime})";
+        $savearr[] = "('{$val['name']}', {$val['types']}, '{$val['lnglat']}', '{$val['radius']}', {$val['resid']}, {$val['resid2']}, {$val['resid3']}, '{$val['texts']}', {$createtime})";
     }
 
     $savestr = implode(',', $savearr);

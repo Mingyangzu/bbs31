@@ -1,14 +1,15 @@
+<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" href="$_G['gis']['dirstyle']css/index.css" />
-        <link rel="stylesheet" href="$_G['gis']['dirstyle']layui/css/layui.css" />
-        <script src="$_G['gis']['dirstyle']js/jquery-1.4.4.min.js"></script>
-        <script src="$_G['gis']['dirstyle']layui/layui.js"></script>
-        <script src="$_G['gis']['dirstyle']js/fafang.js"></script>
+        <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>css/index.css" />
+        <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>layui/css/layui.css" />
+        <script src="<?php echo $_G['gis']['dirstyle'];?>js/jquery-1.4.4.min.js" type="text/javascript"></script>
+        <script src="<?php echo $_G['gis']['dirstyle'];?>layui/layui.js" type="text/javascript"></script>
+        <script src="<?php echo $_G['gis']['dirstyle'];?>js/fafang.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="layui-row" style="margin:15px 20px;">
@@ -32,10 +33,10 @@
         </div>
         <table class="layui-hide" id="test" lay-filter="test"></table>
         <script type="text/html" id="barDemo">
-            <!--{if  $umsg }-->
+            <?php if($umsg ) { ?>
             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            <!--{/if}-->
+            <?php } ?>
         </script>
         <script>
             layui.use(['table', 'form'], function () {

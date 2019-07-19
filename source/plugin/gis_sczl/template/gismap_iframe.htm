@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-		<title>地图 管理 文章管理</title>
+		<title>地图</title>
 		<link rel="stylesheet" href="$_G['gis']['dirstyle']css/index.css" />
-		<link rel="stylesheet" href="$_G['gis']['dirstyle']css/zTreeStyle/zTreeStyle.css" />
-		<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
-		<script src="$_G['gis']['dirstyle']js/city.js"></script>
+		<link rel="stylesheet" href="$_G['gis']['dirstyle']layui/css/layui.css" />
+		<!-- <script src="$_G['gis']['dirstyle']js/city.js"></script> -->
 		<script src="$_G['gis']['dirstyle']js/jquery-1.4.4.min.js"></script>
-		<script src="$_G['gis']['dirstyle']js/jquery.ztree.core.js"></script>
-		<script src="$_G['gis']['dirstyle']js/jquery.ztree.excheck.js"></script>
-		<script src="$_G['gis']['dirstyle']js/jquery.ztree.exhide.js"></script>
+		<script src="$_G['gis']['dirstyle']layui/layui.js"></script>
 		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.14&key=b6d11a2c1cbd93f3ef41a0d02e9fe553&plugin=AMap.MouseTool"></script>
-                
 	</head>
+
 	<body>
 		<div id="container" style="top: {$mapboxtop}px; z-index: 199;">
 
@@ -29,61 +27,75 @@
 					<div class="title_bg_img title_bg_img_nav">
 						<ul class="leftHeadTab">
 							<li class="dtcx_Resourcecatalog active">资源目录</li>
-                                                        <!--{if $umsg === true  }-->
 							<li class="dtcx_displayControl">信息录入</li>
-                                                        <!--{/if}-->
 						</ul>
 					</div>
 					<div class="leftOverflow">
 						<div class="tab_left">
 							<!-- 资源目录 -->
-							<div class="changingOver ztree_tab">
-								<ul id="treeDemo" class="ztree"></ul>
-							</div>
+							<div id="test12" class="demo-tree-more"></div>
 						</div>
 						<div class="xxlr" style="display: none;">
-                                                    <!--{if $umsg === true  }-->
-                                                    <form method="post" autocomplete="off" id="gisform" action="" enctype="multipart/form-data" onsubmit="return checkGisInput();">
-							<div>
-								<div style="margin-right:10px;">名称:</div>
-								<div>
-									<input type="text" name='title' id='gistitle' placeholder="请输入名称" maxlength='126'/>
+							<form class="layui-form" action="" style="min-height:400px;margin-left:40px;">
+								<div class="layui-form-item">
+									<div class="layui-input-inline">
+										<input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入名称" class="layui-input">
+									</div>
 								</div>
-							</div>
-							<div>
-								<div style="margin-right:10px;">类型:</div>
-								<div style="width:40%;">
-									<select name='types' id='gistypes'>
-										<option value='1'>点</option>
-										<option value='2'>线</option>
-										<option value='3'>面</option>
-									</select>
+								<!--<div class="layui-form-item">
+									<div class="layui-input-inline">
+										<select name="types">
+											<option value="">请选择类型</option>
+											<option value="1">点</option>
+											<option value="2">线</option>
+											<option value="3">面</option>
+										</select>
+									</div>
+								</div>-->
+								<div class="layui-form-item">
+									<div class="layui-input-inline" style="margin-bottom:10px;">
+										<select name="resid" lay-filter="resid">
+											<option value="">请选择一级目录</option>
+										</select>
+									</div>
+									<div class="layui-input-inline" style="margin-bottom:10px;">
+										<select name="resid2" lay-filter="resid2">
+
+										</select>
+									</div>
+									<div class="layui-input-inline" style="margin-bottom:10px;">
+										<select name="resid3" lay-filter="resid3">
+
+										</select>
+									</div>
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<input type="text" name="lngs" id="lng" lay-verify="required" autocomplete="off" placeholder="请在地图上拾取经度"
+											 class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<div class="layui-input-inline">
+											<input type="text" name="lats" id="lat" lay-verify="required" autocomplete="off" placeholder="请在地图上拾取维度"
+											 class="layui-input">
+										</div>
+									</div>
+									<div class="layui-form-item layui-form-text">
+										<div class="layui-input-inline">
+											<textarea name="texts" lay-verify="required" autocomplete="off" placeholder="请输入点标记的内容" class="layui-textarea"></textarea>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<button type="button" class="layui-btn layui-btn-danger" id="test7"><i class="layui-icon"></i>上传图片</button>
+									</div>
+									<div class="layui-form-item">
+										<div style="width: 216px; margin: 0;">
+											<button type="button" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1" id="test9">立即提交</button>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div>
-								<div style="margin-right:10px;">经度:</div>
-								<div>
-									<input type="text" name='lngs' id="lngs" placeholder="请在地图上拾取经度"/>
-								</div>
-							</div>
-							<div>
-								<div style="margin-right:10px;">维度:</div>
-								<div>
-									<input type="text" name='lats' id="lats" placeholder="请在地图上拾取维度"/>
-								</div>
-							</div>
-							<div>
-								<div style="margin-right:10px;">内容:</div>
-								<div>
-                                                                    <textarea name="contents" id='giscontents' rows="5" cols="23" placeholder="请输入点标记的内容" maxlength='1020' ></textarea>
-								</div>
-							</div>
-							<div><input type="file" name="file0" id="file0" multiple="multiple" class="shangchuan" /></div>
-							<button type='submit' name='submit' value='gisinput' id='gisinput' >确定</button>
-                                                        </form>
-                                                    <!--{/if}-->
+							</form>
 						</div>
-                                        </div>
 				</section>
 			</div>
 		</div>
@@ -96,7 +108,7 @@
 					<li class="iStyle" title="标注">
 						<i class="my-icon-maptool4 my-maptool-label" value="0"></i>
 					</li>
-					<li class="iStyle" title="搜索">
+					<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 600)">
 						<i class="my-icon-maptool7 my-maptool-location" value="0"></i>
 					</li>
 					<li class="iStyle" title="保存">
@@ -107,13 +119,23 @@
 					</li>
 				</ul>
 			</div>
-			<div class="baiozhu" style="display: none; z-index: 200;">
+			<div class="baiozhu" style="display: none;">
 				<div class="title">
 					<div style="display: flex;flex-direction: row;">
-						<div style="width:20px;height:20px;margin:5px 5px 0;"><img src="$_G['gis']['dirstyle']images/map.png" class="imgs" /></div>
+                                            <!--{if $float == true }-->
+						<div style="width:20px;height:20px;margin:8px 5px;">
+                                            <!--{else}-->
+                                                <div style="width:20px;height:20px;margin:0px 5px;">
+                                            <!--{/if}-->
+						
+                                                    <img src="$_G['gis']['dirstyle']images/map.png" class="imgs" /></div>
 						<div>地图标注</div>
 					</div>
-					<div style="width:25px;height:25px;margin:0 10px;" id="gbzg">
+                                        <!--{if $float == true }-->
+						<div style="width:20px;height:20px;margin:0px 10px 0;" id="gbzg">
+                                            <!--{else}-->
+                                                <div style="width:20px;height:20px;margin:-26px 10px 0;" id="gbzg">
+                                            <!--{/if}-->
 						<img src="$_G['gis']['dirstyle']images/delete.png" class="imgs" />
 					</div>
 				</div>
@@ -145,9 +167,9 @@
 				<div id="srxpo">
 					<div class="wkkh baiohg">
 						<div class="jwd">
-							<div><span>经度：{$testvar}</span><input type="text" id="lat" /></div>
-							<div><span>维度：</span><input type="text" id="lng" /></div>
-							<button>确定</button>
+							<div><span>经度：</span><input type="text" id="lats" /></div>
+							<div><span>维度：</span><input type="text" id="lngs" /></div>
+							<!--<button>确定</button>-->
 						</div>
 						<div class="icon">
 							<div class="left">
@@ -158,7 +180,7 @@
 								</ul>
 							</div>
 							<div id="contentBox" style="width:70%;">
-								<div class="right xianshi">
+								<div class="right xianshi" style="float: none;">
 									<div style="margin:10px 0;color:#002147;">基础图标</div>
 									<ul>
 										<li class="wsghk">
@@ -187,7 +209,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="right">
+								<div class="right"  style="float: none;">
 									<div style="margin:10px 0;color:#002147;">丝路图标</div>
 									<ul>
 										<li>
@@ -220,7 +242,7 @@
 										</li>
 									</ul>
 								</div>
-								<div class="right">
+								<div class="right"  style="float: none;">
 									<div style="margin:10px 0;color:#002147;">军事图标</div>
 									<ul>
 										<li>
@@ -238,17 +260,6 @@
 					</div>
 					<div class="wkkh">
 						<div class="sytf">
-							<!-- <div>
-							<div class="vvcx">绘制类型：</div>
-							<div>
-								<ul class="wxpgv">
-									<li class="zexy1 xian"></li>
-									<li class="zexy2"></li>
-									<li class="zexy3"></li>
-									<li class="zexy4"></li>
-								</ul>
-							</div>
-						</div> -->
 							<div>
 								<div class="vvcx">线条颜色：</div>
 								<div>
@@ -270,21 +281,6 @@
 					</div>
 					<div class="wkkh">
 						<div class="sytf">
-							<!-- <div>
-							<div class="vvcx">绘制类型：</div>
-							<div>
-								<ul class="ssppk">
-									<li class="wwsa1 mian"></li>
-									<li class="wwsa2"></li>
-									<li class="wwsa3"></li>
-									<li class="wwsa4"></li>
-									<li class="wwsa5"></li>
-									<li class="wwsa6"></li>
-									<li class="wwsa7"></li>
-									<li class="wwsa8"></li>
-								</ul>
-							</div>
-						</div> -->
 							<div>
 								<div class="vvcx">填充颜色：</div>
 								<div>
@@ -306,20 +302,6 @@
 					</div>
 					<div class="wkkh">
 						<div class="sytf">
-							<!-- <div>
-							<div class="vvcx">绘制类型：</div>
-							<div>
-								<ul class="eesx">
-									<li class="aaz1 tstx"></li>
-									<li class="aaz2"></li>
-									<li class="aaz3"></li>
-									<li class="aaz4"></li>
-									<li class="aaz5"></li>
-									<li class="aaz6"></li>
-									<li class="aaz7"></li>
-								</ul>
-							</div>
-						</div> -->
 							<div>
 								<div class="vvcx">填充颜色：</div>
 								<div>
@@ -340,14 +322,9 @@
 						</div>
 					</div>
 					<div class="wkkh">
-						<!-- <div class="jwd">
-						<div><span>经度：</span><input type="text" id="lat2" /></div>
-						<div><span>维度：</span><input type="text" id="lng2" /></div>
-						<button>确定</button>
-					</div> -->
 						<div class="sytf" style="margin-top:10px;">
 							<div>
-								<div class="vvcx">颜色：</div>
+								<div class="vvcx">填充颜色：</div>
 								<div>
 									<ul class="sxutr">
 										<li class="xxes1 yanse"></li>
@@ -363,117 +340,7 @@
 									</ul>
 								</div>
 							</div>
-							<!-- <div class="wzbzs">
-							<div class="vvcx">文字：</div>
-							<div>
-								<input type="text" value="文字标注"/>
-							</div>
-						</div> -->
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="sousuo" style="display: none; z-index: 200;">
-				<div class="title">
-					<div style="display: flex;flex-direction: row;">
-						<div style="width:20px;height:20px;margin:5px 5px 0;"><img src="$_G['gis']['dirstyle']images/zuobiao.png" class="imgs" /></div>
-						<div>地图搜索</div>
-					</div>
-					<div style="width:25px;height:25px;margin:0 10px;" id="soush">
-						<img src="$_G['gis']['dirstyle']images/delete.png" class="imgs" />
-					</div>
-				</div>
-				<div class="sser">
-					<div class="sskh">
-						<select class="selecs">
-							<option value="dian">点</option>
-							<option value="xian">线</option>
-							<option value="mian">面</option>
-						</select>
-						<input placeholder="请输入要搜索的名称" class="cheng" />
-						<button>搜索</button>
-					</div>
-					<div class="liste">
-						<table border="1" cellspacing="0" style="width:100%;text-align:center;">
-							<tr>
-								<th>序号</th>
-								<th>名称</th>
-								<th>类型</th>
-								<th style="width:200px;">操作</th>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;" onclick="bianji(1)">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-							<tr style="height:50px;">
-								<td>1</td>
-								<td>大雁塔</td>
-								<td>点</td>
-								<td>
-									<button style="background:#2f5fa5;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">编辑</button>
-									<button style="background: red;color:#fff;line-height:30px;width:70px;border:0px;border-radius:3px;">删除</button>
-								</td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -482,55 +349,105 @@
 				<div style="width:25px;height:25px;margin-left:95%;cursor: pointer;" id="pppnv">
 					<img src="$_G['gis']['dirstyle']images/deletewp.png" class="imgs" />
 				</div>
-				<div>
-					<span>名称：</span>
-					<div><input type="text" placeholder="大雁塔" /></div>
-				</div>
-				<div>
-					<span>经度：</span>
-					<div><input type="text" placeholder="116.258446" /></div>
-				</div>
-				<div>
-					<span>纬度：</span>
-					<div><input type="text" placeholder="37.686622" /></div>
-				</div>
-				<div>
-					<span>内容：</span>
-					<div>
-						<textarea rows="5" cols="23" placeholder="请输入点标记的内容">
-							
-						</textarea>
+				<form class="layui-form" action="" style="height:700px;margin-left:40px;">
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+							<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入名称" class="layui-input">
+						</div>
 					</div>
-				</div>
-				<div><input type="file" name="file0" id="file0" multiple="multiple" class="shangchuan" /></div>
-				<div id="ihgfm">
-					<img src="" id="img0"  class="hide" style="width:100%;height:100%;">
-				</div>
-				<div><button class="tijiao" onclick="console.log('提交');">提交</button></div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+							<select name="quiz1">
+								<option value="">请选择类型</option>
+								<option value="点">点</option>
+								<option value="线">线</option>
+								<option value="面">面</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="margin-bottom:10px;">
+							<select name="quiz2">
+								<option value="">请选择一级目录</option>
+							</select>
+						</div>
+						<div class="layui-input-inline" style="margin-bottom:10px;">
+							<select name="quiz3">
+								<option value="">请选择二级目录</option>
+							</select>
+						</div>
+						<div class="layui-input-inline" style="margin-bottom:10px;">
+							<select name="quiz4">
+								<option value="">请选择三级目录</option>
+							</select>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-inline">
+								<input type="text" name="lngs" lay-verify="title" autocomplete="off" placeholder="请在地图上拾取经度" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-inline">
+								<input type="text" name="lats" lay-verify="title" autocomplete="off" placeholder="请在地图上拾取维度" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item layui-form-text">
+							<div class="layui-input-inline">
+								<textarea placeholder="请输入点标记的内容" class="layui-textarea"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-upload">
+								<button type="button" class="layui-btn layui-btn-normal" id="test10">选择文件</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div style="width: 216px; margin: 0;">
+								<button type="button" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1" id="test11">立即提交</button>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-            
+		</div>
 		<script src="$_G['gis']['dirstyle']js/left.js"></script>
-		<script src="$_G['gis']['dirstyle']js/biaozhu.js"></script>
+		<script src="$_G['gis']['dirstyle']js/index.js"></script>
+		<script src="$_G['gis']['dirstyle']js/fafang.js"></script>
 	</body>
-        <script>
-            function checkGisInput(){
-                if($('#gistitle').val() == ''){
-                    alert('请填写标题');
-                    return false;
-                }
-                
-                if($('#gistypes').val() == ''){
-                    alert('请选择类型');
-                    return false;
-                }
-                
-                if($('#lngs').val() == '' || $('#lats').val() == ''){
-                    alert('请填写经纬度');
-                    return false;
-                }
-//                $('#gisinput').submit();
-                return  true;
-            };
-        </script>
+<script type="text/javascript">
+   $(function(){
+    //    可移动弹出框
+             var eject_move = $("#moveArea");
+             var eject = $(".baiozhu");
+             eject_move.mousedown(function(e){
+                 var max_x = $(window).width() - 500;            //获取浏览页面的宽度
+                 var max_y = $(window).height() -300;
+                 var ev = window.event || e;      
+                 var old_mouse_x = ev.clientX;                        //获取鼠标开始的横轴位置
+                 var old_mouse_y = ev.clientY;                        //获取鼠标开始的纵轴位置
+                 var position_l = eject.offset().left;            //弹出框距离的横轴位置
+                 var position_t = eject.offset().top;            //弹出框距离的纵轴位置
+                 eject_move.bind('mousemove',function(n){
+                     var nv = window.event || n;
+                     var new_mouse_x = nv.clientX;                    //获取鼠标现在的横轴位置
+                     var new_mouse_y = nv.clientY;                    //获取鼠标现在的纵轴位置
+                     var new_x = new_mouse_x - old_mouse_x +position_l;    //弹出框现在的横轴位置
+                     var new_y = new_mouse_y - old_mouse_y +position_t;    //弹出框现在的纵轴位置
+                     //三元表达式 判断有没有超出边界，有的话置于相应的值
+                     new_x = (new_x < 0 )?0:new_x;
+                     new_y = (new_y < 0 )?0:new_y;
+                     new_x = (new_x > max_x)?max_x:new_x;
+                     new_y = (new_y > max_y)?max_y:new_y;
+                     eject.css({'left':new_x,'top':new_y});
+                 });
+                 
+             });
+         //    鼠标抬起
+             eject.mouseup(function(){
+                 eject_move.unbind('mousemove');
+             });        
+   })
+  </script>
+  
 </html>

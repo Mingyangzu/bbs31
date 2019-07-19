@@ -175,7 +175,9 @@ nav.header .logo {
 	width: 100%;
 	overflow: auto;
 }
-
+.leftOverflow::-webkit-scrollbar {
+        display: none;
+}
 .changingOver:first-of-type {
 	display: block;
 	margin-left: 0;
@@ -348,6 +350,7 @@ nav.header .logo {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	cursor: move;
 }
 
 .baiozhu .jiho {
@@ -411,7 +414,7 @@ nav.header .logo {
 }
 
 .baiozhu .jwd input {
-	width: 100px;
+	width: 120px;
 	padding: 0 10px;
 	height: 30px;
 	border-radius: 3px;
@@ -426,6 +429,7 @@ nav.header .logo {
 	border: none;
 	color: #fff;
 	border-radius: 3px;
+	cursor: pointer;
 }
 
 .baiozhu .icon {
@@ -846,7 +850,7 @@ button {
 /* 信息窗口 */
 
 .infos {
-	padding: 10px;
+	padding: 10px 0 10px 10px;
 }
 
 .infos .shg {
@@ -858,7 +862,7 @@ button {
 
 .infos .kjh {
 	width: 45%;
-	height: 120px;
+	/*height: 120px;*/
 }
 
 .infos .name {

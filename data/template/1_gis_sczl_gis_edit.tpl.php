@@ -1,11 +1,12 @@
+<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); ?>
 <!DOCTYPE html>
 <html>
 
     <head>
         <meta charset="utf-8">
         <title></title>
-        <link rel="stylesheet" href="$_G['gis']['dirstyle']layui/css/layui.css" />
-        <script src="$_G['gis']['dirstyle']layui/layui.js"></script>
+        <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>layui/css/layui.css" />
+        <script src="<?php echo $_G['gis']['dirstyle'];?>layui/layui.js" type="text/javascript"></script>
     </head>
 
     <body>
