@@ -263,32 +263,83 @@ function getgis($data) {
 }
 
 // 获取资源目录
+//function getreslist($data) {
+//    global $response;
+//
+//    $data['resid'] = (int) $data['resid'];
+//
+//    $options = 'id,name,fid,types';
+//    $data['resid'] > 0 && $condition_str = ' WHERE id = ' . $data['resid'];
+//    $info = C::t('#gis_sczl#common_resources')->findlist($condition_str, $options);
+////    jsonresponse($info);
+//
+//    if (!empty($info) && is_array($info)) {
+//        // 格式化列表
+//        $onelist = $towlist = $threelist = [];
+//        foreach ($info as $v) {
+//            switch ($v['types']) {
+//                case 1:
+//                    $onelist[] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 1, 'children' => []);
+//                    break;
+//                case 2:
+//                    $twolist[$v['fid']][] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 2, 'children' => []);
+//                    break;
+//                case 3:
+//                    $threelist[$v['fid']][] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 3, 'children' => []);
+//                    break;
+//            }
+//        }
+//        foreach ($twolist as $key => $val) {
+//            foreach ($val as $kk => $vv) {
+//                $twolist[$key][$kk]['children'] = $threelist[$vv['id']];
+//            }
+//        }
+//        foreach ($onelist as $ok => $ov) {
+//            $onelist[$ok]['children'] = $twolist[$ov['id']];
+//        }
+//
+////        jsonresponse($onelist);  die;
+//        $response['code'] = 0;
+//        $response['msg'] = 'success';
+//        $response['data'] = $onelist;
+//    } else {
+//        $response['code'] = 0;
+//        $response['msg'] = '无更多数据!';
+//    }
+//
+//    jsonresponse($response);
+//}
+
+// 获取文章目录列表
 function getreslist($data) {
     global $response;
 
     $data['resid'] = (int) $data['resid'];
 
-    $options = 'id,name,fid,types';
-    $data['resid'] > 0 && $condition_str = ' WHERE id = ' . $data['resid'];
-    $info = C::t('#gis_sczl#common_resources')->findlist($condition_str, $options);
+    $options = 'catid,catname,upid';
+    $data['resid'] > 0 && $condition_str = ' WHERE catid = ' . $data['resid'];
+    $info = C::t('#gis_sczl#portal_category')->findlist($condition_str, $options);
 //    jsonresponse($info);
 
     if (!empty($info) && is_array($info)) {
         // 格式化列表
-        $onelist = $towlist = $threelist = [];
-        foreach ($info as $v) {
-            switch ($v['types']) {
-                case 1:
-                    $onelist[] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 1, 'children' => []);
-                    break;
-                case 2:
-                    $twolist[$v['fid']][] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 2, 'children' => []);
-                    break;
-                case 3:
-                    $threelist[$v['fid']][] = array('title' => $v['name'], 'id' => $v['id'], 'level' => 3, 'children' => []);
-                    break;
+        $infolist = array();
+        foreach($info as $val){
+            $infolist[$val['catid']] = $val;
+        }
+        
+        $onelist = $towlist = $threelist = array();
+        foreach ($infolist as $v) {
+            if($v['upid'] == 0){
+                $onelist[] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 1, 'children' => []);
+            }else if($infolist[$v['upid']]['upid'] == 0){
+                $twolist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 2, 'children' => []);
+            }else{
+                $threelist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 3, 'children' => []);
             }
         }
+//        jsonresponse($twolist);  
+        
         foreach ($twolist as $key => $val) {
             foreach ($val as $kk => $vv) {
                 $twolist[$key][$kk]['children'] = $threelist[$vv['id']];
@@ -298,7 +349,7 @@ function getreslist($data) {
             $onelist[$ok]['children'] = $twolist[$ov['id']];
         }
 
-//        jsonresponse($onelist);  die;
+//        jsonresponse($onelist); 
         $response['code'] = 0;
         $response['msg'] = 'success';
         $response['data'] = $onelist;
@@ -309,6 +360,8 @@ function getreslist($data) {
 
     jsonresponse($response);
 }
+
+
 
 // 获取资源目录下 标注信息
 function getresgis($data) {

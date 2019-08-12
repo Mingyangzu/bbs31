@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/source/plugin/gis_sczl/style/layui/css/layui.css"  media="all">
 
+<button type="button" id="mapresbox" class="pn vm" style="margin-left: 10px;"><em>添加地图标注信息</em></button>
+
 <button type="button" id="mapbox" class="pn vm" style="margin-left: 10px;"><em>添加地图</em></button>
 
 <script src="/source/plugin/gis_sczl/style/js/base64.js"></script>
@@ -67,7 +69,7 @@
         $('#mapbox').click(function () {
             layer.open({
                 type: 2,
-                title: '地理标注信息',
+                title: '添加地图',
                 area: ['100%', '100%'],
                 content: '/plugin.php?id=gis_sczl:gismap_map&mod=addmap',
                 btn: ['添加到文章'],
@@ -94,6 +96,38 @@
                 },
             });
         });
+        
+        $('#mapresbox').click(function () {
+            layer.open({
+                type: 2,
+                title: '添加地理标注信息',
+                area: ['80%', '90%'],
+                content: '/plugin.php?id=gis_sczl:gismap_map&mod=addmapres',
+                btn: ['添加到文章'],
+                btnAlign: 'c',
+                closeBtn: 1,
+                anim: 0,
+                maxmin: false,
+                shade: 0,
+                skin: 'editmapbox',
+                yes: function (index, layero) {
+                    var markers = layui.sessionData('allMarkers');
+
+                    if (editmap()) {
+                        layer.msg('添加成功!');
+                    } else {
+                        layer.msg('添加失败!');
+                    }
+                    layer.close(index);
+                },
+                cancel: function () {
+                    //右上角关闭回调
+                    //return false 开启该代码可禁止点击该按钮关闭
+                    layui.sessionData('allMarkers', {key: 'marker', value: []});
+                },
+            });
+        });
+        
 
     });
 

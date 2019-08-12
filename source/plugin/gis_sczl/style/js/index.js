@@ -199,6 +199,102 @@ $("#clear, .jiho li:last-child").click(function() {
 	lnglat = [];//清空标注点数组
 })
 
+var reslist = [];
+$('#addreslist').click(function(){
+    if(lnglat.length <= 0 || !types){
+       layer.msg("添加失败!", {icon: 5});
+       return false; 
+    }
+    if(types == 1 && !icon){
+       layer.msg("获取标注点图标失败!", {icon: 5});
+       return false; 
+    }
+    
+    if(types == 5 && !radius){
+        layer.msg("获取圆半径失败!", {icon: 5});
+        return false; 
+     }     
+         
+    var lists = {};
+    lists.lnglat = lnglat;
+    lists.types = types;
+    lists.icon = types == 1 ? icon : '';
+    lists.backgrse = types > 1 ? backgrse : '';
+    lists.radius = types == 5 ? radius : 0;
+    switch (types) {
+        case 0:
+            lists.types_text = 'marker';
+            draw('marker');
+            break;
+        case 1:
+            lists.types_text = 'polyline';
+            draw('polyline');
+            break;
+        case 2:
+            lists.types_text = 'polygon';
+            draw('polygon');
+            break;
+        case 3:
+            lists.types_text = 'rectangle';
+            draw('rectangle');
+            break;
+        case 4:
+            lists.types_text = 'circle';
+            draw('circle');
+            break;
+    }
+    
+    reslist.push(lists);
+    console.log(reslist);
+    lnglat = [];
+    layui.use(['table', 'form', 'jquery'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery;
+        table.render({
+            elem: '#addrestable'
+            ,data: reslist
+            , cellMinWidth: 50
+            , cols: [[
+                    {type:'numbers', title: '序号', width: 50}
+                    , {field: 'types', title: '类型', width: 60, templet: function(e){
+                            var types_text = '';
+                            switch(e.types){
+                                case 1: types_text = '点'; break;
+                                case 2: types_text = '线'; break;
+                                case 3: types_text = '面'; break;
+                                case 4: types_text = '矩形'; break;
+                                case 5: types_text = '圆'; break;
+                            }
+                            return types_text;
+                    }}
+                    , {field: 'icon', title: '图标/颜色', templet: function(e){
+                          return  e.icon ? "<img src="+ e.icon +" class='imgs' style='width:20px; height: 30px;'>" : "<div style='width:25px;height:25px;background:"+ e.backgrse +" ; border-radius: 3px;'></div>";
+                    }}
+                    , {title: '删除', toolbar: '#barDemo', width: 70}
+                ]]
+            , id: 'reslistid'
+        });
+        
+        table.on('tool(resList)', function (obj) {
+            var data = obj.data;
+            if (obj.event == 'del') {
+                var tr_index = $("tr").index(obj.tr);
+                var delIndex = layer.confirm('确定删除序号为' + tr_index + "的标注信息吗?", function (delIndex) {
+                    console.log(data);
+                    reslist = reslist.reduce((total, current, key) => {
+                                    key != tr_index && total.push(current);
+//                                    draw(current.types_text);
+                                    return total;
+                                }, []);
+                    layer.close(delIndex);
+                    console.log(reslist);
+                    obj.del();
+                });
+            }
+        });
+           
+    });
+    
+});
 
 //开始标注
 $(".my-maptool-label").click(function() {
@@ -213,6 +309,7 @@ $(".my-maptool-label").click(function() {
 	$("#lng").val("")
 	$("#lat").val("")
 })
+
 //点击确定，根据输入的经纬度绘制点标注
 $("#drawPointBtn").click(function(){
 	lnglat = [];
@@ -231,6 +328,7 @@ $("#drawPointBtn").click(function(){
 })
 
 //开始绘制
+startBiaozhu = true;
 map.on('mousedown', function(e){
 	if(startBiaozhu){
 		//如果是点、面或圆，且已经绘制
@@ -243,13 +341,15 @@ map.on('mousedown', function(e){
 			lnglat = [];
 			map.clearMap();
 			stopDraw = false;
-		}
+		} 
 		$("#lng").val(e.lnglat.lng) //信息录入经度
 		$("#lat").val(e.lnglat.lat) //信息录入纬度
 		//录入点信息
 		if(index == 0) {
 			lnglat[0] = e.lnglat.lng;
 			lnglat[1] = e.lnglat.lat;
+                        $("#lngs").val(e.lnglat.lng) //信息录入经度
+                        $("#lats").val(e.lnglat.lat) //信息录入纬度
 			draw('marker')
 		} 
 	}
@@ -495,7 +595,7 @@ function showAllPoint(allMarkers) {
 //根据左侧勾选的内容，对应展示标注点
 $.ajax({ //渲染左侧
 	type: "GET",
-	url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi&mod=getreslist",
+	url: "/plugin.php?id=gis_sczl:gisapi&mod=getreslist",
 	dataType: "json",
 	success: function(res) {
 		if(res.code == 0) {
@@ -513,42 +613,33 @@ $.ajax({ //渲染左侧
 					showCheckbox: true, //是否显示复选框
 					id: 'demoId1',
 					oncheck: function(obj) {
-						var resid2 = []; //二级目录ID
-						var resid3 = []; //三级目录id
-						if(obj.data.level == 1) {
-							var twoObj = obj.data.children; //二级节点信息
-							for(var i = 0; i < twoObj.length; i++) {
-								var childObj = twoObj[i].children;
-								if(childObj) {
-									for(var j = 0; j < childObj.length; j++) {
-										resid3.push(parseInt(childObj[j].id));
-									}
-								} else {
-									resid2.push(parseInt(twoObj[i].id));
-								}
-							}
-						} 
-						else if(obj.data.level == 2) {
-							var threeObj = obj.data.children;
-							if(threeObj) {
-								for(var i = 0; i < threeObj.length; i++) {
-									resid3.push(parseInt(threeObj[i].id));
-								}
-							}else {
-								resid2.push(obj.data.id);
-							}
-						} 
-						else if(obj.data.level == 3) {
-							resid3.push(obj.data.id);
-						}
-
+                                            var checkres = [];
+                                            var resarr = tree.getChecked('demoId1');
+                                            for(var i in resarr){
+                                                if(!resarr[i].children || resarr[i].children.length == 0){
+                                                    checkres.push(parseInt(resarr[i].id));     //一级
+                                                }else{ 
+                                                    var twolevel = resarr[i].children;
+                                                    for(var k in twolevel){
+                                                        if(!twolevel[k].children || twolevel[k].children.length == 0){
+                                                            checkres.push(parseInt(twolevel[k].id));   //二级
+                                                        }else{
+                                                            var threeleve = twolevel[k].children;
+                                                            for(var j in threeleve){
+                                                              checkres.push(parseInt(threeleve[j].id));   //三级 
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+//                                            console.log(checkres);
+                                            
 						$.ajax({ //获取点击节点的数据
 							type: "POST",
-							url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+							url: "/plugin.php?id=gis_sczl:gisapi",
 							dataType: "json",
 							data: {
-								"resid2": resid2,
-								"resid3": resid3,
+								"checkres": checkres,
 								"mod": "getresgis"
 							},
 							success: function(res) {
@@ -604,7 +695,7 @@ layui.use(['tree', 'util', 'form', 'upload'], function () {
 
     var getres = function (fid, types) {
         $.ajax({
-            url: 'http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi',
+            url: '/plugin.php?id=gis_sczl:gisapi',
             data: {'mod': 'getres', 'resid': fid},
             type: "post",
             dataType: 'json',
@@ -653,7 +744,7 @@ layui.use(['tree', 'util', 'form', 'upload'], function () {
 	//添加上传文件
 	upload.render({
 		elem: '#test7',
-		url: 'http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi',
+		url: '/plugin.php?id=gis_sczl:gisapi',
 		data: {
 			"mod": "upimgs"
 		},
@@ -673,7 +764,7 @@ layui.use(['tree', 'util', 'form', 'upload'], function () {
 		}else{
 			$.ajax({
 				type: "POST",
-				url: "http://silu.topmy.cn/plugin.php?id=gis_sczl:gisapi",
+				url: "/plugin.php?id=gis_sczl:gisapi",
 				dataType: "json",
 				data: {
 					"name": field.name,

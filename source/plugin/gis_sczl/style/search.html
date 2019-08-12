@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
+    <style>
+      html,body,#container{
+        height: 100%
+      }
+      .input-item{
+        height: 2.2rem;
+      }
+      .btn{
+        width: 6rem;
+        /* margin: 0 1rem 0 2rem; */
+      }
+      .input-text{
+        width: 4rem;
+        margin-right:1rem;
+      }
+	  .amap-icon img {
+            width: 25px;
+            height: 34px;
+        }
+ 
+        .amap-marker-label{
+            border: 0;
+            background-color: transparent;
+        }
+	  .info{
+            position: relative;
+            top: 0;
+            right: 0;
+            min-width: 0;
+        }
+    </style>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <title>高德框选</title>
+  </head>
+  <body>
+    <div id='container'></div>
+    <div class='info'>操作说明：圆和矩形通过拖拽来绘制，其他覆盖物通过点击来绘制</div>
+    <div class="input-card" style='width: 24rem;'>
+        <div class="input-item">
+          <input type="radio" name='func' value='marker'><span class="input-text">画点</span>
+          <input type="radio" name='func' value='polyline'><span class="input-text">画折线</span>
+          <input type="radio" name='func' value='polygon'><span class="input-text" style='width:5rem;'>画多边形</span>
+        </div>
+        <div class="input-item">
+          <input type="radio" name='func' checked="checked" value='rectangle'><span class="input-text">画矩形</span>
+          <input type="radio" name='func' value='circle'><span class="input-text">画圆</span>
+        </div>
+        <div class="input-item">
+            <input id="clear" type="button" class="btn" value="清除" />
+			<input id="close" type="button" class="btn" value="关闭绘图" />
+			<input id="getCverlays" type="button" class="btn" value="获取覆盖物" />
+        </div>
+    </div>
+    <script src="https://webapi.amap.com/maps?v=1.4.12&key=5ade03ebd89b43b3c03f74e9f7b93fa4&plugin=AMap.MouseTool"></script>
+    <script type="text/javascript">
+    var map = new AMap.Map('container',{
+		resizeEnable: true, //是否监控地图容器尺寸变化
+		zoom: 14, //初始地图级别
+		center: [126.947813, 44.410906], //初始地图中心点
+		showIndoorMap: false //关闭室内地图
+    });
+	//map.setCity('舒兰市');
+	console.log(map.getCenter())
+ // 创建点
+    var marker = new AMap.Marker({
+        map: map,
+       // draggable:true,
+        position: [126.947962, 44.406889],
+		extData:{
+			id:1,
+			name:'茉莉香鸭颈王（舒兰店）'
+			}
+    });
+	var marker1 = new AMap.Marker({
+        map: map,
+       // draggable:true,
+        position: [126.950275, 44.411781],
+		extData:{
+			id:2,
+			name:'王老六包子铺'
+			}
+    });
+	var marker2 = new AMap.Marker({
+        map: map,
+       // draggable:true,
+        position: [126.958212, 44.411545],
+		extData:{
+			id:3,
+			name:'舒兰市满盆龙虾饭店'
+			}
+    });
+	var marker3 = new AMap.Marker({
+        map: map,
+       // draggable:true,
+        position: [126.949713, 44.411858],
+		extData:{
+			id:4,
+			name:'皇妈厨房黄焖鷄米饭'
+			}
+    });
+	var marker4 = new AMap.Marker({
+        map: map,
+       // draggable:true,
+        position: [126.943696, 44.417337],
+		extData:{
+			id:5,
+			name:'聚财馋嘴鸭（正阳）'
+			}
+    });
+	var info = [];
+       //	 info.push("<div class='input-card content-window-card'><div><img style=\"float:left;\" src=\" https://webapi.amap.com/images/autonavi.png \"/></div> ");
+        info.push("<div style=\"padding:7px 0px 0px 0px;\"><h4>茉莉香鸭颈王（舒兰店）</h4>");
+       // info.push("<p class='input-item'>电话 : 010-84107000   邮编 : 100102</p>");
+        info.push("<p class='input-item'>地址 :舒兰市舒兰大街5013号</p></div></div>");
+	var infoWindow = new AMap.InfoWindow({
+		isCustom: false,  //使用自定义窗体
+		content: info.join(""),  //使用默认信息窗体框样式，显示信息内容
+		offset: new AMap.Pixel(0, -25)
+	});
+	//鼠标点击marker弹出自定义的信息窗体
+    AMap.event.addListener(marker, 'click', function () {
+        infoWindow.open(map, marker.getPosition());
+    });
+    var mouseTool = new AMap.MouseTool(map); 
+    //监听draw事件可获取画好的覆盖物
+    var overlays = [];
+    mouseTool.on('draw',function(e){
+		map.remove(overlays)
+        overlays = [];
+		//debugger
+		//console.log(point);
+      	//console.log(e.obj.getBounds().contains(point))
+        overlays.push(e.obj);
+		var bounds = e.obj.getBounds();
+		var allMarkers = map.getAllOverlays('marker');
+       // var isPointInRing = AMap.GeometryUtil.isPointInRing(point,e.obj.getBounds().getPath());
+	   //console.log(allMarkers)
+		var overlayPath = [];	//覆盖物路径
+		   
+		//console.log(e.obj.contains(point))  //可以判断点是否在多边形、矩形、圆内
+	   if(e.obj.CLASS_NAME=="AMap.Marker"){
+			overlayPath.push(e.obj.getPosition());
+	   }else{
+		   var southWest = bounds.getSouthWest();
+		   var northEast = bounds.getNorthEast();
+		   if(southWest.equals(northEast)){
+				return;
+		   }
+			overlayPath = e.obj.getPath();
+	   }
+ 
+	   $.each(allMarkers,function(index, thisMarker){
+		   var point = thisMarker.getPosition();
+		   //console.log("索引:"+index+"对应值为："+point);
+		   console.log(thisMarker.getExtData());
+		  // debugger
+		   //console.log(overlayPath)
+			var isPointInRing =  AMap.GeometryUtil.isPointInRing(point,overlayPath);//bounds.contains(point);
+			//console.log(isPointInRing);
+			thisMarker.on('mouseover', showLable);
+            thisMarker.on('mouseout', hideLable);
+			
+			thisMarker.setTitle(isPointInRing?'在框选内部':'在框选外部');
+		});
+		rejectSelect();
+		
+    }) 
+	function showLable(e){
+		var thisMarker = e.target;
+		thisMarker.setLabel({
+				content: "<div class='info'>"+thisMarker.getExtData().name+"</div>",
+				offset:new AMap.Pixel(20, -10)
+			});
+		console.log(e);
+	}
+ 
+	function hideLable(e){
+		var thisMarker = e.target;
+		//thisMarker.setLabel({});
+	}
+ 
+	function rejectSelect(){
+		mouseTool.close(false);
+		for(var i=0;i<radios.length;i+=1){
+            radios[i].checked = false;
+        }
+	}
+    
+    function draw(type){
+      switch(type){
+        case 'marker':{
+            mouseTool.marker({
+              //同Marker的Option设置
+            });
+            break;
+        }
+        case 'polyline':{
+            mouseTool.polyline({
+              strokeColor:'#80d8ff'
+              //同Polyline的Option设置
+            });
+            break;
+        }
+        case 'polygon':{
+            mouseTool.polygon({
+              fillColor:'#00b0ff',
+              strokeColor:'#80d8ff'
+              //同Polygon的Option设置
+            });
+            break;
+        }
+        case 'rectangle':{
+            mouseTool.rectangle({
+              fillColor:'#00b0ff',
+              strokeColor:'#80d8ff'
+              //同Polygon的Option设置
+            });
+            break;
+        }
+        case 'circle':{
+            mouseTool.circle({
+              fillColor:'#00b0ff',
+              strokeColor:'#80d8ff'
+              //同Circle的Option设置
+            });
+            break;
+        }
+      }
+    }
+    var radios = document.getElementsByName('func');
+    for(var i=0;i<radios.length;i+=1){
+        radios[i].onchange = function(e){
+ 
+          draw(e.target.value)
+        }
+    }
+    draw('rectangle');
+	//获取所有区域覆盖物
+	function getOverlays(type){
+		//var bounds =  map.getBounds();
+		//map.setLimitBounds(bounds);
+		var overlays = map.getAllOverlays(type);
+		console.log(overlays);
+	} 
+ 
+    document.getElementById('clear').onclick = function(){
+        map.remove(overlays)
+        overlays = [];
+    }  
+    document.getElementById('close').onclick = function(){
+        mouseTool.close(true)//关闭，并清除覆盖物
+		//map.clearLimitBounds();
+        for(var i=0;i<radios.length;i+=1){
+            radios[i].checked = false;
+        }
+    }
+	document.getElementById('getCverlays').onclick = function(){
+console.log(map.getCenter())
+        getOverlays('marker');
+    }
+    </script>
+  </body>
+</html>

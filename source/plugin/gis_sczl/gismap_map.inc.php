@@ -37,6 +37,11 @@ switch ($_GET['mod']) {
     case 'edit':
         include template('gis_sczl:gis_edit');
         break;
+    case 'addmapres':
+        $mapboxtop = 5;
+        $float = false;
+        include template('gis_sczl:addmapres');
+        break;
     default:
         $mapboxtop = $_GET['mod'] == 'addmap' ? 5 : 50;
         $float = $_GET['mod'] == 'addmap' ? false : true;
