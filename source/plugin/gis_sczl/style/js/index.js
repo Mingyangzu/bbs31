@@ -244,8 +244,7 @@ $('#addreslist').click(function(){
             break;
     }
     
-    reslist.push(lists);
-    console.log(reslist);
+    reslist.push(lists); //console.log(reslist);
     lnglat = [];
     layui.use(['table', 'form', 'jquery'], function () {
         var table = layui.table, form = layui.form, $ = layui.jquery;
@@ -277,17 +276,16 @@ $('#addreslist').click(function(){
         table.on('tool(resList)', function (obj) {
             var data = obj.data;
             if (obj.event == 'del') {
-                var tr_index = $("tr").index(obj.tr);
-                var delIndex = layer.confirm('确定删除序号为' + tr_index + "的标注信息吗?", function (delIndex) {
-                    console.log(data);
+                var trindex = $("tr").index(obj.tr);
+                var delIndex = layer.confirm("确定删除序号为"+ trindex +"标注信息吗?", function (delIndex) {
                     reslist = reslist.reduce((total, current, key) => {
-                                    key != tr_index && total.push(current);
-//                                    draw(current.types_text);
-                                    return total;
-                                }, []);
+                        //console.log(key);console.log(trindex - 1); 
+                        key != (trindex - 1) && total.push(current);
+//                        draw(current.types_text);
+                        return total;
+                    }, []);
                     layer.close(delIndex);
-                    console.log(reslist);
-                    obj.del();
+                    table.reload('reslistid', {data: reslist});
                 });
             }
         });
