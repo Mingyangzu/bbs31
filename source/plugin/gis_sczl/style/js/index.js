@@ -154,7 +154,9 @@ function draw(type) {
 //************************************************************************************************************************************
 //******************************************************标注开始**********************************************************************
 //************************************************************************************************************************************
-var index = 0;//index==0表示选择录入点信息，index==1表示选择录入线信息，index==2表示选择录入面信息
+if(!index){
+    var index = 100; //index==0表示选择录入点信息，index==1表示选择录入线信息，index==2表示选择录入面信息
+}
 var lnglat = [];//信息录入时要绘制的点/线/面数组信息
 var stopDraw = false;//是否停止绘制。true表示一次绘制结束
 var types = 1;//要录入的类型（1点，2线，3面，4矩形，5圆）
@@ -199,101 +201,6 @@ $("#clear, .jiho li:last-child").click(function() {
 	lnglat = [];//清空标注点数组
 })
 
-var reslist = [];
-$('#addreslist').click(function(){
-    if(lnglat.length <= 0 || !types){
-       layer.msg("添加失败!", {icon: 5});
-       return false; 
-    }
-    if(types == 1 && !icon){
-       layer.msg("获取标注点图标失败!", {icon: 5});
-       return false; 
-    }
-    
-    if(types == 5 && !radius){
-        layer.msg("获取圆半径失败!", {icon: 5});
-        return false; 
-     }     
-         
-    var lists = {};
-    lists.lnglat = lnglat;
-    lists.types = types;
-    lists.icon = types == 1 ? icon : '';
-    lists.backgrse = types > 1 ? backgrse : '';
-    lists.radius = types == 5 ? radius : 0;
-    switch (types) {
-        case 0:
-            lists.types_text = 'marker';
-            draw('marker');
-            break;
-        case 1:
-            lists.types_text = 'polyline';
-            draw('polyline');
-            break;
-        case 2:
-            lists.types_text = 'polygon';
-            draw('polygon');
-            break;
-        case 3:
-            lists.types_text = 'rectangle';
-            draw('rectangle');
-            break;
-        case 4:
-            lists.types_text = 'circle';
-            draw('circle');
-            break;
-    }
-    
-    reslist.push(lists); //console.log(reslist);
-    lnglat = [];
-    layui.use(['table', 'form', 'jquery'], function () {
-        var table = layui.table, form = layui.form, $ = layui.jquery;
-        table.render({
-            elem: '#addrestable'
-            ,data: reslist
-            , cellMinWidth: 50
-            , cols: [[
-                    {type:'numbers', title: '序号', width: 50}
-                    , {field: 'types', title: '类型', width: 60, templet: function(e){
-                            var types_text = '';
-                            switch(e.types){
-                                case 1: types_text = '点'; break;
-                                case 2: types_text = '线'; break;
-                                case 3: types_text = '面'; break;
-                                case 4: types_text = '矩形'; break;
-                                case 5: types_text = '圆'; break;
-                            }
-                            return types_text;
-                    }}
-                    , {field: 'icon', title: '图标/颜色', templet: function(e){
-                          return  e.icon ? "<img src="+ e.icon +" class='imgs' style='width:20px; height: 30px;'>" : "<div style='width:25px;height:25px;background:"+ e.backgrse +" ; border-radius: 3px;'></div>";
-                    }}
-                    , {title: '删除', toolbar: '#barDemo', width: 70}
-                ]]
-            , id: 'reslistid'
-        });
-        
-        table.on('tool(resList)', function (obj) {
-            var data = obj.data;
-            if (obj.event == 'del') {
-                var trindex = $("tr").index(obj.tr);
-                var delIndex = layer.confirm("确定删除序号为"+ trindex +"标注信息吗?", function (delIndex) {
-                    reslist = reslist.reduce((total, current, key) => {
-                        //console.log(key);console.log(trindex - 1); 
-                        key != (trindex - 1) && total.push(current);
-//                        draw(current.types_text);
-                        return total;
-                    }, []);
-                    layer.close(delIndex);
-                    table.reload('reslistid', {data: reslist});
-                });
-            }
-        });
-           
-    });
-    
-});
-
 //开始标注
 $(".my-maptool-label").click(function() {
 	startBiaozhu = true;
@@ -326,8 +233,8 @@ $("#drawPointBtn").click(function(){
 })
 
 //开始绘制
-startBiaozhu = true;
-map.on('mousedown', function(e){
+map.on('mousedown', function(e){  
+        startBiaozhu = true;
 	if(startBiaozhu){
 		//如果是点、面或圆，且已经绘制
 		if(((index==0) || (index==3) || (index==4)) && lnglat.length>0){
@@ -469,8 +376,7 @@ function setInfoContent(item) {
 		'</a></div>' +
 		'<div class="shg">' +
 		'<div class="wenzi">' + item.texts + '</div>' +
-		'<div class="kjh"><img src="' + item.imgs +
-		'" style="width:100%;height:100%;"/></div>' +
+		'<div class="kjh"><img src="' + item.imgs + '" style="width:100%;height:100%;"/></div>' +
 		'</div>' +
 		'</div>';
 	}else{
@@ -480,8 +386,7 @@ function setInfoContent(item) {
 		'</a></div>' +
 		'<div>' +
 		'<div style="font-size=14px">' + item.texts + '</div>' +
-		'<div class="kjh">'
-		'" style="width:100%;height:100%;"/></div>' +
+		'<div class="kjh"></div>' +
 		'</div>' +
 		'</div>';
 	}
@@ -516,7 +421,7 @@ function showAllPoint(allMarkers) {
 				position: new AMap.LngLat(point[0], point[1]),
 				title: allMarkers[i].name,
 				map: map,
-				icon: '/source/plugin/gis_sczl/style/images/' + allMarkers[i].icon
+				icon: allMarkers[i].icon
 			});
 			marker.content = setInfoContent(allMarkers[i]);
 			marker.on('click', markerClick);
@@ -630,8 +535,8 @@ $.ajax({ //渲染左侧
                                                     }
                                                 }
                                             }
-//                                            console.log(checkres);
-                                            
+                                            console.log(checkres);
+                                            if(checkres.length > 0){
 						$.ajax({ //获取点击节点的数据
 							type: "POST",
 							url: "/plugin.php?id=gis_sczl:gisapi",
@@ -641,29 +546,35 @@ $.ajax({ //渲染左侧
 								"mod": "getresgis"
 							},
 							success: function(res) {
+                                                                var allMarkers = [];
 								var citys = res.data; //当前选中复选框的对应标记集合
 								//当前点击的复选框被选中
-								if(obj.checked) {
+//								if(obj.checked) {
 									for(var i=0; i<citys.length; i++){
 										allMarkers.push(citys[i]);
 									}
+                                                                        map.clearMap(); //清除地图上所有点、线、面
 									showAllPoint(allMarkers);
-								} else {//当前点击的复选框取消选中
-									infoWindow.close();
-									for(var i=0; i<citys.length; i++){
-										for(var j=0; j<allMarkers.length; j++){
-											//取消选中的节点对应的标注点==已展示的标注点
-											if(citys[i].id == allMarkers[j].id){
-												allMarkers.splice(j,1);
-											}
-										}
-									}
-									map.clearMap(); //清除地图上所有点、线、面
-									showAllPoint(allMarkers); //重新绘制左侧目录树选中的数据集合
-								}
+//								} else {//当前点击的复选框取消选中
+//									infoWindow.close();
+//									for(var i=0; i<citys.length; i++){
+//										for(var j=0; j<allMarkers.length; j++){
+//											//取消选中的节点对应的标注点==已展示的标注点
+//											if(citys[i].id == allMarkers[j].id){
+//												allMarkers.splice(j,1);
+//											}
+//										}
+//									}
+//									map.clearMap(); //清除地图上所有点、线、面
+//									showAllPoint(allMarkers); //重新绘制左侧目录树选中的数据集合
+//								}
                                                                 layui.sessionData('allMarkers', {key: 'marker', value: allMarkers});
 							}
-						})
+						});
+                                            }else{
+                                                map.clearMap(); //清除地图上所有点、线、面
+                                            }
+                                                
 					}
 				})
 			})
@@ -672,17 +583,17 @@ $.ajax({ //渲染左侧
 });
 //***************************************************************标注点展示结束********************************************************************
 
-
-
 //*****************************************************************************************************************************************
 //*****************************************************************************************************************************************
 //渲染三级联动
-layui.use(['tree', 'util', 'form', 'upload'], function () {
+layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
     var tree = layui.tree,
             layer = layui.layer,
             util = layui.util,
             form = layui.form,
-            upload = layui.upload;
+            upload = layui.upload,
+            table = layui.table,
+            $ = layui.jquery;
 
     form.on('select', function (obj) {
         var selectname = obj.elem.name;
@@ -792,4 +703,80 @@ layui.use(['tree', 'util', 'form', 'upload'], function () {
 		}
 		
 	});
+
+    $('#addreslist').click(function () {
+        if (lnglat.length <= 0 || !types) {
+            layer.msg("添加失败!", {icon: 5});
+            return false;
+        }
+        if (types == 1 && !icon) {
+            layer.msg("获取标注点图标失败!", {icon: 5});
+            return false;
+        }
+
+        if (types == 5 && !radius) {
+            layer.msg("获取圆半径失败!", {icon: 5});
+            return false;
+        }
+
+        var lists = {};
+        lists.lnglat = lnglat;
+        lists.types = types;
+        lists.icon = types == 1 ? icon : '';
+        lists.backgrse = types > 1 ? backgrse : '';
+        lists.radius = types == 5 ? radius : 0;
+
+        addresToArticle(lists);
+        lnglat = [];
+    });
+
+    function addresToArticle(texts) {
+        if (!texts || texts.lnglat.length < 1) {
+            layer.msg('未获取到标注信息!');
+            return false;
+        }
+        var ucode = layui.sessionData('gisucode');
+        ucode = ucode.code;
+        if (!ucode || ucode.length < 20) {
+            layer.msg('gisucode码有误!');
+            return false;
+        }
+        texts.lnglat = JSON.stringify(texts.lnglat);
+//            texts = BASE64.encode(texts);
+        var argis = 0;
+        var index = layer.load(1);
+        $.ajax({
+            url: '/plugin.php?id=gis_sczl:gisapi',
+            type: 'post',
+            dataType: 'json',
+            async: true,
+            data: {"texts": texts, "gisucode": ucode, "mod": "addrestoarticle"},
+            success: function (res) {
+                if (res.data) {
+                    var reslist = layui.sessionData(ucode);
+                    reslist = reslist.marker;
+                    argis = res.data;
+                    texts.id = res.data;
+                    reslist.push(texts);
+                    layui.sessionData(ucode, {key: 'marker', value: reslist});
+                    table.reload('reslistid', {data: reslist});
+                } else {
+                    layer.msg(res.msg);
+                    layer.close(index);
+                    return false;
+                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+        layer.close(index);
+        if (argis > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+  
 });
+

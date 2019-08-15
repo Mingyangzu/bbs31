@@ -35,7 +35,7 @@
                                                             <div class="baiozhu" >
 
                                                 <ul class="jiho">
-                                                        <li class="xuanzhong">
+                                                        <li class="">
                                                                 <span></span>
                                                                 <div>点</div>
                                                         </li>
@@ -269,13 +269,13 @@
 
                 </div>
 <script src="<?php echo $_G['gis']['dirstyle'];?>js/left.js" type="text/javascript"></script>
-<script src="<?php echo $_G['gis']['dirstyle'];?>js/index.js" type="text/javascript"></script>
 <script src="<?php echo $_G['gis']['dirstyle'];?>js/fafang.js" type="text/javascript"></script>
 </body>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<script type="text/javascript">
+<script type="text/javascript"> 
+    var index = 0;
    $(function(){
     //    可移动弹出框
              var eject_move = $("#moveArea");
@@ -307,7 +307,70 @@
              eject.mouseup(function(){
                  eject_move.unbind('mousemove');
              });        
-   })
-  </script>
-  
+   });
+
+layui.use(['table', 'form', 'jquery'], function () { 
+    var table = layui.table, form = layui.form, $ = layui.jquery;
+    var types_text = ['', '点', '线', '面', '矩形', '圆'];
+    var ucode = layui.sessionData('gisucode');
+    var marklist = layui.sessionData(ucode.code);
+    reslist = marklist.marker ? marklist.marker : [];
+    table.render({
+        elem: '#addrestable'
+        , data: reslist
+        , cellMinWidth: 50
+        , cols: [[
+                {type: 'numbers', title: '序号', width: 50}
+                , {field: 'types', title: '类型', width: 60, templet: function (e) {
+                        return types_text[e.types];
+                    }}
+                , {field: 'icon', title: '图标/颜色', templet: function (e) {
+                        return  e.icon ? "<img src=" + e.icon + " class='imgs' style='width:20px; height: 30px;'>" : "<div style='width:25px;height:25px;background:" + e.backgrse + " ; border-radius: 3px;'></div>";
+                    }}
+                , {title: '删除', toolbar: '#barDemo', width: 70}
+            ]]
+        , id: 'reslistid'
+    });
+
+    table.on('tool(resList)', function (obj) {
+        var data = obj.data;
+        if (obj.event == 'del') {
+            var trindex = $("tr").index(obj.tr); 
+            var delIndex = layer.confirm("确定删除序号为" + trindex + "标注信息吗?", function (delIndex) {
+            $.ajax({
+                url: '/plugin.php?id=gis_sczl:gisapi',
+                type: 'post',
+                dataType: 'json',
+                async: true,
+                data: {"resid": data.id, "gisucode": ucode.code, "mod": "delrestoarticle"},
+                success: function (res) {
+                    if (res.data) { 
+                        var gislists = layui.sessionData(ucode.code); console.log(gislists);
+                        gislists = gislists.marker;
+                        gislists = gislists.reduce((total, current, key) => {
+                            key != (trindex - 1) && total.push(current);
+    //                        draw(current.types_text);
+                            return total;
+                        }, []);console.log(gislists);
+                        table.reload('reslistid', {data: gislists});
+                        layui.sessionData(ucode.code, {key: 'marker', value: gislists});
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                    layer.close(delIndex);
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+        
+            });
+
+        }
+    });
+
+});
+
+</script>
+<script src="<?php echo $_G['gis']['dirstyle'];?>js/index.js" type="text/javascript"></script> 
 </html>

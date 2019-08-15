@@ -16,9 +16,11 @@ $aid = intval($_GET['aid']);
 $catid = intval($_GET['catid']);
 list($seccodecheck, $secqaacheck) = seccheck('publish');
 
+$gisucode = md5(time());
 $article = $article_content = array();
 if($aid) {
 	$article = C::t('portal_article_title')->fetch($aid);
+        empty($article['gisucode']) && $article['gisucode'] = $gisucode;
 	if(!$article) {
 		showmessage('article_not_exist', dreferer());
 	}
@@ -94,6 +96,7 @@ if(submitcheck("articlesubmit", 0, $seccodecheck, $secqaacheck)) {
 		'status' => $article_status,
 		'highlight' => $style,
 		'showinnernav' => empty($_POST['showinnernav']) ? '0' : '1',
+                'gisucode' => trim($_POST['gisucode']),
 	);
 
 	if(empty($setarr['catid'])) {

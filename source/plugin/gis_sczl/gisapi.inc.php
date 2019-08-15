@@ -10,8 +10,8 @@ $siturl = $_G['siteurl'];
 
 $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
-$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis', 'upimgs');
-$getmd = array('getreslist', 'getindex', 'searchlist');  // 上线后关闭 getindex
+$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis', 'upimgs', 'addrestoarticle', 'delrestoarticle');
+$getmd = array('getreslist', 'getindex', 'searchlist', 'restoarticle');  // 上线后关闭 getindex
 //提交数据 验证用户是否管理员权限
 $umsg = true; //isadminuser($_G);  //测试不验证cookie,正式打开
 
@@ -25,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && in_array($_GET['mod'], $getmd)) {
             break;
         case 'searchlist':
             searchlist($_GET);
+            break;
+        case 'restoarticle':
+            restoarticle($_GET);
             break;
         default:
             $response['msg'] = '请求接口有误';
@@ -50,9 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
         case 'getgis':
             getgis($_POST);
             break;
-        case 'getresgis':
-            getresgis($_POST);
-            break;
         case 'getres':
             getres($_POST);
             break;
@@ -65,6 +65,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
                 jsonresponse($response);
             }
             articlegis($_POST);
+            break;
+        case 'addrestoarticle':
+            if ($umsg !== true) {
+                $response['msg'] = '请重新登录';
+                jsonresponse($response);
+            }
+            addrestoarticle($_POST);
+            break;
+        case 'delrestoarticle':
+            if ($umsg !== true) {
+                $response['msg'] = '请重新登录';
+                jsonresponse($response);
+            }
+            delrestoarticle($_POST);
+            break;
+        case 'getresgis':
+            getresgis($_POST);
             break;
         case 'upimgs':
             if ($umsg !== true) {
@@ -362,49 +379,6 @@ function getreslist($data) {
 }
 
 
-
-// 获取资源目录下 标注信息
-function getresgis($data) {
-    global $response;
-
-    if (empty($data['resid3']) && empty($data['resid2'])) {
-            $response['msg'] = '提交参数为空';
-            jsonresponse($response);
-    }
-    
-    $condition_str = '';
-    if(!empty($data['resid3'])){
-        $resid3 = is_array($data['resid3']) ? implode(',', $data['resid3']) : $data['resid3'];
-        $condition_str = ' resid3 in(' . $resid3 . ')';
-    }
-    
-    if(!empty($data['resid2'])){
-        $resid2 = is_array($data['resid2']) ? implode(',', $data['resid2']) : $data['resid2'];
-        $condition_str != '' && $condition_str .= ' or ';
-        $condition_str .= ' ( resid3 = 0 and resid2 in(' . $resid2 . ') )' ;
-    }
-    
-    $options = 'id,name,types,lnglat,radius,texts,imgs,icon,color';
-    $info = C::t('#gis_sczl#common_gis')->findlist($condition_str, $options, 0, 500);
-//    jsonresponse($info);
-
-    if (!empty($info) && is_array($info)) {
-        foreach ($info as $k => $v) {
-            $info[$k]['http'] = 'http://baidu.com';
-            $info[$k]['style'] = 2;
-        }
-        $response['code'] = 0;
-        $response['msg'] = 'success';
-        $response['data'] = $info;
-    } else {
-        $response['code'] = 0;
-        $response['msg'] = 'success';
-        $response['data'] = [];
-    }
-
-    jsonresponse($response);
-}
-
 //根据资源目录获取 默认标注信息
 function getdefaultgis($data) {
     global $response;
@@ -553,36 +527,6 @@ function upfiles($data) {
     jsonresponse($response);
 }
 
-// 文章编辑页 加入地图数据入库
-function articlegis($data) {
-    global $response;
-
-    if (empty($data['texts'])) {
-        $response['msg'] = '提交参数有误';
-        $response['data'] = '';
-        jsonresponse($response);
-    }
-
-    $savedata = array();
-    $savedata['texts'] = base64_decode($data['texts']);
-    $savedata['create_time'] = time();
-    $info = C::t('#gis_sczl#common_gis_article')->inster($savedata);
-
-//    jsonresponse($info);
-
-    if ($info == true) {
-        $response['code'] = 0;
-        $response['msg'] = 'success';
-        $response['data'] = DB::insert_id();
-    } else {
-        $response['msg'] = '保存失败!';
-        $response['data'] = '';
-    }
-
-    jsonresponse($response);
-}
-
-
 // 上传文件
 function upimgs($files, $data = []){
     global $response;
@@ -597,5 +541,155 @@ function upimgs($files, $data = []){
     $response['msg'] = 'success';
     $response['data'] = upfiles($files['file']);
     jsonresponse($response);
+}
+
+
+// 文章编辑页 加入地图数据入库
+function articlegis($data) {
+    global $response;
+
+    if (empty($data['texts'])) {
+        $response['msg'] = '提交参数有误';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
+
+    $savedata = array();
+    $savedata['texts'] = base64_decode($data['texts']);
+    $savedata['create_time'] = time();
+    $info = C::t('#gis_sczl#common_gis_article')->inster($savedata);
+//    jsonresponse($info);
+    if ($info == true) {
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = DB::insert_id();
+    } else {
+        $response['msg'] = '保存失败!';
+        $response['data'] = '';
+    }
+
+    jsonresponse($response);
+}
+
+
+//文章编辑页 查文章所属地图
+function restoarticle($data){
+    global $response;
+
+    if (empty($data['gisucode'])) {
+        $response['msg'] = '提交参数有误';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
     
+    $lists = array();
+    $condition_str = " gisucode = '" .$data['gisucode']. "'"; 
+    $options = 'id,types,lnglat,icon,backgrse,radius';
+    $lists = C::t('#gis_sczl#portal_article_gis')->findlist($condition_str, $options);
+    $response['code'] = 0;
+    $response['data'] = $lists;
+    
+    jsonresponse($response);
+}
+
+
+
+
+// 文章编辑页 加入地图标注信息入库
+function addrestoarticle($data) {
+    global $response;
+
+    if (empty($data['texts']) || empty($data['gisucode'])) {
+        $response['msg'] = '提交参数有误';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
+
+    $nowtime = time();
+    $savedata = array(
+        'gisucode' => $data['gisucode'],
+        'lnglat' => $data['texts']['lnglat'],
+        'types' => $data['texts']['types'],
+        'icon' => $data['texts']['icon'],
+        'radius' => $data['texts']['radius'],
+        'backgrse' => $data['texts']['backgrse'],
+        'types_text' => $data['texts']['types_text'],
+        'create_time' => $nowtime,
+    );
+    $info = C::t('#gis_sczl#portal_article_gis')->inster($savedata);
+//    jsonresponse($info);
+
+    if ($info == true) {
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = DB::insert_id();
+    } else {
+        $response['msg'] = '保存失败!';
+        $response['data'] = '';
+    }
+
+    jsonresponse($response);
+}
+
+// 文章编辑页 删除库中地图标注信息
+function delrestoarticle($data){
+    global $response;
+
+    if (empty($data['resid']) || empty($data['gisucode'])) {
+        $response['msg'] = '提交参数有误';
+        $response['data'] = '';
+        jsonresponse($response);
+    }
+
+    $nowtime = time();
+    $condition = array(
+        'id' => $data['resid'],
+        'gisucode' => $data['gisucode'],
+    );
+    $info = C::t('#gis_sczl#portal_article_gis')->delete($condition);
+//    jsonresponse($info);
+
+    if ($info == true) {
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = $info;
+    } else {
+        $response['msg'] = '保存失败!';
+        $response['data'] = '';
+    }
+
+    jsonresponse($response);
+}
+
+
+// 获取文章栏目下文章关联 标注信息
+function getresgis($data) {
+    global $response;
+
+    if (empty($data['checkres'])) {
+            $response['msg'] = '提交参数为空';
+            jsonresponse($response);
+    }
+    
+    $condition_str = '';
+    if(!empty($data['checkres'])){
+        $checkres = is_array($data['checkres']) ? implode(',', $data['checkres']) : $data['checkres'];
+        $condition_str = ' where b.catid in(' . $checkres . ')';
+    }
+    
+    $options = 'a.id,a.types,a.lnglat,a.radius,a.icon,a.backgrse,';
+    $info = C::t('#gis_sczl#portal_article_gis')->joinArticlelist($condition_str, $options);
+//    jsonresponse($info);
+
+    if (!empty($info) && is_array($info)) {
+        foreach ($info as $k => $v) {
+            $info[$k]['http'] = '/portal.php?mod=view&aid='.$v['aid'] ;
+        }
+        $response['data'] = $info;
+    } else {
+        $response['data'] = [];
+    }
+    $response['code'] = 0;
+
+    jsonresponse($response);
 }

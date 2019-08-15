@@ -30,8 +30,9 @@ class plugin_gis_sczl_portal extends plugin_gis_sczl_base {
 
     function portalcp_extend() {
         $siturl = $_G['siteurl'];
-
-       return  file_get_contents(template('gis_sczl:gis_article'));
+//        $gisucode = md5(time());
+//        $temstr = file_get_contents(template('gis_sczl:gis_article'));
+/*        return str_replace('<?php echo $gisucode;?>', $gisucode, $temstr); */
     }
     
     

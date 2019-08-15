@@ -1,8 +1,8 @@
 <?php if(!defined('IN_DISCUZ')) exit('Access Denied'); hookscriptoutput('portalcp_article');
 0
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/home/editor_image_menu.htm', 1565571349, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/seccheck.htm', 1565571349, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
-|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/upload.htm', 1565571349, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/home/editor_image_menu.htm', 1565687012, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/seccheck.htm', 1565687012, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
+|| checktplrefresh('./template/default/portal/portalcp_article.htm', './template/default/common/upload.htm', 1565687012, '1', './data/template/1_1_portal_portalcp_article.tpl.php', './template/default', 'portal/portalcp_article')
 ;?><?php include template('common/header'); if($op == 'delete') { ?>
 
 <h3 class="flb">
@@ -203,7 +203,7 @@ make_html('portal.php?mod=view&aid=<?php echo $aid;?>', $('makehtml_'));
 <?php } ?>
 </dl>
 <div><input type="hidden" id="conver" name="conver" value="" /></div>
-</div>
+                                                <?php include template('gis_sczl:gis_article'); ?></div>
 <?php if(!empty($_G['setting']['pluginhooks']['portalcp_extend'])) echo $_G['setting']['pluginhooks']['portalcp_extend'];?>
 </div>
 
