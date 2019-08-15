@@ -17,7 +17,7 @@ if ($umsg === true) {
         $filepath = upfiles($_FILES);
 
         if ($filepath != false) {
-            
+
             // 读取文件 转数组
             $arrInfos = filetoArray($filepath);
             if (empty($arrInfos)) {
@@ -39,15 +39,11 @@ if ($umsg === true) {
 
 include template('gis_sczl:gismap_import');
 
-
-
-
 // 验证是否管理员
 function isadminuser($_G) {
     $usession = C::app()->session;
     return ($_G['uid'] > 0 && $_G['adminid'] === '1' && !empty($usession->var['username']) ) ? true : false;
 }
-
 
 function filetoArray($filePath) {
     require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
@@ -95,32 +91,26 @@ function filetoArray($filePath) {
 // 表数据入库
 function saveArrtodb($data, $tablepre = '') {
     global $filepath, $response;
-    
-    $savearr = $uparr = array();
-    $createtime = time();
-    $inputSql = $updateSql = '';
-    foreach ($data as $key => $val) {
-        $ucode = $createtime .'+'. $val['aid'] ; //md5(time() .'+'. $v['aid']);
-        $savearr = "('{$val['gisucode']}', {$val['types']}, '{$val['lnglat']}', '{$val['icon']}', {$val['backgrse']}, {$val['radius']}, {$createtime}) ;";
-        $inputSql .= "insert into " . $tablepre . "portal_article_gis(gisucode,types,lnglat,icon,backgrse,radius,create_time) values" . $savestr;
-        $updateSql .= 'update' . $tablepre . "portal_article_title set gisucode='".$ucode."' where id=".$val['aid'].';' ;
-    }
 
-//    print_r($inputSql) ; 
-//    print_r($updateSql); 
-//    die;
-    
-    try{
-        $info = DB::query($inputSql);
-        return $info;
-    } catch (Exception $e){
+    $createtime = time();
+    $inputSql = "insert into " . $tablepre . "portal_article_gis(`gisucode`,`types`,`lnglat`,`icon`,`backgrse`,`radius`,`create_time`) values";
+
+    try {
+        foreach ($data as $key => $val) {
+            $ucode = md5($createtime . '+' . $val['aid']);
+            $updateSql = 'update ' . $tablepre . "portal_article_title set gisucode='" . $ucode . "' where aid=" . $val['aid'] . ';';
+            DB::query($updateSql);
+            $inputdata = "('{$ucode}', {$val['types']}, '{$val['lnglat']}', '{$val['icon']}', '{$val['backgrse']}', {$val['radius']}, {$createtime}); ";
+            DB::query($inputSql . $inputdata);
+        }
+
+        return true;
+    } catch (Exception $e) {
         unlink($filepath); //删除 文件
-        $response['msg'] = $e->getMessage() . "<br/>" ;
+        $response['msg'] = $e->getMessage() . "<br/>";
         return false;
     }
-    
 }
-
 
 //上传文件
 function upfiles($data) {

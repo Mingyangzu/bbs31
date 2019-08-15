@@ -9,7 +9,6 @@
 <title>文章添加地图标注信息</title>
 <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>css/inputs.css" />
 <link rel="stylesheet" href="<?php echo $_G['gis']['dirstyle'];?>layui/css/layui.css" />
-<!-- <script src="<?php echo $_G['gis']['dirstyle'];?>js/city.js" type="text/javascript"></script> -->
 <script src="<?php echo $_G['gis']['dirstyle'];?>js/jquery-1.4.4.min.js" type="text/javascript"></script>
 <script src="<?php echo $_G['gis']['dirstyle'];?>layui/layui.js" type="text/javascript"></script>
 <script src="https://webapi.amap.com/maps?v=1.4.14&key=b6d11a2c1cbd93f3ef41a0d02e9fe553&plugin=AMap.MouseTool" type="text/javascript"></script>
@@ -261,9 +260,6 @@
 <li class="iStyle" title="中心点">
 <i class="my-icon-maptool1 my-maptool-china" value="0"></i>
 </li>
-<!--					<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 600)">
-<i class="my-icon-maptool7 my-maptool-location" value="0"></i>
-</li>-->
 </ul>
 </div>
 
@@ -345,13 +341,12 @@ layui.use(['table', 'form', 'jquery'], function () {
                 data: {"resid": data.id, "gisucode": ucode.code, "mod": "delrestoarticle"},
                 success: function (res) {
                     if (res.data) { 
-                        var gislists = layui.sessionData(ucode.code); console.log(gislists);
+                        var gislists = layui.sessionData(ucode.code);
                         gislists = gislists.marker;
                         gislists = gislists.reduce((total, current, key) => {
                             key != (trindex - 1) && total.push(current);
-    //                        draw(current.types_text);
                             return total;
-                        }, []);console.log(gislists);
+                        }, []);
                         table.reload('reslistid', {data: gislists});
                         layui.sessionData(ucode.code, {key: 'marker', value: gislists});
                     } else {
