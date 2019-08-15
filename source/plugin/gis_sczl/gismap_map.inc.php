@@ -59,7 +59,7 @@ function getdefaultgis($argis) {
 
 
 function jsonresponse($res) {
-    header('Access-Control-Allow-Origin:*');  // 接口调试 开放跨域请求, 上线后关闭
+//    header('Access-Control-Allow-Origin:*');  // 接口调试 开放跨域请求, 上线后关闭
     header("content:application/json;chartset=uft-8");
     echo json_encode($res);
     die;
