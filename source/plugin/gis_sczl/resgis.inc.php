@@ -15,26 +15,26 @@ $response = array('code' => 500, 'msg' => '', 'data' => array(), 'count' => 0);
 //提交数据 验证用户是否管理员权限
 $umsg = isadminuser($_G);  
 if ($umsg == false) {
-    $response['msg'] = '请重新登录后操作!';
-    jsonresponse($response);
+    echo '请重新登录后操作!';
+    die;
 }
 
 switch ($_REQUEST['mod']) {
     case 'resgislist':
         resgislist($_GET);
         break;
-    case 'resgisadd':
-        resgisadd($_POST);
-        break;
+//    case 'resgisadd':
+//        resgisadd($_POST);
+//        break;
     case 'resgisdel':
         resgisdel($_POST);
         break;
-    case 'resgisarr':
-        resgisarr($_POST);
-        break;
-    case 'resgisinfo':
-        resgisinfo($_POST);
-        break;
+//    case 'resgisarr':
+//        resgisarr($_POST);
+//        break;
+//    case 'resgisinfo':
+//        resgisinfo($_POST);
+//        break;
 }
 
 
@@ -48,7 +48,7 @@ function isadminuser($_G) {
 }
 
 function jsonresponse($res) {
-    header('Access-Control-Allow-Origin:*');  // 接口调试 开放跨域请求, 上线后关闭
+//    header('Access-Control-Allow-Origin:*');  // 接口调试 开放跨域请求, 上线后关闭
     header("content:application/json;chartset=uft-8");
     echo json_encode($res);
     die;
@@ -60,17 +60,22 @@ function resgislist($data) {
     global $response;
 
     $condition_str = '';
-    $limits = empty($data['limit']) ? 10 : $data['limit'] ;
     $pages = empty($data['page']) ? 1 : $data['page'];
-    $start = ($pages - 1) * $limits;
-    $options = 'a.id,a.name,a.fid,a.types,b.name title,b.fid ffid';
-    $lists = C::t('#gis_sczl#common_resources')->querylist($condition_str, $options, $start, $limits);
+    $nums = empty($data['limit']) ? 10 : $data['limit'] ;
+    $start = ($pages - 1) * $nums;
+    $limits = " limit $start,$nums";
+    $orderby = ' order by a.id desc ';
+    $options = 'a.id, a.gisucode, a.types, a.lnglat, a.icon, a.backgrse, a.radius, a.create_time, b.aid, b.title';
+    $lists = C::t('#gis_sczl#portal_article_gis')->joinArticlelist($condition_str, $options, $limits, $orderby);
 
     if(!empty($lists)){
-        $counts = C::t('#gis_sczl#common_resources')->counts($condition_str);
+        foreach($lists as &$v){
+            $v['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+        }
+        $counts = C::t('#gis_sczl#portal_article_gis')->count($condition_str);
         $response['msg'] = 'success';
         $response['data'] = $lists;
-        $response['count'] = $counts[0]['count'];
+        $response['count'] = $counts;
         $response['code'] = 0;
     }else{
         $response['msg'] = '无符合数据';
@@ -78,6 +83,32 @@ function resgislist($data) {
     
     jsonresponse($response);
 }
+
+
+//删除
+function resgisdel($data){
+    global $response;
+    
+    if(empty($data['resid'])){
+        $response['msg'] = '提交数据有误!';
+        jsonresponse($response);
+    }
+    $resid = is_array($data['resid']) ? implode(',', $data['resid']) : $data['resid'] ;   
+    $condition_str = " id in(".$resid.') ';
+    $info = C::t('#gis_sczl#portal_article_gis')->delete($condition_str, 100);
+    
+    if(!empty($info)){
+        $response['msg'] = 'success';
+        $response['data'] = $info;
+        $response['code'] = 0;
+    }else{
+        $response['msg'] = '删除数据失败';
+    }
+    
+    jsonresponse($response);
+}
+
+
 
 
 // 详情
@@ -100,29 +131,6 @@ function resgisinfo($data) {
     jsonresponse($response);
 }
 
-
-//删除
-function resgisdel($data){
-    global $response;
-    
-    if(empty($data['resid'])){
-        $response['msg'] = '提交数据有误!';
-        jsonresponse($response);
-    }
-    $resid = is_array($data['resid']) ? implode(',', $data['resid']) : $data['resid'] ;   
-    $condition_str = " id in(".$resid.') ';
-    $info = C::t('#gis_sczl#common_resources')->delete($condition_str, 100);
-    
-    if(!empty($info)){
-        $response['msg'] = 'success';
-        $response['data'] = $info;
-        $response['code'] = 0;
-    }else{
-        $response['msg'] = '删除数据失败';
-    }
-    
-    jsonresponse($response);
-}
 
 // 添加数据
 function resgisadd($data){

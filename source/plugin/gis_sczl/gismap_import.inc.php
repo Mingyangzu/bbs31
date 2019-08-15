@@ -96,20 +96,22 @@ function filetoArray($filePath) {
 function saveArrtodb($data, $tablepre = '') {
     global $filepath, $response;
     
-    
-    $savearr = array();
+    $savearr = $uparr = array();
     $createtime = time();
+    $inputSql = $updateSql = '';
     foreach ($data as $key => $val) {
-        $savearr[] = "('{$val['name']}', {$val['types']}, '{$val['lnglat']}', '{$val['radius']}', {$val['resid']}, {$val['resid2']}, {$val['resid3']}, '{$val['texts']}', {$createtime})";
+        $ucode = $createtime .'+'. $val['aid'] ; //md5(time() .'+'. $v['aid']);
+        $savearr = "('{$val['gisucode']}', {$val['types']}, '{$val['lnglat']}', '{$val['icon']}', {$val['backgrse']}, {$val['radius']}, {$createtime}) ;";
+        $inputSql .= "insert into " . $tablepre . "portal_article_gis(gisucode,types,lnglat,icon,backgrse,radius,create_time) values" . $savestr;
+        $updateSql .= 'update' . $tablepre . "portal_article_title set gisucode='".$ucode."' where id=".$val['aid'].';' ;
     }
 
-    $savestr = implode(',', $savearr);
-
-    $sql = "insert into " . $tablepre . "common_gis(name,types,lnglat,resid,resid2,resid3,texts,create_time) values" . $savestr;
-//    print_r($sql);
+//    print_r($inputSql) ; 
+//    print_r($updateSql); 
+//    die;
     
     try{
-        $info = DB::query($sql);
+        $info = DB::query($inputSql);
         return $info;
     } catch (Exception $e){
         unlink($filepath); //删除 文件

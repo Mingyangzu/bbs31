@@ -677,7 +677,7 @@ function getresgis($data) {
         $condition_str = ' where b.catid in(' . $checkres . ')';
     }
     
-    $options = 'a.id,a.types,a.lnglat,a.radius,a.icon,a.backgrse,';
+    $options = 'a.id,a.types,a.lnglat,a.radius,a.icon,a.backgrse,b.aid, b.title name,b.summary texts,b.pic img';
     $info = C::t('#gis_sczl#portal_article_gis')->joinArticlelist($condition_str, $options);
 //    jsonresponse($info);
 

@@ -35,8 +35,8 @@ class table_portal_article_gis extends discuz_table{
         return $data;
     }
     
-    public function joinArticlelist($condition_str, $options = 'a.name') {
-        $sql = "select $options b.aid, b.title name,b.summary texts,b.pic img from ". DB::table($this->_table) ." a left join ".DB::table('portal_article_title')." b on a.gisucode = b.gisucode $condition_str ;";
+    public function joinArticlelist($condition_str, $options = 'a.name', $limit = '', $orderby = '') {
+        $sql = "select $options from ". DB::table($this->_table) ." a left join ".DB::table('portal_article_title')." b on a.gisucode = b.gisucode $condition_str $orderby $limit;";
         return DB::fetch_all($sql);
     }
     
