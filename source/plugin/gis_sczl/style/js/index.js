@@ -73,8 +73,6 @@ $("#pppnv").click(function() {
 })
 //右侧编辑按钮-end****************************************************************************************************************************
 
-
-
 var icon = '/source/plugin/gis_sczl/style/images/17.png';
 var backgrse = '#E6241F';
 var overlays = [];
@@ -595,114 +593,6 @@ layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
             table = layui.table,
             $ = layui.jquery;
 
-    form.on('select', function (obj) {
-        var selectname = obj.elem.name;
-        if (obj.value && selectname != 'resid3') {
-            getres(obj.value, selectname);
-        }
-    });
-
-    var getres = function (fid, types) {
-        $.ajax({
-            url: '/plugin.php?id=gis_sczl:gisapi',
-            data: {'mod': 'getres', 'resid': fid},
-            type: "post",
-            dataType: 'json',
-            success: function (res) {
-                if (res.code === 0) {
-                    changelevel(res.data, types);
-                } else {
-                    layer.msg("获取失败", {
-                        icon: 5
-                    });
-                    return false;
-                }
-            }
-        });
-    }
-
-
-    function changelevel(level, types, selectedid = false) {
-        var levelhtmloption = '';
-        for (var i in level) {
-            var selectedid_str = '';
-            selectedid_str = (selectedid == level[i].id) ? 'selected' : '';
-            levelhtmloption += '<option value="' + level[i].id + '" ' + selectedid_str + '>' + level[i].name + '</option>';
-        }
-        switch (types) {
-            case 'resid0':
-                var levelhtml = '<option value="" >请选择一级目录</option>';
-                $("select[name=resid]").html(levelhtml + levelhtmloption);
-                break;
-            case 'resid':
-                var levelhtml = '<option value="" >请选择二级目录</option>';
-                $("select[name=resid2]").html(levelhtml + levelhtmloption);
-                break;
-            case 'resid2':
-                var levelhtml = '<option value="" >请选择三级目录</option>';
-                $("select[name=resid3]").html(levelhtml + levelhtmloption);
-                break;
-        }
-        form.render('select');
-    }
-
-    getres('', 'resid0');
-
-
-    var tupian;
-	//添加上传文件
-	upload.render({
-		elem: '#test7',
-		url: '/plugin.php?id=gis_sczl:gisapi',
-		data: {
-			"mod": "upimgs"
-		},
-		done: function(res) {
-			if(res.code == 0){
-				tupian = res.data;
-				layer.msg('图片上传成功！');
-			}else{
-				layer.msg(res.msg);
-			}
-		}
-	});
-	form.on('submit(demo1)', function(data) {
-		var field = data.field; //提交的数据
-		if(lnglat.length == 0){
-			layer.msg("请先绘制需要录入的信息");
-		}else{
-			$.ajax({
-				type: "POST",
-				url: "/plugin.php?id=gis_sczl:gisapi",
-				dataType: "json",
-				data: {
-					"name": field.name,
-					"types": types,
-					"lnglat": lnglat,//[经度，纬度]
-					"radius":radius,//半径
-					"resid": field.resid,
-					"resid2": field.resid2,
-					"resid3": field.resid3,
-					"texts": field.texts,
-					"file": tupian,
-					"color": backgrse,
-					"icon": icon.split('/').pop(),
-					"mod": "gisinput"
-				},
-				success: function(res) {
-					layer.msg(res.msg);
-					if(res.code == 0) {
-						layer.alert('录入成功', {
-							icon: 6,
-							title: '信息录入'
-						})
-						map.clearMap();//清除所有点线面
-					}
-				}
-			})
-		}
-		
-	});
 
     $('#addreslist').click(function () {
         if (lnglat.length <= 0 || !types) {

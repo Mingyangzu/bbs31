@@ -25,7 +25,7 @@
 <section>
 <div class="title_bg_img title_bg_img_nav">
 <ul class="leftHeadTab">
-<li class="dtcx_Resourcecatalog active">地图标注</li>
+<li class="dtcx_Resourcecatalog">地图标注</li>
 </ul>
 </div>
 <div class="leftOverflow">
@@ -261,9 +261,9 @@
 <li class="iStyle" title="中心点">
 <i class="my-icon-maptool1 my-maptool-china" value="0"></i>
 </li>
-<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 600)">
+<!--					<li class="iStyle" title="搜索" onclick="WeAdminShow('地图搜索','/plugin.php?id=gis_sczl:gismap_map&mod=search',600, 600)">
 <i class="my-icon-maptool7 my-maptool-location" value="0"></i>
-</li>
+</li>-->
 </ul>
 </div>
 

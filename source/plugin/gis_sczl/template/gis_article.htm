@@ -4,9 +4,6 @@
 
 <input type="hidden" name="gisucode" id="gisucode" value="{eval echo empty($article[gisucode]) ? $gisucode : $article[gisucode] ;} ">
 
-<button type="button" id="mapbox" class="pn vm" style="margin-left: 10px;"><em>添加地图</em></button>
-
-
 <script src="/source/plugin/gis_sczl/style/js/base64.js"></script>
 <script src="/source/plugin/gis_sczl/style/layui/layui.js" charset="utf-8"></script>
 
@@ -19,83 +16,7 @@
     layui.use(['table', 'form', 'layer', 'jquery'], function () {
         var table = layui.table, form = layui.form, layer = layui.layer, $ = layui.jquery;
         var index = 0; //添加laoding,0-2两种方式 
-        layui.sessionData('gisucode', {key: 'code', value: $('#gisucode').val()});
-        
-        function editmap() {
-            var markers = layui.sessionData('allMarkers');
-            var texts = markers.marker;
-            if (!texts || texts.length < 1) {
-//                layer.msg('未获取到标注信息!');
-                return false;
-            }
-            texts = JSON.stringify(texts);
-            texts = BASE64.encode(texts);
-            var argis = 0;
-            index = layer.load(1);
-            $.ajax({
-                url: '/plugin.php?id=gis_sczl:gisapi',
-                type: 'post',
-                dataType: 'json',
-                async: false,
-                data: {"texts": texts, "mod": "articlegis"},
-                success: function (res) {
-                    if (res.data != '') {
-                        argis = res.data;
-                    } else {
-                        layer.msg(res.msg);
-                        layer.close(index);
-                        return false;
-                    }
-                },
-                error: function (res) {
-                    console.log(res);
-                }
-            });
-            if (argis > 0) {
-                var editp = window.frames['uchome-ifrHtmlEditor'];
-                var editobj = editp.window.frames['HtmlEditor'];
-                var editInfos = editobj.document.body.innerHTML;
-                editobj.document.body.innerHTML = editInfos + '<br/> <br/><div><iframe name="gd_map_iframe" id="gd_map_iframe" src="/plugin.php?id=gis_sczl:gismap_map&mod=article&argis=' + argis + '" frameborder="0" align="left" width="99%"  scrolling="no" style="min-height: 500px;position: relative;"></iframe></div> <div><br></div><div><br></div> ';
-                layer.close(index);
-                layui.sessionData('allMarkers', {key: 'marker', value: []});
-                return true;
-            } else {
-                layer.close(index);
-                return false;
-            }
-
-        }
-
-        $('#mapbox').click(function () { 
-            layer.open({
-                type: 2,
-                title: '添加地图',
-                area: ['100%', '100%'],
-                content: '/plugin.php?id=gis_sczl:gismap_map&mod=addmap',
-                btn: ['添加到文章'],
-                btnAlign: 'c',
-                closeBtn: 1,
-                anim: 0,
-                maxmin: false,
-                shade: 0,
-                skin: 'editmapbox',
-                yes: function (index, layero) {
-                    var markers = layui.sessionData('allMarkers');
-
-                    if (editmap()) {
-                        layer.msg('添加成功!');
-                    } else {
-                        layer.msg('添加失败!');
-                    }
-                    layer.close(index);
-                },
-                cancel: function () {
-                    //右上角关闭回调
-                    //return false 开启该代码可禁止点击该按钮关闭
-                    layui.sessionData('allMarkers', {key: 'marker', value: []});
-                },
-            });
-        });
+        layui.sessionData('gisucode', {key: 'code', value: $('#gisucode').val()});        
         
         $('#mapresbox').click(function () {
             var ucode = layui.sessionData('gisucode');
@@ -120,7 +41,7 @@
                     console.log(res);
                 }
             });
-            
+
             layer.open({
                 type: 2,
                 title: '添加地理标注信息',

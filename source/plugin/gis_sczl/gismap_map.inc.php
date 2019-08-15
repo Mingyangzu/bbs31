@@ -12,7 +12,6 @@ $_G['siteurl']; // 当前网站域名
 //验证用户权限
 $umsg = isadminuser($_G);
 
-//$testvar = '我从后端来';
 
 function isadminuser($_G) {
     $usession = C::app()->session;
@@ -23,11 +22,6 @@ $defaultgis = false;
 $response = array('code' => 0, 'data' => array(), 'msg' => '', 'time' => time());
 
 switch ($_GET['mod']) {
-    case 'article':
-        $defaultgis = getdefaultgis($_GET['argis']);
-        $defaultgis = $defaultgis !== false ? json_encode($defaultgis) : false ; 
-        include template('gis_sczl:gismap_article');
-        break;
     case 'index':
         include template('gis_sczl:gd_iframe');
         break;
@@ -38,14 +32,12 @@ switch ($_GET['mod']) {
         include template('gis_sczl:gis_edit');
         break;
     case 'addmapres':
-        $mapboxtop = 5;
+        $mapboxtop = 1;
         $float = false;
         include template('gis_sczl:addmapres');
         break;
     default:
-        $mapboxtop = $_GET['mod'] == 'addmap' ? 5 : 50;
-        $float = $_GET['mod'] == 'addmap' ? false : true;
-        include template('gis_sczl:gismap_iframe');
+        return false;
 }
 
 //根据资源目录获取 默认标注信息
@@ -56,7 +48,6 @@ function getdefaultgis($argis) {
     $condition_str = ' id = '. $argis;
     $options = 'texts';
     $info = C::t('#gis_sczl#common_gis_article')->findinfo($condition_str, $options);
-//print_r($info[0]['texts']);die; 
 
     if (!empty($info[0]['texts'])) {
         return $info[0]['texts'];
