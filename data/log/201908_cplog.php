@@ -342,3 +342,7 @@
 <?PHP exit;?>	1565861938	admin	1	127.0.0.1	plugins	GET={operation=config; do=13; identifier=gis_sczl; pmod=resgis; }; POST={};
 <?PHP exit;?>	1565861962	admin	1	127.0.0.1	portalcategory	GET={}; POST={};
 <?PHP exit;?>	1565862027	admin	1	127.0.0.1	portalcategory	GET={operation=edit; catid=1; }; POST={};
+<?PHP exit;?>	1565946062	admin	1	127.0.0.1		GET={}; POST={};
+<?PHP exit;?>	1565946062	admin	1	127.0.0.1	index	GET={}; POST={};
+<?PHP exit;?>	1565946068	admin	1	127.0.0.1	plugins	GET={}; POST={};
+<?PHP exit;?>	1565946072	admin	1	127.0.0.1	plugins	GET={operation=edit; pluginid=13; }; POST={};

@@ -33,7 +33,7 @@
                                                         <div id="" >
                                                             <div class="baiozhu" >
 
-                                                <ul class="jiho">
+                                                <ul class="jiho" id="addgistype">
                                                         <li class="">
                                                                 <span></span>
                                                                 <div>点</div>
@@ -240,6 +240,7 @@
                                                 </div>
 
                                                 <div class="layui-layer-btn layui-layer-btn-c">
+                                                    <a class="layui-layer-btn0" id="showgis" style="background-color:#009688;">显示标注</a>
                                                     <a class="layui-layer-btn0" id="addreslist">添加标注</a>
                                                 </div> 
                                                                 
@@ -268,42 +269,11 @@
 <script src="<?php echo $_G['gis']['dirstyle'];?>js/fafang.js" type="text/javascript"></script>
 </body>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs gisdelshow " lay-event="del">删除</a>
 </script>
 <script type="text/javascript"> 
     var index = 0;
-   $(function(){
-    //    可移动弹出框
-             var eject_move = $("#moveArea");
-             var eject = $(".baiozhu");
-             eject_move.mousedown(function(e){
-                 var max_x = $(window).width() - 500;            //获取浏览页面的宽度
-                 var max_y = $(window).height() -300;
-                 var ev = window.event || e;      
-                 var old_mouse_x = ev.clientX;                        //获取鼠标开始的横轴位置
-                 var old_mouse_y = ev.clientY;                        //获取鼠标开始的纵轴位置
-                 var position_l = eject.offset().left;            //弹出框距离的横轴位置
-                 var position_t = eject.offset().top;            //弹出框距离的纵轴位置
-                 eject_move.bind('mousemove',function(n){
-                     var nv = window.event || n;
-                     var new_mouse_x = nv.clientX;                    //获取鼠标现在的横轴位置
-                     var new_mouse_y = nv.clientY;                    //获取鼠标现在的纵轴位置
-                     var new_x = new_mouse_x - old_mouse_x +position_l;    //弹出框现在的横轴位置
-                     var new_y = new_mouse_y - old_mouse_y +position_t;    //弹出框现在的纵轴位置
-                     //三元表达式 判断有没有超出边界，有的话置于相应的值
-                     new_x = (new_x < 0 )?0:new_x;
-                     new_y = (new_y < 0 )?0:new_y;
-                     new_x = (new_x > max_x)?max_x:new_x;
-                     new_y = (new_y > max_y)?max_y:new_y;
-                     eject.css({'left':new_x,'top':new_y});
-                 });
-                 
-             });
-         //    鼠标抬起
-             eject.mouseup(function(){
-                 eject_move.unbind('mousemove');
-             });        
-   });
+    var nowpage = 'addmapres';
 
 layui.use(['table', 'form', 'jquery'], function () { 
     var table = layui.table, form = layui.form, $ = layui.jquery;
@@ -327,7 +297,7 @@ layui.use(['table', 'form', 'jquery'], function () {
             ]]
         , id: 'reslistid'
     });
-
+    
     table.on('tool(resList)', function (obj) {
         var data = obj.data;
         if (obj.event == 'del') {

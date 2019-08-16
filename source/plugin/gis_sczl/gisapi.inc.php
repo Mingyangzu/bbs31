@@ -10,7 +10,7 @@ $siturl = $_G['siteurl'];
 
 $_G['gis']['dir'] = '/source/plugin/gis_sczl/';
 $_G['gis']['dirstyle'] = '/source/plugin/gis_sczl/style/';
-$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis', 'upimgs', 'addrestoarticle', 'delrestoarticle');
+$postmd = array('gisinput', 'gisdel', 'getgis', 'getresgis', 'getres', 'getdefaultgis', 'articlegis', 'upimgs', 'addrestoarticle', 'delrestoarticle', 'searchgisall');
 $getmd = array('getreslist', 'getindex', 'searchlist', 'restoarticle');  // 上线后关闭 getindex
 //提交数据 验证用户是否管理员权限
 $umsg = true; //isadminuser($_G);  //测试不验证cookie,正式打开
@@ -82,6 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && in_array($_POST['mod'], $postmd)) {
             break;
         case 'getresgis':
             getresgis($_POST);
+            break;
+        case 'searchgisall':
+            searchgisall($_POST);
             break;
         case 'upimgs':
             if ($umsg !== true) {
@@ -327,57 +330,6 @@ function getgis($data) {
 //    jsonresponse($response);
 //}
 
-// 获取文章目录列表
-function getreslist($data) {
-    global $response;
-
-    $data['resid'] = (int) $data['resid'];
-
-    $options = 'catid,catname,upid';
-    $data['resid'] > 0 && $condition_str = ' WHERE catid = ' . $data['resid'];
-    $info = C::t('#gis_sczl#portal_category')->findlist($condition_str, $options);
-//    jsonresponse($info);
-
-    if (!empty($info) && is_array($info)) {
-        // 格式化列表
-        $infolist = array();
-        foreach($info as $val){
-            $infolist[$val['catid']] = $val;
-        }
-        
-        $onelist = $towlist = $threelist = array();
-        foreach ($infolist as $v) {
-            if($v['upid'] == 0){
-                $onelist[] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 1, 'children' => []);
-            }else if($infolist[$v['upid']]['upid'] == 0){
-                $twolist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 2, 'children' => []);
-            }else{
-                $threelist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 3, 'children' => []);
-            }
-        }
-//        jsonresponse($twolist);  
-        
-        foreach ($twolist as $key => $val) {
-            foreach ($val as $kk => $vv) {
-                $twolist[$key][$kk]['children'] = $threelist[$vv['id']];
-            }
-        }
-        foreach ($onelist as $ok => $ov) {
-            $onelist[$ok]['children'] = $twolist[$ov['id']];
-        }
-
-//        jsonresponse($onelist); 
-        $response['code'] = 0;
-        $response['msg'] = 'success';
-        $response['data'] = $onelist;
-    } else {
-        $response['code'] = 0;
-        $response['msg'] = '无更多数据!';
-    }
-
-    jsonresponse($response);
-}
-
 
 //根据资源目录获取 默认标注信息
 function getdefaultgis($data) {
@@ -544,6 +496,61 @@ function upimgs($files, $data = []){
 }
 
 
+
+
+
+// 获取文章目录列表
+function getreslist($data) {
+    global $response;
+
+    $data['resid'] = (int) $data['resid'];
+
+    $options = 'catid,catname,upid';
+    $data['resid'] > 0 && $condition_str = ' WHERE catid = ' . $data['resid'];
+    $info = C::t('#gis_sczl#portal_category')->findlist($condition_str, $options);
+//    jsonresponse($info);
+
+    if (!empty($info) && is_array($info)) {
+        // 格式化列表
+        $infolist = array();
+        foreach($info as $val){
+            $infolist[$val['catid']] = $val;
+        }
+        
+        $onelist = $towlist = $threelist = array();
+        foreach ($infolist as $v) {
+            if($v['upid'] == 0){
+                $onelist[] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 1, 'children' => []);
+            }else if($infolist[$v['upid']]['upid'] == 0){
+                $twolist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 2, 'children' => []);
+            }else{
+                $threelist[$v['upid']][] = array('title' => $v['catname'], 'id' => $v['catid'], 'level' => 3, 'children' => []);
+            }
+        }
+//        jsonresponse($twolist);  
+        
+        foreach ($twolist as $key => $val) {
+            foreach ($val as $kk => $vv) {
+                $twolist[$key][$kk]['children'] = $threelist[$vv['id']];
+            }
+        }
+        foreach ($onelist as $ok => $ov) {
+            $onelist[$ok]['children'] = $twolist[$ov['id']];
+        }
+
+//        jsonresponse($onelist); 
+        $response['code'] = 0;
+        $response['msg'] = 'success';
+        $response['data'] = $onelist;
+    } else {
+        $response['code'] = 0;
+        $response['msg'] = '无更多数据!';
+    }
+
+    jsonresponse($response);
+}
+
+
 // 文章编辑页 加入地图数据入库
 function articlegis($data) {
     global $response;
@@ -586,6 +593,11 @@ function restoarticle($data){
     $condition_str = " gisucode = '" .$data['gisucode']. "'"; 
     $options = 'id,types,lnglat,icon,backgrse,radius';
     $lists = C::t('#gis_sczl#portal_article_gis')->findlist($condition_str, $options);
+    if(count($lists) > 0){
+        foreach($lists as &$v){
+            $v['color'] = $v['backgrse'];
+        }
+    }
     $response['code'] = 0;
     $response['data'] = $lists;
     
@@ -684,6 +696,7 @@ function getresgis($data) {
     if (!empty($info) && is_array($info)) {
         foreach ($info as $k => $v) {
             $info[$k]['http'] = '/portal.php?mod=view&aid='.$v['aid'] ;
+            $info[$k]['color'] = $v['backgrse'];
         }
         $response['data'] = $info;
     } else {
@@ -693,3 +706,29 @@ function getresgis($data) {
 
     jsonresponse($response);
 }
+
+//获取所有标注信息
+function searchgisall(){
+    global $response;
+    
+    $condition_str = ' where b.aid is not null ';
+    $options = 'a.id,a.types,a.lnglat,a.radius,a.icon,a.backgrse,b.aid, b.title name,b.summary texts,b.pic img';
+    $info = C::t('#gis_sczl#portal_article_gis')->joinArticlelist($condition_str, $options);
+//    jsonresponse($info);
+
+    if (!empty($info) && is_array($info)) {
+        foreach ($info as $k => $v) {
+            $info[$k]['http'] = '/portal.php?mod=view&aid='.$v['aid'] ;
+            $info[$k]['lnglat'] = json_decode($v['lnglat'], true);
+            $info[$k]['color'] = $v['backgrse'];
+        }
+        $response['data'] = $info;
+    } else {
+        $response['data'] = [];
+    }
+    $response['code'] = 0;
+
+    jsonresponse($response);
+}
+
+

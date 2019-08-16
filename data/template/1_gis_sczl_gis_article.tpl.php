@@ -5,7 +5,7 @@
 
 <input type="hidden" name="gisucode" id="gisucode" value="<?php echo empty($article[gisucode]) ? $gisucode : $article[gisucode] ;?> ">
 
-<script src="/source/plugin/gis_sczl/style/js/base64.js" type="text/javascript"></script>
+<!--<script src="/source/plugin/gis_sczl/style/js/base64.js" type="text/javascript"></script>-->
 <script src="/source/plugin/gis_sczl/style/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 
 <style>
@@ -31,7 +31,7 @@
                 dataType: 'json',
                 async: true,
                 data: {"gisucode": ucode.code, "mod": "restoarticle"},
-                success: function (res) { console.log(res);
+                success: function (res) {
                     if (res.data) {
                         layui.sessionData(ucode.code, {key: 'marker', value: res.data});
                     } else {

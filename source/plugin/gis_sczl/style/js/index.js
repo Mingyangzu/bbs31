@@ -1,3 +1,7 @@
+//渲染三级联动
+layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
+    var tree = layui.tree, layer = layui.layer, util = layui.util, form = layui.form, upload = layui.upload, table = layui.table,$ = layui.jquery;
+
 //初始化地图
 var map = new AMap.Map('container', {
 	zoom: 4, //级别
@@ -24,7 +28,7 @@ AMap.plugin([
 });
 
 
-//右侧编辑按钮-start****************************************************************************************************************************
+//右侧编辑按钮-start********************************
 //返回中心点
 $(".my-maptool-china").click(function() {
 	var map = new AMap.Map('container', {
@@ -71,7 +75,7 @@ $("#pppnv").click(function() {
 		"display": "none"
 	})
 })
-//右侧编辑按钮-end****************************************************************************************************************************
+//右侧编辑按钮-end****************************
 
 var icon = '/source/plugin/gis_sczl/style/images/17.png';
 var backgrse = '#E6241F';
@@ -97,61 +101,63 @@ mouseTool.on('draw', function(e) {
 		radius = e.obj.getRadius();//获取半径
   		lnglat.push(centerPoint.lng,centerPoint.lat);
 	}
+        
+        //框选搜索
+        if(index == 2 && nowpage == 'gdiframe'){
+            searchmap(lnglat);
+        }
 })
 
-
 //mouseTool插件鼠标绘制标注
-function draw(type) {
-	switch(type) {
-		case 'marker':
-			{
-				mouseTool.marker({
-					icon: icon
-				});
-				break;
-			}
-		case 'polyline':
-			{
-				mouseTool.polyline({
-					strokeColor: backgrse
-					//同Polyline的Option设置
-				});
-				break;
-			}
-		case 'polygon':
-			{
-				mouseTool.polygon({
-					fillColor: backgrse,
-					strokeColor: backgrse
-					//同Polygon的Option设置
-				});
-				break;
-			}
-		case 'rectangle':
-			{
-				mouseTool.rectangle({
-					fillColor: backgrse,
-					strokeColor: backgrse
-					//同Polygon的Option设置
-				});
-				break;
-			}
-		case 'circle':
-			{
-				mouseTool.circle({
-					fillColor: backgrse,
-					strokeColor: backgrse
-					//同Circle的Option设置
-				});
-				break;
-			}
-	}
-}
+    function draw(type) {
+        switch (type) {
+            case 'marker':
+            {
+                mouseTool.marker({
+                    icon: icon
+                });
+                break;
+            }
+            case 'polyline':
+            {
+                mouseTool.polyline({
+                    strokeColor: backgrse
+                            //同Polyline的Option设置
+                });
+                break;
+            }
+            case 'polygon':
+            {
+                mouseTool.polygon({
+                    fillColor: backgrse,
+                    strokeColor: backgrse
+                            //同Polygon的Option设置
+                });
+                break;
+            }
+            case 'rectangle':
+            {
+                mouseTool.rectangle({
+                    fillColor: backgrse,
+                    strokeColor: backgrse
+                            //同Polygon的Option设置
+                });
+                break;
+            }
+            case 'circle':
+            {
+                mouseTool.circle({
+                    fillColor: backgrse,
+                    strokeColor: backgrse
+                            //同Circle的Option设置
+                });
+                break;
+            }
+        }
+    }
 
 
-//************************************************************************************************************************************
-//******************************************************标注开始**********************************************************************
-//************************************************************************************************************************************
+//****************************************标注开始************************************************
 if(!index){
     var index = 100; //index==0表示选择录入点信息，index==1表示选择录入线信息，index==2表示选择录入面信息
 }
@@ -230,32 +236,38 @@ $("#drawPointBtn").click(function(){
 	map.add(marker);
 })
 
+$("#addgistype").click(function(){
+    startBiaozhu = true;
+    $("#container").addClass("wagvc");
+    $("#lngs").val("");
+    $("#lats").val("");
+});
+
 //开始绘制
 map.on('mousedown', function(e){  
-        startBiaozhu = true;
-	if(startBiaozhu){
-		//如果是点、面或圆，且已经绘制
-		if(((index==0) || (index==3) || (index==4)) && lnglat.length>0){
-			lnglat = [];
-			map.clearMap();
-		}
-		//线、面逻辑
-		if(stopDraw){
-			lnglat = [];
-			map.clearMap();
-			stopDraw = false;
-		} 
-		$("#lng").val(e.lnglat.lng) //信息录入经度
-		$("#lat").val(e.lnglat.lat) //信息录入纬度
-		//录入点信息
-		if(index == 0) {
-			lnglat[0] = e.lnglat.lng;
-			lnglat[1] = e.lnglat.lat;
-                        $("#lngs").val(e.lnglat.lng) //信息录入经度
-                        $("#lats").val(e.lnglat.lat) //信息录入纬度
-			draw('marker')
-		} 
-	}
+        if (startBiaozhu) {
+            //如果是点、面或圆，且已经绘制
+            if (((index == 0) || (index == 3) || (index == 4)) && lnglat.length > 0) {
+                lnglat = [];
+                map.clearMap();
+            }
+            //线、面逻辑
+            if (stopDraw) {
+                lnglat = [];
+                map.clearMap();
+                stopDraw = false;
+            }
+            $("#lng").val(e.lnglat.lng) //信息录入经度
+            $("#lat").val(e.lnglat.lat) //信息录入纬度
+            //录入点信息
+            if (index == 0) {
+                lnglat[0] = e.lnglat.lng;
+                lnglat[1] = e.lnglat.lat;
+                $("#lngs").val(e.lnglat.lng) //信息录入经度
+                $("#lats").val(e.lnglat.lat) //信息录入纬度
+                draw('marker')
+            }
+        }
 });
 
 //停止绘制
@@ -347,13 +359,11 @@ $(".sxutr li").click(function() {
 	$(this).siblings('li').removeClass('yanse')
 })
 
-//标注结束*************************************************************************************************************************************
+//标注结束*************************************************************************
 
 
 
-//************************************************************************************************************************************************
-//***************************************************************标注点展示开始********************************************************************
-//************************************************************************************************************************************************
+//****************************************标注点展示开始********************************************
 var markers = []; //需要绘制的点的集合
 var marker = null; //点标记
 var overlayGroups = []; //覆盖物群组集合
@@ -367,14 +377,14 @@ var allMarkers = []; //所有点、线、面的详细信息集合
 //定义点、线、面信息框内容
 function setInfoContent(item) {
 	var infoContent = '';
-	if(item.imgs){
+	if(item.img){
 		infoContent =
 		'<div class="infos">' +
 		'<div class="name"><a href="' + item.http + '" target="_blank">' + item.name +
 		'</a></div>' +
 		'<div class="shg">' +
 		'<div class="wenzi">' + item.texts + '</div>' +
-		'<div class="kjh"><img src="' + item.imgs + '" style="width:100%;height:100%;"/></div>' +
+		'<div class="kjh"><img src="' + item.img + '" style="width:100%;height:100%;"/></div>' +
 		'</div>' +
 		'</div>';
 	}else{
@@ -404,194 +414,173 @@ function lineOrFaceClick(e) {
 	infoWindow.open(map, infoAddress); //打开信息框
 }
 //根据左侧目录树是否选中，显示对应的点、线、面
-function showAllPoint(allMarkers) {
-	overlayGroups = []; //清空覆盖物群组集合
-	markers = []; //清空点的集合
-	polyline = null; //清空线标记
-	polyGon = null; //清空面标记
-	for(var i = 0; i < allMarkers.length; i++) {
-		var point = eval(allMarkers[i].lnglat);
-		var radius = parseFloat(allMarkers[i].radius);//圆半径
-		//如果是点标记
-		if(allMarkers[i].types == 1) {
-			//创建点实例
-			marker = new AMap.Marker({
-				position: new AMap.LngLat(point[0], point[1]),
-				title: allMarkers[i].name,
-				map: map,
-				icon: allMarkers[i].icon
-			});
-			marker.content = setInfoContent(allMarkers[i]);
-			marker.on('click', markerClick);
-			marker.emit('click', {
-				target: marker
-			});
-			markers.push(marker);
-			// 创建覆盖物群组，并将 marker 传给 OverlayGroup
-			overlayGroups = new AMap.OverlayGroup(markers);
-			// 添加覆盖物群组
-			map.add(overlayGroups);
-		}
+    function showAllPoint(allMarkers) {
+        overlayGroups = []; //清空覆盖物群组集合
+        markers = []; //清空点的集合
+        polyline = null; //清空线标记
+        polyGon = null; //清空面标记
+        for (var i = 0; i < allMarkers.length; i++) {
+            var point = eval(allMarkers[i].lnglat);
+            var radius = parseFloat(allMarkers[i].radius);//圆半径
+            //如果是点标记
+            if (allMarkers[i].types == 1) {
+                //创建点实例
+                marker = new AMap.Marker({
+                    position: new AMap.LngLat(point[0], point[1]),
+                    title: allMarkers[i].name,
+                    map: map,
+                    icon: allMarkers[i].icon
+                });
+                if (nowpage == 'gdiframe')
+                    marker.content = setInfoContent(allMarkers[i]);
+                marker.on('click', markerClick);
+                marker.emit('click', {
+                    target: marker
+                });
+                markers.push(marker);
+                // 创建覆盖物群组，并将 marker 传给 OverlayGroup
+                overlayGroups = new AMap.OverlayGroup(markers);
+                // 添加覆盖物群组
+                map.add(overlayGroups);
+            }
 
-		//如果是线标记
-		
-		else if(allMarkers[i].types == 2){
-			//创建线实例
-			polyline = new AMap.Polyline({
-				path: point,
-				strokeColor: allMarkers[i].color || "red",
-				strokeOpacity: 1,
-				strokeWeight: 2,
-				strokeStyle: 'solid',
-				strokeDasharray: [10, 5],
-				geodesic: true
-			});
-			polyline.setMap(map);
-			polyline.content = setInfoContent(allMarkers[i]);
-			polyline.on('click', lineOrFaceClick);
-		}
+            //如果是线标记
 
-		//如果是面/矩形标记
-		else if(allMarkers[i].types == 3 || (allMarkers[i].types == 4)){
-			//创建面实例
-			polyGon = new AMap.Polygon({
-				path: point,
-				map: map,
-				strokeColor: allMarkers[i].color || "red",
-				strokeOpacity: 1,
-				strokeWeight: 2,
-				strokeStyle: 'solid',
-				strokeDasharray: [10, 5],
-				fillColor: allMarkers[i].color || "red",
-				fillOpacity: 0.2,
-				geodesic: true
-			})
-			polyGon.content = setInfoContent(allMarkers[i]);
-			polyGon.on('click', lineOrFaceClick);
-		}
-		//如果是圆形标记
-		else if(allMarkers[i].types == 5){
-			//创建圆实例
-			polyGon = new AMap.Circle({
-				center: point,
-				radius: radius,
-				map: map,
-				strokeColor: allMarkers[i].color || "red",
-				strokeOpacity: 1,
-				strokeWeight: 2,
-				strokeStyle: 'solid',
-				strokeDasharray: [10, 5],
-				fillColor: allMarkers[i].color || "red",
-				fillOpacity: 0.2,
-				geodesic: true
-			})
-			polyGon.content = setInfoContent(allMarkers[i]);
-			polyGon.on('click', lineOrFaceClick);
-		}
-		map.setFitView();
-	}
-}
+            else if (allMarkers[i].types == 2) {
+                //创建线实例
+                polyline = new AMap.Polyline({
+                    path: point,
+                    strokeColor: allMarkers[i].color || "red",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    strokeStyle: 'solid',
+                    strokeDasharray: [10, 5],
+                    geodesic: true
+                });
+                polyline.setMap(map);
+                if (nowpage == 'gdiframe')
+                    polyline.content = setInfoContent(allMarkers[i]);
+                polyline.on('click', lineOrFaceClick);
+            }
+
+            //如果是面/矩形标记
+            else if (allMarkers[i].types == 3 || (allMarkers[i].types == 4)) {
+                //创建面实例
+                polyGon = new AMap.Polygon({
+                    path: point,
+                    map: map,
+                    strokeColor: allMarkers[i].color || "red",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    strokeStyle: 'solid',
+                    strokeDasharray: [10, 5],
+                    fillColor: allMarkers[i].color || "red",
+                    fillOpacity: 0.2,
+                    geodesic: true
+                })
+                if (nowpage == 'gdiframe')
+                    polyGon.content = setInfoContent(allMarkers[i]);
+                polyGon.on('click', lineOrFaceClick);
+            }
+            //如果是圆形标记
+            else if (allMarkers[i].types == 5) {
+                //创建圆实例
+                polyGon = new AMap.Circle({
+                    center: point,
+                    radius: radius,
+                    map: map,
+                    strokeColor: allMarkers[i].color || "red",
+                    strokeOpacity: 1,
+                    strokeWeight: 2,
+                    strokeStyle: 'solid',
+                    strokeDasharray: [10, 5],
+                    fillColor: allMarkers[i].color || "red",
+                    fillOpacity: 0.2,
+                    geodesic: true
+                })
+                if (nowpage == 'gdiframe')
+                    polyGon.content = setInfoContent(allMarkers[i]);
+                polyGon.on('click', lineOrFaceClick);
+            }
+            map.setFitView();
+        }
+    }
 
 
 //根据左侧勾选的内容，对应展示标注点
-$.ajax({ //渲染左侧
-	type: "GET",
-	url: "/plugin.php?id=gis_sczl:gisapi&mod=getreslist",
-	dataType: "json",
-	success: function(res) {
-		if(res.code == 0) {
-			var lists = res.data;
-			layui.use(['tree', 'util', 'form'], function() {
-				var tree = layui.tree,
-					layer = layui.layer,
-					util = layui.util,
-					form = layui.form,
-					data = lists;
-				//点击复选框获取选中的数据
-				tree.render({
-					elem: '#test12',
-					data: lists,
-					showCheckbox: true, //是否显示复选框
-					id: 'demoId1',
-					oncheck: function(obj) {
-                                            var checkres = [];
-                                            var resarr = tree.getChecked('demoId1');
-                                            for(var i in resarr){
-                                                if(!resarr[i].children || resarr[i].children.length == 0){
-                                                    checkres.push(parseInt(resarr[i].id));     //一级
-                                                }else{ 
-                                                    var twolevel = resarr[i].children;
-                                                    for(var k in twolevel){
-                                                        if(!twolevel[k].children || twolevel[k].children.length == 0){
-                                                            checkres.push(parseInt(twolevel[k].id));   //二级
-                                                        }else{
-                                                            var threeleve = twolevel[k].children;
-                                                            for(var j in threeleve){
-                                                              checkres.push(parseInt(threeleve[j].id));   //三级 
-                                                            }
-                                                        }
-                                                    }
-                                                }
+    $.ajax({//渲染左侧
+        type: "GET",
+        url: "/plugin.php?id=gis_sczl:gisapi&mod=getreslist",
+        dataType: "json",
+        success: function (res) {
+            if (res.code == 0) {
+                var lists = res.data;
+                layui.use(['tree', 'util', 'form'], function () {
+                    var tree = layui.tree,
+                            layer = layui.layer,
+                            util = layui.util,
+                            form = layui.form,
+                            data = lists;
+                    //点击复选框获取选中的数据
+                    tree.render({
+                        elem: '#test12',
+                        data: lists,
+                        showCheckbox: true, //是否显示复选框
+                        id: 'demoId1',
+                        oncheck: function (obj) {
+                            mouseTool.close(true); //关闭绘画
+                            var checkres = [];
+                            var resarr = tree.getChecked('demoId1');
+                            for (var i in resarr) {
+                                if (!resarr[i].children || resarr[i].children.length == 0) {
+                                    checkres.push(parseInt(resarr[i].id));     //一级
+                                } else {
+                                    var twolevel = resarr[i].children;
+                                    for (var k in twolevel) {
+                                        if (!twolevel[k].children || twolevel[k].children.length == 0) {
+                                            checkres.push(parseInt(twolevel[k].id));   //二级
+                                        } else {
+                                            var threeleve = twolevel[k].children;
+                                            for (var j in threeleve) {
+                                                checkres.push(parseInt(threeleve[j].id));   //三级 
                                             }
-                                            console.log(checkres);
-                                            if(checkres.length > 0){
-						$.ajax({ //获取点击节点的数据
-							type: "POST",
-							url: "/plugin.php?id=gis_sczl:gisapi",
-							dataType: "json",
-							data: {
-								"checkres": checkres,
-								"mod": "getresgis"
-							},
-							success: function(res) {
-                                                                var allMarkers = [];
-								var citys = res.data; //当前选中复选框的对应标记集合
-								//当前点击的复选框被选中
-//								if(obj.checked) {
-									for(var i=0; i<citys.length; i++){
-										allMarkers.push(citys[i]);
-									}
-                                                                        map.clearMap(); //清除地图上所有点、线、面
-									showAllPoint(allMarkers);
-//								} else {//当前点击的复选框取消选中
-//									infoWindow.close();
-//									for(var i=0; i<citys.length; i++){
-//										for(var j=0; j<allMarkers.length; j++){
-//											//取消选中的节点对应的标注点==已展示的标注点
-//											if(citys[i].id == allMarkers[j].id){
-//												allMarkers.splice(j,1);
-//											}
-//										}
-//									}
-//									map.clearMap(); //清除地图上所有点、线、面
-//									showAllPoint(allMarkers); //重新绘制左侧目录树选中的数据集合
-//								}
-                                                                layui.sessionData('allMarkers', {key: 'marker', value: allMarkers});
-							}
-						});
-                                            }else{
-                                                map.clearMap(); //清除地图上所有点、线、面
-                                            }
-                                                
-					}
-				})
-			})
-		}
-	}
-});
-//***************************************************************标注点展示结束********************************************************************
+                                        }
+                                    }
+                                }
+                            }
+//                                            console.log(checkres);
+                            if (checkres.length > 0) {
+                                $.ajax({//获取点击节点的数据
+                                    type: "POST",
+                                    url: "/plugin.php?id=gis_sczl:gisapi",
+                                    dataType: "json",
+                                    data: {
+                                        "checkres": checkres,
+                                        "mod": "getresgis"
+                                    },
+                                    success: function (res) {
+                                        var allMarkers = [];
+                                        var citys = res.data; //当前选中复选框的对应标记集合
+                                        //当前点击的复选框被选中
+                                        for (var i = 0; i < citys.length; i++) {
+                                            allMarkers.push(citys[i]);
+                                        }
+                                        map.clearMap(); //清除地图上所有点、线、面
+                                        showAllPoint(allMarkers);
+                                        layui.sessionData('allMarkers', {key: 'marker', value: allMarkers});
+                                    }
+                                });
+                            } else {
+                                map.clearMap(); //清除地图上所有点、线、面
+                            }
 
-//*****************************************************************************************************************************************
-//*****************************************************************************************************************************************
-//渲染三级联动
-layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
-    var tree = layui.tree,
-            layer = layui.layer,
-            util = layui.util,
-            form = layui.form,
-            upload = layui.upload,
-            table = layui.table,
-            $ = layui.jquery;
+                        }
+                    })
+                })
+            }
+        }
+    });
+//*********************************标注点展示结束*****************************************************
 
 
     $('#addreslist').click(function () {
@@ -632,7 +621,6 @@ layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
             return false;
         }
         texts.lnglat = JSON.stringify(texts.lnglat);
-//            texts = BASE64.encode(texts);
         var argis = 0;
         var index = layer.load(1);
         $.ajax({
@@ -643,6 +631,7 @@ layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
             data: {"texts": texts, "gisucode": ucode, "mod": "addrestoarticle"},
             success: function (res) {
                 if (res.data) {
+                    layer.msg("添加成功!");
                     var reslist = layui.sessionData(ucode);
                     reslist = reslist.marker;
                     argis = res.data;
@@ -650,6 +639,8 @@ layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
                     reslist.push(texts);
                     layui.sessionData(ucode, {key: 'marker', value: reslist});
                     table.reload('reslistid', {data: reslist});
+                    $('#lngs').val('');
+                    $('#lats').val('');
                 } else {
                     layer.msg(res.msg);
                     layer.close(index);
@@ -667,6 +658,88 @@ layui.use(['tree', 'table', 'util', 'form', 'upload'], function () {
             return false;
         }
     }
+    
+    var articleshowgis = function(){
+        var ucode = layui.sessionData('gisucode'); 
+        var gisarr = layui.sessionData(ucode.code);
+        if(gisarr.marker.length > 0){
+            showAllPoint(gisarr.marker);
+        }
+    }
+    $('#showgis').on('click', function(){
+        articleshowgis();
+    });
+    $('.gisdelshow').on('click', function(){
+        map.clearMap(); 
+    });
+    
+    
+$('#mapsearch').on('click', function(){
+    startBiaozhu = true;
+    index = 2; 
+    mouseTool.polygon({
+        fillColor: '#e7f5ff',
+        strokeColor: '#e7f5ff'
+    });
+                                
+});
+
+
+var searchgisall = []; 
+var searchmap = function(searchdata){
+    if(searchdata.length > 0){
+        if(searchgisall.length > 0){
+            showsearchgis(searchdata);
+        }else{
+        $.ajax({
+            url: '/plugin.php?id=gis_sczl:gisapi',
+            type: 'post',
+            dataType: 'json',
+            async: true,
+            data: {"mod": "searchgisall"},
+            success: function (res) { 
+                if (res.data) {
+                    searchgisall = res.data; 
+                    showsearchgis(searchdata);
+                } 
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+    }
+    }
+}
+
+var showsearchgis = function(data){
+    if(data.length > 0){
+        var showsearchlist = [];
+        searchgisall.map(function(v, k){
+            switch(v['types']){
+                case '1':
+                    AMap.GeometryUtil.isPointInRing(v['lnglat'], data) && showsearchlist.push(v);
+                    break;
+                case '2':
+                    AMap.GeometryUtil.doesLineRingIntersect(v['lnglat'], data) && showsearchlist.push(v);
+                    break;
+                case '3':
+                    AMap.GeometryUtil.doesRingRingIntersect(v['lnglat'], data) && showsearchlist.push(v);
+                    break;
+                case '4':
+                    AMap.GeometryUtil.doesRingRingIntersect(v['lnglat'], data) && showsearchlist.push(v);
+                    break;
+                case '5':
+                    AMap.GeometryUtil.isPointInRing(v['lnglat'], data) && showsearchlist.push(v);
+                    break;  
+            }
+        });   
+        showAllPoint(showsearchlist);
+        startBiaozhu = false;
+        mouseTool.close(true);
+    }
+}
+
+
   
 });
 
