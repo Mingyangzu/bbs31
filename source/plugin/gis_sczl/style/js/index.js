@@ -677,6 +677,8 @@ function lineOrFaceClick(e) {
 $('#mapsearch').on('click', function(){
     startBiaozhu = true;
     index = 2; 
+    map.clearMap(); //清除地图上所有点、线、面
+    tree.reload('demoId1', {});
     mouseTool.polygon({
         fillColor: '#e7f5ff',
         strokeColor: '#e7f5ff'
