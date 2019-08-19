@@ -40,5 +40,10 @@ class table_portal_article_gis extends discuz_table{
         return DB::fetch_all($sql);
     }
     
+    public function joinArticleCount($condition_str) {
+        $sql = "select count(a.id) nums from ". DB::table($this->_table) ." a left join ".DB::table('portal_article_title')." b on a.gisucode = b.gisucode $condition_str;";
+        return DB::fetch_all($sql);
+    }
+    
 }
 

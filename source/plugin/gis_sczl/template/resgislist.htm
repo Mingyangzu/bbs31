@@ -16,9 +16,15 @@
         <table class="layui-hide" id="test"  lay-filter="complainList"></table>
 
         <script type="text/html" id="complain_toolbar">
-            <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delAll"><i class="layui-icon"></i>批量删除</button>
+            <div class="layui-btn-container" style="display:inline-block;">
+                <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delAll" ><i class="layui-icon"></i>批量删除</button>
             </div>
+            <form class="layui-form" action="" onsubmit="return false;" style="display:inline-block;">
+                <div class="layui-inline">
+                    <input class="layui-input" name="title" id="titles" placeholder="文章标题" >
+                </div>
+                <button class="layui-btn" data-type="reload" lay-submit lay-filter="formSearch">搜索</button>
+            </form>
         </script>
 
         <script src="/source/plugin/gis_sczl/style/layui/layui.js" charset="utf-8"></script>
@@ -96,6 +102,18 @@
                     });
                     layer.close(1);
                 }
+                
+                
+                        //监听提交
+        form.on('submit(formSearch)', function (data) {
+//            layer.msg(JSON.stringify(data.field));
+            table.reload('reslist', {
+                where: data.field,
+                page: {
+                    curr: 1,
+                }
+            });
+        });
 
             });
 

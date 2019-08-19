@@ -60,6 +60,7 @@ function resgislist($data) {
     global $response;
 
     $condition_str = '';
+    $data['title'] && $condition_str = " where b.title like '%". $data['title'] ."%' ";
     $pages = empty($data['page']) ? 1 : $data['page'];
     $nums = empty($data['limit']) ? 10 : $data['limit'] ;
     $start = ($pages - 1) * $nums;
@@ -72,7 +73,7 @@ function resgislist($data) {
         foreach($lists as &$v){
             $v['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
         }
-        $counts = C::t('#gis_sczl#portal_article_gis')->count($condition_str);
+        $counts = C::t('#gis_sczl#portal_article_gis')->joinArticleCount($condition_str)[0]['nums'] ;
         $response['msg'] = 'success';
         $response['data'] = $lists;
         $response['count'] = $counts;
